@@ -7,7 +7,7 @@ Samooh (समूह) is an AI-powered group procurement platform designed speci
 ## 🚀 Key Technical Features
 
 1. **Dual-Mode Repository Layer** (`backend/database/repository.py`)
-   - Firebase Firestore integration configured for project `samooh1`.
+   - Firebase Firestore integration configured for project `samoohindia-351f2`.
    - Built-in In-Memory fallback repository allowing zero-configuration instant local execution.
    - Collections managed: `retailers`, `products`, `sales`, `suppliers`, `forecasts`, `procurementPools`, `recommendations`.
 

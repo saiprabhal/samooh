@@ -1,11 +1,11 @@
 @echo off
 echo ========================================================
-echo Deploying Samooh Frontend to Firebase Hosting (samooh1)...
+echo Deploying Samooh Frontend to Firebase Hosting (samoohindia-351f2)...
 echo ========================================================
 
 :: Step 1: Build production bundle
 echo 1/3: Building production React bundle (dist)...
-call "C:\Program Files\nodejs\npm.cmd" run build
+call npm run build
 
 if %ERRORLEVEL% NEQ 0 (
     echo Build failed! Please check errors above.
@@ -18,14 +18,14 @@ echo.
 echo 2/3: Checking Firebase CLI...
 call npx -y firebase-tools --version
 
-:: Step 3: Deploy to Firebase Hosting project samooh1
+:: Step 3: Deploy to Firebase Hosting project samoohindia-351f2
 echo.
-echo 3/3: Deploying to Firebase Hosting project samooh1...
-call npx -y firebase-tools deploy --only hosting --project samooh1
+echo 3/3: Deploying to Firebase Hosting project samoohindia-351f2...
+call npx -y firebase-tools deploy --only hosting --project samoohindia-351f2
 
 echo.
 echo ========================================================
 echo Deployment finished!
-echo Web App URL: https://samooh1.web.app / https://samooh1.firebaseapp.com
+echo Web App URL: https://samoohindia-351f2.web.app / https://samoohindia-351f2.firebaseapp.com
 echo ========================================================
 pause

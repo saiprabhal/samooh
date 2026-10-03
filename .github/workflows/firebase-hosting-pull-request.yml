@@ -17,5 +17,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SAMOOH1 }}
-          projectId: samooh1
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SAMOOHINDIA_351F2 || secrets.FIREBASE_SERVICE_ACCOUNT_SAMOOH1 }}
+          projectId: samoohindia-351f2

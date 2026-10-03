@@ -6,7 +6,7 @@ try:
         PROJECT_NAME: str = "Samooh AI Core Backend"
         VERSION: str = "1.0.0"
         API_PREFIX: str = ""
-        FIREBASE_PROJECT_ID: str = "samooh1"
+        FIREBASE_PROJECT_ID: str = "samoohindia-351f2"
         FIREBASE_CREDENTIALS_PATH: str = os.getenv("FIREBASE_CREDENTIALS_PATH", "")
         USE_MOCK_FIRESTORE: bool = os.getenv("USE_MOCK_FIRESTORE", "true").lower() in ("true", "1", "yes")
         DEFAULT_FORECAST_HORIZON_DAYS: int = 30
@@ -23,7 +23,7 @@ except ImportError:
         PROJECT_NAME: str = "Samooh AI Core Backend"
         VERSION: str = "1.0.0"
         API_PREFIX: str = ""
-        FIREBASE_PROJECT_ID: str = "samooh1"
+        FIREBASE_PROJECT_ID: str = "samoohindia-351f2"
         FIREBASE_CREDENTIALS_PATH: str = os.getenv("FIREBASE_CREDENTIALS_PATH", "")
         USE_MOCK_FIRESTORE: bool = os.getenv("USE_MOCK_FIRESTORE", "true").lower() in ("true", "1", "yes")
         DEFAULT_FORECAST_HORIZON_DAYS: int = 30
