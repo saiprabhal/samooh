@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Filter, Search, RefreshCw, Database, Sparkles, Layers, Users } from 'lucide-react';
 import RecommendationCard from '../components/RecommendationCard';
 import PoolDetailModal from '../components/PoolDetailModal';
@@ -18,6 +18,7 @@ import { useApp } from '../context/AppContext';
 export default function Opportunities() {
   const { theme, t, setActiveInvoice, user, addOrderToHistory } = useApp();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   // Tab State: 'OPPORTUNITIES' (Engine View) | 'COMPATIBILITY' (Why Stores Match) | 'POOLS' (Active Group Pools)
   const [activeTab, setActiveTab] = useState('OPPORTUNITIES');
@@ -40,10 +41,18 @@ export default function Opportunities() {
   
   // Shared Search & Category Filters
   const [filterCategory, setFilterCategory] = useState('ALL');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(() => searchParams.get('search') || '');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Sync with search URL parameter when navigated from TopNav
+  useEffect(() => {
+    const param = searchParams.get('search');
+    if (param !== null && param !== undefined) {
+      setSearchQuery(param);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     loadAllData();
