@@ -313,43 +313,43 @@ export default function Opportunities() {
       </div>
 
       {/* Tab Navigation: Opportunities Engine vs Compatibility vs Active Pools */}
-      <div className="flex items-center space-x-2 border-b border-slate-200 dark:border-slate-700">
+      <div className="flex flex-wrap items-center gap-2 border-b-2 border-black dark:border-white pb-3">
         <button
           type="button"
           onClick={() => setActiveTab('OPPORTUNITIES')}
-          className={`pb-2.5 px-3 text-xs font-bold transition flex items-center space-x-1.5 border-b-2 ${
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition flex items-center space-x-1.5 cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
             activeTab === 'OPPORTUNITIES'
-              ? 'border-emerald-800 text-emerald-800 dark:border-emerald-400 dark:text-emerald-400'
-              : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+              ? 'border-2 border-black bg-[#FFDE59] text-black shadow-[3px_3px_0px_0px_#000]'
+              : 'border-2 border-black/20 dark:border-white/20 text-slate-700 dark:text-slate-300 hover:border-black dark:hover:border-white bg-white dark:bg-black/20'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5" />
+          <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
           <span>Procurement Opportunities ({opportunities.length})</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('COMPATIBILITY')}
-          className={`pb-2.5 px-3 text-xs font-bold transition flex items-center space-x-1.5 border-b-2 ${
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition flex items-center space-x-1.5 cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
             activeTab === 'COMPATIBILITY'
-              ? 'border-emerald-800 text-emerald-800 dark:border-emerald-400 dark:text-emerald-400'
-              : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+              ? 'border-2 border-black bg-[#FFDE59] text-black shadow-[3px_3px_0px_0px_#000]'
+              : 'border-2 border-black/20 dark:border-white/20 text-slate-700 dark:text-slate-300 hover:border-black dark:hover:border-white bg-white dark:bg-black/20'
           }`}
         >
-          <Users className="w-3.5 h-3.5" />
+          <Users className="w-3.5 h-3.5 stroke-[2.5]" />
           <span>Retailer Compatibility ({compatibilities.length})</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('POOLS')}
-          className={`pb-2.5 px-3 text-xs font-bold transition flex items-center space-x-1.5 border-b-2 ${
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition flex items-center space-x-1.5 cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
             activeTab === 'POOLS'
-              ? 'border-emerald-800 text-emerald-800 dark:border-emerald-400 dark:text-emerald-400'
-              : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+              ? 'border-2 border-black bg-[#FFDE59] text-black shadow-[3px_3px_0px_0px_#000]'
+              : 'border-2 border-black/20 dark:border-white/20 text-slate-700 dark:text-slate-300 hover:border-black dark:hover:border-white bg-white dark:bg-black/20'
           }`}
         >
-          <Layers className="w-3.5 h-3.5" />
+          <Layers className="w-3.5 h-3.5 stroke-[2.5]" />
           <span>Active Procurement Pools ({recommendations.length})</span>
         </button>
       </div>
@@ -358,7 +358,7 @@ export default function Opportunities() {
       <div className="glass-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3">
         {/* Search */}
         <div className="relative flex-1 min-w-[240px]">
-          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-black dark:text-white stroke-[2.5]" />
           <input 
             type="text"
             placeholder={
@@ -370,24 +370,24 @@ export default function Opportunities() {
             }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="glass-input w-full rounded-xl pl-9 pr-3 py-1.5 text-xs focus:outline-none"
+            className="w-full rounded-xl pl-9 pr-3 py-1.5 text-xs font-bold border-2 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] text-black dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#FFF] focus:outline-none"
           />
         </div>
 
         {/* Status Pills */}
-        <div className="flex items-center space-x-1 overflow-x-auto py-1">
-          <span className="text-xs font-medium text-slate-500 flex items-center mr-1">
-            <Filter className="w-3.5 h-3.5 mr-1 text-slate-400" /> Status:
+        <div className="flex items-center space-x-1.5 overflow-x-auto py-1">
+          <span className="text-xs font-black uppercase text-black dark:text-white flex items-center mr-1">
+            <Filter className="w-3.5 h-3.5 mr-1 stroke-[2.5]" /> Status:
           </span>
           {activeTab === 'OPPORTUNITIES' ? (
             ['ALL', 'FEASIBLE', 'BELOW_MOQ', 'INSUFFICIENT_STOCK', 'ALREADY_IN_POOL'].map((status) => (
               <button
                 key={status}
                 onClick={() => setOppFilterStatus(status)}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium transition whitespace-nowrap ${
+                className={`px-2.5 py-1 rounded-lg text-xs font-black uppercase transition whitespace-nowrap border-2 border-black cursor-pointer shadow-[1.5px_1.5px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
                   oppFilterStatus === status 
-                    ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900'
-                    : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50'
+                    ? 'bg-[#22C55E] text-black'
+                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-[#FFDE59] hover:text-black'
                 }`}
               >
                 {status === 'ALL' ? 'All Opportunities' : status.replace('_', ' ')}
@@ -398,10 +398,10 @@ export default function Opportunities() {
               <button
                 key={status}
                 onClick={() => setCompatFilterStatus(status)}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium transition whitespace-nowrap ${
+                className={`px-2.5 py-1 rounded-lg text-xs font-black uppercase transition whitespace-nowrap border-2 border-black cursor-pointer shadow-[1.5px_1.5px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
                   compatFilterStatus === status 
-                    ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900'
-                    : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50'
+                    ? 'bg-[#22C55E] text-black'
+                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-[#FFDE59] hover:text-black'
                 }`}
               >
                 {status === 'ALL' ? 'All Partners' : status.replace('_', ' ')}
@@ -412,10 +412,10 @@ export default function Opportunities() {
               <button
                 key={status}
                 onClick={() => setFilterStatus(status)}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium transition whitespace-nowrap ${
+                className={`px-2.5 py-1 rounded-lg text-xs font-black uppercase transition whitespace-nowrap border-2 border-black cursor-pointer shadow-[1.5px_1.5px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
                   filterStatus === status 
-                    ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900'
-                    : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50'
+                    ? 'bg-[#22C55E] text-black'
+                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-[#FFDE59] hover:text-black'
                 }`}
               >
                 {status === 'ALL' ? t('allOpps') : status === 'ACHIEVED' ? t('achieved') : status === 'NEAR_THRESHOLD' ? t('nearThreshold') : t('inProgress')}
