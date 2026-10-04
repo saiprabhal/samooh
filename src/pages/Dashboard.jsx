@@ -300,40 +300,83 @@ export default function Dashboard() {
         }}
       />
 
-      {/* KPI Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <KPICard
-          title={t('estimatedSavings')}
-          value={formatINR(data?.metrics?.total_community_savings_inr || 84520)}
-          subtext={t('netSavingsSub')}
-          icon={IndianRupee}
-          color="emerald"
-          badge="+24.5%"
-        />
-        <KPICard
-          title={t('retailersBenefited')}
-          value={data?.metrics?.total_retailers || 30}
-          subtext={t('retailersSub')}
-          icon={Users}
-          color="blue"
-          badge="Hyderabad Hub"
-        />
-        <KPICard
-          title={t('procurementPools')}
-          value={data?.metrics?.total_active_pools || 12}
-          subtext={t('poolsSub')}
-          icon={Layers}
-          color="purple"
-          badge={`${data?.metrics?.pools_achieved_threshold || 9} Active`}
-        />
-        <KPICard
-          title={t('avgSavingsPct')}
-          value={`${data?.metrics?.average_savings_percentage || 18.5}%`}
-          subtext={t('avgSavingsSub')}
-          icon={Percent}
-          color="amber"
-          badge="Up to 24%"
-        />
+      {/* Top Urgent Recommendations & Pools (Placed at TOP) */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+              <Sparkles className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+              <span>{t('highPriorityOpps') || 'Recommended Procurement Pools'}</span>
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              AI-matched bulk procurement opportunities ready to unlock tier discounts with nearby stores.
+            </p>
+          </div>
+          {recommendations.length > 0 && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800">
+              {recommendations.length} Active Pools
+            </span>
+          )}
+        </div>
+
+        {recommendations.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {recommendations.slice(0, 3).map((rec) => (
+              <RecommendationCard
+                key={rec.id || rec.pool_id || Math.random()}
+                recommendation={rec}
+                onAccept={handleAccept}
+                onReject={handleReject}
+                onViewDetails={setSelectedPool}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="p-8 text-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+            <p className="text-slate-500 text-xs">{t('noPools') || 'No active pools currently match your store location.'}</p>
+          </div>
+        )}
+      </div>
+
+      {/* Performance & Community Savings Metrics (Placed at BOTTOM) */}
+      <div className="pt-2">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+          Platform Performance & Savings Metrics
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <KPICard
+            title={t('estimatedSavings')}
+            value={formatINR(data?.metrics?.total_community_savings_inr || 84520)}
+            subtext={t('netSavingsSub')}
+            icon={IndianRupee}
+            color="emerald"
+            badge="+24.5%"
+          />
+          <KPICard
+            title={t('retailersBenefited')}
+            value={data?.metrics?.total_retailers || 30}
+            subtext={t('retailersSub')}
+            icon={Users}
+            color="blue"
+            badge="Hyderabad Hub"
+          />
+          <KPICard
+            title={t('procurementPools')}
+            value={data?.metrics?.total_active_pools || 12}
+            subtext={t('poolsSub')}
+            icon={Layers}
+            color="purple"
+            badge={`${data?.metrics?.pools_achieved_threshold || 9} Active`}
+          />
+          <KPICard
+            title={t('avgSavingsPct')}
+            value={`${data?.metrics?.average_savings_percentage || 18.5}%`}
+            subtext={t('avgSavingsSub')}
+            icon={Percent}
+            color="amber"
+            badge="Up to 24%"
+          />
+        </div>
       </div>
 
       {/* Charts Grid Section */}
@@ -433,30 +476,6 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Top Urgent Recommendations */}
-      <div>
-        <h2 className="text-base font-bold text-slate-900 dark:text-white mb-3">
-          {t('highPriorityOpps')}
-        </h2>
-        {recommendations.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {recommendations.slice(0, 3).map((rec) => (
-              <RecommendationCard
-                key={rec.id || rec.pool_id || Math.random()}
-                recommendation={rec}
-                onAccept={handleAccept}
-                onReject={handleReject}
-                onViewDetails={setSelectedPool}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="p-12 text-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
-            <p className="text-slate-500 text-xs">{t('noPools')}</p>
-          </div>
-        )}
       </div>
 
       {/* Pool Detail Modal */}

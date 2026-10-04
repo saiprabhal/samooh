@@ -60,6 +60,7 @@ const OrderProcessing = lazy(() => import('./pages/OrderProcessing'));
 const Login = lazy(() => import('./pages/Login'));
 const PreviousOrders = lazy(() => import('./pages/PreviousOrders'));
 const Onboarding = lazy(() => import('./pages/onboarding/Onboarding'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 // Supplier Portal Pages
 const SupplierDashboard = lazy(() => import('./pages/supplier/SupplierDashboard'));
@@ -89,6 +90,7 @@ function MainLayout() {
   const location = useLocation();
   const [isLiveApi, setIsLiveApi] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(true);
 
   // Initial Firebase Session Resolution
   if (isAuthLoading) {
@@ -157,22 +159,31 @@ function MainLayout() {
         ? 'bg-[#F7F6F2] text-slate-900'
         : 'bg-[#0F172A] text-slate-100'
     }`}>
-      {/* Left Sidebar Navigation */}
+      {/* Left Sidebar Navigation (Fixed on Desktop, Collapsible Thin Line) */}
       <Sidebar 
         mobileOpen={mobileMenuOpen}
         onCloseMobile={() => setMobileMenuOpen(false)}
+        isCollapsed={isDesktopCollapsed}
+        onToggleCollapse={() => setIsDesktopCollapsed(prev => !prev)}
       />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      {/* Main Content Area - dynamically offsets for fixed desktop sidebar */}
+      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${
+        isDesktopCollapsed ? 'md:ml-14' : 'md:ml-60'
+      }`}>
         <TopNav 
           isLiveApi={isLiveApi}
           onToggleApi={() => setIsLiveApi(!isLiveApi)}
           onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
+          isDesktopCollapsed={isDesktopCollapsed}
+          onToggleDesktopSidebar={() => setIsDesktopCollapsed(prev => !prev)}
         />
         <main className="flex-1 overflow-y-auto pb-24 md:pb-6">
           <Suspense fallback={<PageLoader />}>
             <Routes>
+              {/* Common Profile & App Settings Route */}
+              <Route path="/profile" element={<Profile />} />
+
               {/* Retailer Routes */}
               <Route path="/" element={userRole === 'supplier' ? <Navigate to="/supplier" replace /> : <Dashboard />} />
               <Route path="/opportunities" element={userRole === 'supplier' ? <Navigate to="/supplier" replace /> : <Opportunities />} />
