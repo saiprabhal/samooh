@@ -33,7 +33,7 @@ import { formatINR } from '../utils/currency';
 import { useApp } from '../context/AppContext';
 
 export default function Dashboard() {
-  const { theme, t, setActiveInvoice, user, addOrderToHistory, firebaseUser, userProfile } = useApp();
+  const { theme, t, setActiveInvoice, user, addOrderToHistory, firebaseUser, userProfile, onboardingCompleted } = useApp();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
@@ -42,40 +42,55 @@ export default function Dashboard() {
   const [selectedPool, setSelectedPool] = useState(null);
   const [isSeeding, setIsSeeding] = useState(false);
 
-  // Retailer Location Permission Flow State - Optional, never blocks dashboard
+  // Retailer Location Permission Flow State - Never show if already granted, onboarded, or previously dismissed
   const [showLocationPrompt, setShowLocationPrompt] = useState(() => {
     try {
-      const dismissed = sessionStorage.getItem('samooh_location_prompt_dismissed');
-      if (dismissed) return false;
+      const isDismissed = localStorage.getItem('samooh_location_prompt_dismissed') === 'true' || 
+                          sessionStorage.getItem('samooh_location_prompt_dismissed') === 'true';
+      const isGranted = localStorage.getItem('samooh_location_permission_granted') === 'true' ||
+                        Boolean(userProfile?.location?.permissionGranted) ||
+                        Boolean(userProfile?.businessLocation?.permissionGranted);
+      const isOnboarded = Boolean(onboardingCompleted) ||
+                          Boolean(userProfile?.onboardingCompleted) ||
+                          localStorage.getItem('samooh_onboarding_completed') === 'true';
       const hasCoords = Boolean(
+        userProfile?.businessLocation?.latitude != null ||
         userProfile?.location?.latitude != null ||
-        user?.location?.latitude != null
+        user?.businessLocation?.latitude != null ||
+        user?.location?.latitude != null ||
+        userProfile?.businessLocation != null ||
+        user?.businessLocation != null
       );
-      const isGranted = Boolean(userProfile?.location?.permissionGranted);
-      return !hasCoords && !isGranted;
+
+      // If user has coords, is granted, is onboarded, or previously dismissed, DO NOT show prompt
+      if (isDismissed || isGranted || isOnboarded || hasCoords) {
+        return false;
+      }
+      return false; // Default to never intrusively auto-pop up on dashboard
     } catch {
       return false;
     }
   });
 
-  // Dismiss prompt automatically if user profile already has location saved
+  // Permanently suppress prompt if location or onboarding is detected
   useEffect(() => {
     try {
-      const dismissed = sessionStorage.getItem('samooh_location_prompt_dismissed');
-      if (dismissed) {
-        setShowLocationPrompt(false);
-        return;
-      }
+      const isOnboarded = Boolean(onboardingCompleted) ||
+                          Boolean(userProfile?.onboardingCompleted) ||
+                          localStorage.getItem('samooh_onboarding_completed') === 'true';
       const hasCoords = Boolean(
+        userProfile?.businessLocation?.latitude != null ||
         userProfile?.location?.latitude != null ||
+        user?.businessLocation?.latitude != null ||
         user?.location?.latitude != null
       );
-      const isGranted = Boolean(userProfile?.location?.permissionGranted);
-      if (hasCoords || isGranted) {
+      if (isOnboarded || hasCoords) {
+        localStorage.setItem('samooh_location_prompt_dismissed', 'true');
+        localStorage.setItem('samooh_location_permission_granted', 'true');
         setShowLocationPrompt(false);
       }
     } catch (_) {}
-  }, [userProfile, user]);
+  }, [userProfile, user, onboardingCompleted]);
 
   useEffect(() => {
     loadDashboardData();
@@ -261,10 +276,15 @@ export default function Dashboard() {
           retailerId={firebaseUser?.uid || user?.id}
           onComplete={(coords) => {
             setShowLocationPrompt(false);
+            try {
+              localStorage.setItem('samooh_location_permission_granted', 'true');
+              localStorage.setItem('samooh_location_prompt_dismissed', 'true');
+            } catch {}
           }}
           onDismiss={() => {
             setShowLocationPrompt(false);
             try {
+              localStorage.setItem('samooh_location_prompt_dismissed', 'true');
               sessionStorage.setItem('samooh_location_prompt_dismissed', 'true');
             } catch {}
           }}

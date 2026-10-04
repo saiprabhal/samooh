@@ -441,6 +441,8 @@ export function AppProvider({ children }) {
     localStorage.setItem('samooh_user', JSON.stringify(updatedUser));
     localStorage.setItem('samooh_role', 'retailer');
     localStorage.setItem('samooh_onboarding_completed', 'true');
+    localStorage.setItem('samooh_location_permission_granted', 'true');
+    localStorage.setItem('samooh_location_prompt_dismissed', 'true');
     return result;
   };
 
@@ -480,6 +482,8 @@ export function AppProvider({ children }) {
     localStorage.setItem('samooh_supplier', JSON.stringify(updatedSupplier));
     localStorage.setItem('samooh_role', 'supplier');
     localStorage.setItem('samooh_onboarding_completed', 'true');
+    localStorage.setItem('samooh_location_permission_granted', 'true');
+    localStorage.setItem('samooh_location_prompt_dismissed', 'true');
     return result;
   };
 
