@@ -567,56 +567,151 @@ export async function getSupplierAnalytics(supplierId) {
   };
 }
 
+const INITIAL_SUPPLIER_PRODUCTS = [
+  {
+    id: 'prod_001',
+    name: 'Sona Masoori Raw Rice (25kg Bag)',
+    category: 'Grains',
+    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=700&q=80',
+    unit_of_measure: 'bag',
+    unit_weight_kg: 25.0,
+    retail_price: 1450.0,
+    wholesale_price: 1180.0,
+    min_wholesale_quantity: 20.0,
+    available_quantity: 850.0,
+    max_order_quantity: 1500.0,
+    supplier_id: 'sup_01',
+    lead_time_days: 2,
+    service_radius_km: 60.0,
+    discount_pct: 2.0,
+    is_available: true,
+    quantity_tiers: [
+      { min_quantity: 1.0, max_quantity: 19.0, price_per_unit: 1250.0 },
+      { min_quantity: 20.0, max_quantity: 49.0, price_per_unit: 1180.0 },
+      { min_quantity: 50.0, max_quantity: 99.0, price_per_unit: 1140.0 },
+      { min_quantity: 100.0, max_quantity: null, price_per_unit: 1090.0 }
+    ]
+  },
+  {
+    id: 'prod_006',
+    name: 'Freedom Refined Sunflower Oil (15L Tin)',
+    category: 'Oils',
+    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=700&q=80',
+    unit_of_measure: 'tin',
+    unit_weight_kg: 15.0,
+    retail_price: 1950.0,
+    wholesale_price: 1620.0,
+    min_wholesale_quantity: 15.0,
+    available_quantity: 320.0,
+    max_order_quantity: 500.0,
+    supplier_id: 'sup_01',
+    lead_time_days: 2,
+    service_radius_km: 60.0,
+    discount_pct: 3.0,
+    is_available: true,
+    quantity_tiers: [
+      { min_quantity: 1.0, max_quantity: 14.0, price_per_unit: 1750.0 },
+      { min_quantity: 15.0, max_quantity: null, price_per_unit: 1620.0 }
+    ]
+  },
+  {
+    id: 'prod_010',
+    name: 'Guntur Red Chilli Whole (5kg Pack)',
+    category: 'Spices',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=700&q=80',
+    unit_of_measure: 'pack',
+    unit_weight_kg: 5.0,
+    retail_price: 1750.0,
+    wholesale_price: 1390.0,
+    min_wholesale_quantity: 10.0,
+    available_quantity: 400.0,
+    max_order_quantity: 800.0,
+    supplier_id: 'sup_01',
+    lead_time_days: 3,
+    service_radius_km: 75.0,
+    discount_pct: 4.0,
+    is_available: true
+  },
+  {
+    id: 'prod_002',
+    name: 'Royal Premium Desi Toor Dal (50kg Bag)',
+    category: 'Grains',
+    image: 'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=700&q=80',
+    unit_of_measure: 'bag',
+    unit_weight_kg: 50.0,
+    retail_price: 6800.0,
+    wholesale_price: 5400.0,
+    min_wholesale_quantity: 8.0,
+    available_quantity: 190.0,
+    max_order_quantity: 350.0,
+    supplier_id: 'sup_01',
+    lead_time_days: 2,
+    service_radius_km: 50.0,
+    discount_pct: 2.5,
+    is_available: true
+  }
+];
+
+function getLocalSupplierProducts() {
+  try {
+    const raw = localStorage.getItem('samooh_supplier_products');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {}
+  try {
+    localStorage.setItem('samooh_supplier_products', JSON.stringify(INITIAL_SUPPLIER_PRODUCTS));
+  } catch (e) {}
+  return [...INITIAL_SUPPLIER_PRODUCTS];
+}
+
+function saveLocalSupplierProducts(products) {
+  try {
+    localStorage.setItem('samooh_supplier_products', JSON.stringify(products));
+  } catch (e) {}
+}
+
 export async function getSupplierProducts(supplierId) {
   try {
     const res = await apiClient.get(`/api/suppliers/${supplierId}/products`);
-    return res.data;
+    if (res.data && res.data.length > 0) return res.data;
   } catch (err) {
-    console.warn('[Samooh API] Serving Mock Supplier Products');
-    return [
-      {
-        id: 'prod_001',
-        name: 'Sona Masoori Raw Rice (25kg Bag)',
-        category: 'Grains & Staples',
-        unit_of_measure: 'bag',
-        unit_weight_kg: 25.0,
-        retail_price: 1450.0,
-        wholesale_price: 1180.0,
-        min_wholesale_quantity: 20.0,
-        available_quantity: 850.0,
-        max_order_quantity: 1500.0,
-        supplier_id: supplierId,
-        lead_time_days: 2,
-        service_radius_km: 60.0,
-        discount_pct: 2.0,
-        is_available: true,
-        quantity_tiers: [
-          { min_quantity: 1.0, max_quantity: 19.0, price_per_unit: 1250.0 },
-          { min_quantity: 20.0, max_quantity: 49.0, price_per_unit: 1180.0 },
-          { min_quantity: 50.0, max_quantity: 99.0, price_per_unit: 1140.0 },
-          { min_quantity: 100.0, max_quantity: null, price_per_unit: 1090.0 }
-        ]
-      }
-    ];
+    // Continue to local mock store
   }
+  return getLocalSupplierProducts();
 }
 
 export async function addSupplierProduct(supplierId, productData) {
   try {
     const res = await apiClient.post(`/api/suppliers/${supplierId}/products`, productData);
-    return res.data;
+    if (res.data) return res.data;
   } catch (err) {
-    return { status: 'success', product: { ...productData, id: `prod_${Date.now()}`, supplier_id: supplierId } };
+    // Continue to local mock store
   }
+  const all = getLocalSupplierProducts();
+  const newProduct = {
+    ...productData,
+    id: `prod_${Date.now()}`,
+    supplier_id: supplierId,
+    created_at: new Date().toISOString()
+  };
+  const updated = [newProduct, ...all];
+  saveLocalSupplierProducts(updated);
+  return { status: 'success', product: newProduct };
 }
 
 export async function updateSupplierProduct(supplierId, productId, updates) {
   try {
     const res = await apiClient.put(`/api/suppliers/${supplierId}/products/${productId}`, updates);
-    return res.data;
+    if (res.data) return res.data;
   } catch (err) {
-    return { status: 'success', product: { id: productId, ...updates } };
+    // Continue to local mock store
   }
+  const all = getLocalSupplierProducts();
+  const updated = all.map(p => p.id === productId ? { ...p, ...updates } : p);
+  saveLocalSupplierProducts(updated);
+  return { status: 'success', product: { id: productId, ...updates } };
 }
 
 export async function getSupplierOrders(supplierId, status = null) {

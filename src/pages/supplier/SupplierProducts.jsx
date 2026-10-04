@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Tag, Plus, Edit3, CheckCircle2, AlertTriangle, 
-  Search, RefreshCw, X
+  Search, RefreshCw, X, Image as ImageIcon, Upload, Check, Link as LinkIcon
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { getSupplierProducts, addSupplierProduct, updateSupplierProduct } from '../../services/api';
+import { AVAILABLE_COMMODITY_PRESETS, getCommodityVisual } from '../../utils/commodityVisuals';
 
 export default function SupplierProducts() {
   const { currentSupplier } = useApp();
@@ -15,6 +16,12 @@ export default function SupplierProducts() {
   const [editingProduct, setEditingProduct] = useState(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [notification, setNotification] = useState(null);
+
+  // Mandatory Product Image States
+  const [selectedImage, setSelectedImage] = useState('');
+  const [imageTab, setImageTab] = useState('PRESET'); // 'PRESET' | 'UPLOAD' | 'URL'
+  const [imageError, setImageError] = useState(null);
+  const [customUrlInput, setCustomUrlInput] = useState('');
 
   const supId = currentSupplier?.id || 'sup_01';
 
@@ -34,6 +41,58 @@ export default function SupplierProducts() {
     loadProducts();
   }, [supId]);
 
+  const handleOpenAddModal = () => {
+    setEditingProduct(null);
+    setSelectedImage('');
+    setImageError(null);
+    setCustomUrlInput('');
+    setImageTab('PRESET');
+    setIsAddModalOpen(true);
+  };
+
+  const handleOpenEditModal = (prod) => {
+    setEditingProduct(prod);
+    const initialImg = prod.image || prod.image_url || getCommodityVisual(prod.name, prod.category).image || '';
+    setSelectedImage(initialImg);
+    setImageError(null);
+    setCustomUrlInput('');
+    setImageTab('PRESET');
+    setIsAddModalOpen(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsAddModalOpen(false);
+    setEditingProduct(null);
+    setSelectedImage('');
+    setImageError(null);
+    setCustomUrlInput('');
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setImageError("Please upload a valid image file (JPG, PNG, WEBP).");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setImageError("Image file size exceeds 5MB limit. Please upload a smaller image.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setSelectedImage(event.target.result);
+      setImageError(null);
+    };
+    reader.onerror = () => {
+      setImageError("Failed to read image file. Please try again.");
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleToggleAvailability = async (prod) => {
     const updatedStatus = !prod.is_available;
     try {
@@ -48,10 +107,18 @@ export default function SupplierProducts() {
 
   const handleSaveProduct = async (e) => {
     e.preventDefault();
+
+    // STRICT MANDATORY VALIDATION: Product image must be provided
+    if (!selectedImage || !selectedImage.trim()) {
+      setImageError("Product image is mandatory. Please choose an image from the presets or upload your own image.");
+      return;
+    }
+
     const formData = new FormData(e.target);
     const payload = {
       name: formData.get('name'),
       category: formData.get('category'),
+      image: selectedImage,
       unit_of_measure: formData.get('unit_of_measure'),
       unit_weight_kg: parseFloat(formData.get('unit_weight_kg') || 1),
       retail_price: parseFloat(formData.get('retail_price') || 0),
@@ -69,11 +136,11 @@ export default function SupplierProducts() {
       if (editingProduct) {
         await updateSupplierProduct(supId, editingProduct.id, payload);
         setNotification(`Product "${payload.name}" updated successfully`);
-        setEditingProduct(null);
+        handleCloseModal();
       } else {
         await addSupplierProduct(supId, payload);
         setNotification(`Product "${payload.name}" added to catalog`);
-        setIsAddModalOpen(false);
+        handleCloseModal();
       }
       setTimeout(() => setNotification(null), 3000);
       await loadProducts();
@@ -122,8 +189,8 @@ export default function SupplierProducts() {
           </button>
 
           <button
-            onClick={() => setIsAddModalOpen(true)}
-            className="px-3.5 py-1.5 rounded-md bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-medium transition shadow-sm flex items-center space-x-1.5"
+            onClick={handleOpenAddModal}
+            className="px-3.5 py-1.5 rounded-md bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-medium transition shadow-sm flex items-center space-x-1.5 cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add Product</span>
@@ -200,9 +267,21 @@ export default function SupplierProducts() {
                   return (
                     <tr key={prod.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-700/30 transition">
                       <td className="py-3 px-4">
-                        <div className="font-semibold text-slate-900 dark:text-slate-100">{prod.name}</div>
-                        <div className="text-[11px] text-slate-400">
-                          Unit: {prod.unit_of_measure} ({prod.unit_weight_kg || 1} kg) • Lead: {prod.lead_time_days || 2}d
+                        <div className="flex items-center space-x-3">
+                          <div className="w-11 h-11 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900 flex-shrink-0 relative shadow-2xs">
+                            <img
+                              src={prod.image || getCommodityVisual(prod.name, prod.category).image}
+                              alt={prod.name}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                          </div>
+                          <div>
+                            <div className="font-semibold text-slate-900 dark:text-slate-100">{prod.name}</div>
+                            <div className="text-[11px] text-slate-400">
+                              Unit: {prod.unit_of_measure} ({prod.unit_weight_kg || 1} kg) • Lead: {prod.lead_time_days || 2}d
+                            </div>
+                          </div>
                         </div>
                       </td>
                       <td className="py-3 px-4">
@@ -243,7 +322,7 @@ export default function SupplierProducts() {
                       <td className="py-3 px-4 text-center">
                         <button
                           onClick={() => handleToggleAvailability(prod)}
-                          className={`px-2 py-0.5 rounded text-[11px] font-medium border transition ${
+                          className={`px-2 py-0.5 rounded text-[11px] font-medium border transition cursor-pointer ${
                             prod.is_available
                               ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
                               : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-700 dark:text-slate-400 dark:border-slate-600'
@@ -255,8 +334,8 @@ export default function SupplierProducts() {
                       </td>
                       <td className="py-3 px-4 text-right">
                         <button
-                          onClick={() => setEditingProduct(prod)}
-                          className="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium transition inline-flex items-center space-x-1"
+                          onClick={() => handleOpenEditModal(prod)}
+                          className="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium transition inline-flex items-center space-x-1 cursor-pointer"
                         >
                           <Edit3 className="w-3 h-3 text-slate-500" />
                           <span>Edit</span>
@@ -274,21 +353,229 @@ export default function SupplierProducts() {
       {/* Add / Edit Product Modal */}
       {(isAddModalOpen || editingProduct) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-xl rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-2xl rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 p-6 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-700">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                 <Tag className="w-4 h-4 text-emerald-800 dark:text-emerald-400" />
                 <span>{editingProduct ? 'Edit Commercial Terms' : 'Add Wholesale Product'}</span>
               </h3>
               <button
-                onClick={() => { setIsAddModalOpen(false); setEditingProduct(null); }}
-                className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-white"
+                type="button"
+                onClick={handleCloseModal}
+                className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <form onSubmit={handleSaveProduct} className="space-y-4 text-xs">
+              {/* MANDATORY PRODUCT IMAGE SECTION */}
+              <div className="p-3.5 rounded-xl border border-slate-200/90 dark:border-slate-750 bg-slate-50/70 dark:bg-slate-900/60 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <ImageIcon className="w-4 h-4 text-emerald-800 dark:text-emerald-400" />
+                    <span className="text-xs font-bold text-slate-900 dark:text-white">
+                      Product Image <span className="text-rose-600 dark:text-rose-400">*</span>
+                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                      Mandatory
+                    </span>
+                  </div>
+
+                  {selectedImage && (
+                    <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 flex items-center space-x-1">
+                      <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                      <span>Image Ready</span>
+                    </span>
+                  )}
+                </div>
+
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Every wholesale listing requires a real-world commodity visual for Kiranas to inspect mandi quality. You can choose from available commodity presets or upload your own warehouse image.
+                </p>
+
+                {/* If image is selected, show active image preview strip */}
+                {selectedImage ? (
+                  <div className="relative rounded-xl overflow-hidden border-2 border-emerald-700 dark:border-emerald-600 bg-slate-900 p-2.5 flex items-center justify-between shadow-sm">
+                    <div className="flex items-center space-x-3.5">
+                      <div className="w-16 h-16 rounded-lg overflow-hidden border border-white/20 flex-shrink-0 bg-black">
+                        <img 
+                          src={selectedImage} 
+                          alt="Active Product Visual" 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="space-y-0.5">
+                        <div className="flex items-center space-x-1.5">
+                          <span className="text-xs font-bold text-white">Active Product Visual</span>
+                          <span className="text-[9px] font-bold bg-emerald-800 text-white px-1.5 py-0.5 rounded uppercase">Attached</span>
+                        </div>
+                        <p className="text-[10px] text-white/70 max-w-[260px] sm:max-w-xs truncate font-mono">
+                          {selectedImage.startsWith('data:') ? 'Custom Uploaded File (Base64)' : selectedImage}
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedImage('');
+                        setImageError(null);
+                      }}
+                      className="px-2.5 py-1 text-xs font-semibold text-rose-300 hover:text-white bg-rose-950/70 hover:bg-rose-900 border border-rose-800 rounded-lg transition cursor-pointer"
+                    >
+                      Change Image
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {/* Mode Navigation Tabs */}
+                    <div className="flex border-b border-slate-200 dark:border-slate-700 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => { setImageTab('PRESET'); setImageError(null); }}
+                        className={`pb-2 px-3 font-semibold transition border-b-2 cursor-pointer flex items-center space-x-1.5 ${
+                          imageTab === 'PRESET'
+                            ? 'border-emerald-800 text-emerald-800 dark:border-emerald-400 dark:text-emerald-400'
+                            : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                        }`}
+                      >
+                        <ImageIcon className="w-3.5 h-3.5" />
+                        <span>Choose from Available Options ({AVAILABLE_COMMODITY_PRESETS.length})</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => { setImageTab('UPLOAD'); setImageError(null); }}
+                        className={`pb-2 px-3 font-semibold transition border-b-2 cursor-pointer flex items-center space-x-1.5 ${
+                          imageTab === 'UPLOAD'
+                            ? 'border-emerald-800 text-emerald-800 dark:border-emerald-400 dark:text-emerald-400'
+                            : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                        }`}
+                      >
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>Upload Your Own Image</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => { setImageTab('URL'); setImageError(null); }}
+                        className={`pb-2 px-3 font-semibold transition border-b-2 cursor-pointer flex items-center space-x-1.5 ${
+                          imageTab === 'URL'
+                            ? 'border-emerald-800 text-emerald-800 dark:border-emerald-400 dark:text-emerald-400'
+                            : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                        }`}
+                      >
+                        <LinkIcon className="w-3.5 h-3.5" />
+                        <span>Paste Link</span>
+                      </button>
+                    </div>
+
+                    {/* Tab 1: Available Preset Options Grid */}
+                    {imageTab === 'PRESET' && (
+                      <div className="space-y-2">
+                        <span className="text-[11px] text-slate-500 font-medium block">
+                          Click any commodity below to assign it immediately:
+                        </span>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 max-h-52 overflow-y-auto pr-1">
+                          {AVAILABLE_COMMODITY_PRESETS.map((preset) => (
+                            <button
+                              key={preset.id}
+                              type="button"
+                              onClick={() => {
+                                setSelectedImage(preset.image);
+                                setImageError(null);
+                              }}
+                              className="group relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:border-emerald-700 dark:hover:border-emerald-500 transition text-left cursor-pointer p-1.5 bg-white dark:bg-slate-800 hover:shadow-md"
+                            >
+                              <div className="relative h-14 w-full rounded-lg overflow-hidden bg-slate-900 mb-1">
+                                <img 
+                                  src={preset.image} 
+                                  alt={preset.label} 
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                                  loading="lazy"
+                                />
+                                <div className="absolute inset-0 bg-black/25" />
+                              </div>
+                              <div className="text-[11px] font-bold text-slate-800 dark:text-slate-200 truncate">
+                                {preset.label}
+                              </div>
+                              <div className="text-[10px] text-slate-400 truncate">
+                                {preset.commodityType}
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Tab 2: Upload Own Image File */}
+                    {imageTab === 'UPLOAD' && (
+                      <div className="p-5 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-emerald-700 text-center space-y-2 bg-white dark:bg-slate-800/60 transition">
+                        <Upload className="w-7 h-7 mx-auto text-emerald-800 dark:text-emerald-400" />
+                        <div>
+                          <label 
+                            htmlFor="product_image_file" 
+                            className="cursor-pointer font-bold text-emerald-800 dark:text-emerald-400 hover:underline text-xs"
+                          >
+                            Click to browse image from device
+                          </label>
+                          <span className="text-slate-500 text-xs"> (JPG, PNG, WEBP)</span>
+                          <input
+                            id="product_image_file"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleFileUpload}
+                          />
+                        </div>
+                        <p className="text-[10px] text-slate-400">
+                          Maximum file size: 5MB. Photo will be displayed on Kirana pool cards and commodity detail pages.
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Tab 3: Paste Direct Image Link */}
+                    {imageTab === 'URL' && (
+                      <div className="space-y-2 bg-white dark:bg-slate-800 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <label className="text-[11px] font-medium text-slate-600 dark:text-slate-400 block">
+                          Direct Commodity Image URL (HTTPS)
+                        </label>
+                        <div className="flex space-x-2">
+                          <input
+                            type="url"
+                            placeholder="https://images.unsplash.com/... or https://..."
+                            value={customUrlInput}
+                            onChange={(e) => setCustomUrlInput(e.target.value)}
+                            className="flex-1 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-800"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (!customUrlInput.trim()) return;
+                              setSelectedImage(customUrlInput.trim());
+                              setImageError(null);
+                            }}
+                            className="px-3.5 py-1.5 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs transition cursor-pointer"
+                          >
+                            Apply URL
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Validation Feedback Warning */}
+                {imageError && (
+                  <div className="p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-[11px] font-medium flex items-center space-x-2 animate-shake">
+                    <AlertTriangle className="w-4 h-4 flex-shrink-0 text-rose-600" />
+                    <span>{imageError}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Standard Product Attributes */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1">Product Name</label>
@@ -426,9 +713,9 @@ export default function SupplierProducts() {
                   id="is_available"
                   name="is_available"
                   defaultChecked={editingProduct ? editingProduct.is_available : true}
-                  className="rounded border-slate-300 text-emerald-800 focus:ring-emerald-800 w-4 h-4"
+                  className="rounded border-slate-300 text-emerald-800 focus:ring-emerald-800 w-4 h-4 cursor-pointer"
                 />
-                <label htmlFor="is_available" className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                <label htmlFor="is_available" className="text-xs font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
                   Product is currently active & open for Kirana group pooling
                 </label>
               </div>
@@ -436,14 +723,14 @@ export default function SupplierProducts() {
               <div className="flex items-center justify-end space-x-2 pt-3 border-t border-slate-200 dark:border-slate-700">
                 <button
                   type="button"
-                  onClick={() => { setIsAddModalOpen(false); setEditingProduct(null); }}
-                  className="px-3.5 py-1.5 rounded-md text-xs font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+                  onClick={handleCloseModal}
+                  className="px-3.5 py-1.5 rounded-md text-xs font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 rounded-md bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-medium transition shadow-sm"
+                  className="px-4 py-1.5 rounded-md bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-medium transition shadow-sm cursor-pointer"
                 >
                   {editingProduct ? 'Save Changes' : 'Add to Catalog'}
                 </button>

@@ -104,7 +104,7 @@ const COMMODITY_IMAGES = {
   }
 };
 
-const DEFAULT_COMMODITY = {
+export const DEFAULT_COMMODITY = {
   image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=700&q=80',
   categoryName: 'Wholesale Commodity',
   commodityType: 'Direct Mandi Stock',
@@ -112,9 +112,114 @@ const DEFAULT_COMMODITY = {
 };
 
 /**
- * Returns commodity image & metadata based on product name or category
+ * Curated list of standard wholesale commodity presets for suppliers to choose from
  */
-export function getCommodityVisual(name = '', category = '') {
+export const AVAILABLE_COMMODITY_PRESETS = [
+  {
+    id: 'rice',
+    label: 'Rice & Grains',
+    commodityType: 'Mandi Staple Rice',
+    categoryName: 'Grains & Pulses',
+    defaultUnit: '25kg Bag',
+    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'basmati',
+    label: 'Basmati Rice',
+    commodityType: 'Premium Aged Basmati',
+    categoryName: 'Grains & Pulses',
+    defaultUnit: '25kg Bag',
+    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'atta',
+    label: 'Wheat Atta & Flour',
+    commodityType: 'Whole Wheat Atta',
+    categoryName: 'Flour & Atta',
+    defaultUnit: '10kg Bag',
+    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'oil',
+    label: 'Refined Edible Oil',
+    commodityType: 'Sunflower / Refined Oil',
+    categoryName: 'Edible Oils',
+    defaultUnit: '15L Tin',
+    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'dal',
+    label: 'Toor Dal & Pulses',
+    commodityType: 'Desi Toor Dal',
+    categoryName: 'Pulses & Dals',
+    defaultUnit: '50kg Bag',
+    image: 'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'chilli',
+    label: 'Red Chilli & Spices',
+    commodityType: 'Guntur Red Chilli',
+    categoryName: 'Spices & Condiments',
+    defaultUnit: '5kg Pack',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'sugar',
+    label: 'Refined Sugar',
+    commodityType: 'Grade M-30 Sugar',
+    categoryName: 'Essentials',
+    defaultUnit: '50kg Bag',
+    image: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'salt',
+    label: 'Iodized Salt',
+    commodityType: 'Pure Iodized Salt',
+    categoryName: 'Essentials',
+    defaultUnit: '1kg x 25',
+    image: 'https://images.unsplash.com/photo-1518110903416-83a31c518b26?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'tea',
+    label: 'Tea & Chai',
+    commodityType: 'Assam Tea Master Pack',
+    categoryName: 'Beverages & Snacks',
+    defaultUnit: '1kg x 12',
+    image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'surf',
+    label: 'Detergents & FMCG',
+    commodityType: 'Detergent Master Carton',
+    categoryName: 'Personal Care & Household',
+    defaultUnit: '20kg Carton',
+    image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    id: 'mandi_stock',
+    label: 'General Mandi Stock',
+    commodityType: 'Wholesale Mandi Stock',
+    categoryName: 'Wholesale Commodity',
+    defaultUnit: 'Bulk Unit',
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=700&q=80'
+  }
+];
+
+/**
+ * Returns commodity image & metadata based on product name or category
+ * Supports explicit customImage (URL or base64) uploaded/chosen by supplier
+ */
+export function getCommodityVisual(name = '', category = '', customImage = null) {
+  // If custom or uploaded image is provided, use it
+  if (customImage && typeof customImage === 'string' && customImage.trim() !== '') {
+    return {
+      image: customImage,
+      categoryName: category || 'Wholesale Commodity',
+      commodityType: name || 'Wholesale Commodity',
+      defaultUnit: 'Standard Wholesale Unit'
+    };
+  }
+
   const query = `${name} ${category}`.toLowerCase();
 
   if (query.includes('rice') || query.includes('sona') || query.includes('grain')) {
