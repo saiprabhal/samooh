@@ -7,6 +7,7 @@ import ExplainableRecommendation from './ExplainableRecommendation';
 import { useApp, DEMO_SUPPLIERS } from '../context/AppContext';
 import { SAMPLE_WAREHOUSE } from '../data/sampleNetworkLocations';
 import { formatINR } from '../utils/currency';
+import { getCommodityVisual } from '../utils/commodityVisuals';
 
 export default function PoolDetailModal({ pool, onClose, onAccept }) {
   const { t, user, userProfile } = useApp();
@@ -40,32 +41,57 @@ export default function PoolDetailModal({ pool, onClose, onAccept }) {
     };
   }, [selectedSupplierId, pool]);
 
-  return (
+    const visual = getCommodityVisual(pool.product_name, pool.category);
+
+    return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-      <div className="border border-slate-200 dark:border-slate-700 rounded-lg w-full max-w-2xl overflow-hidden shadow-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
-        {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-700 flex items-start justify-between bg-slate-50/50 dark:bg-slate-900/50">
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
-                {pool.category || "Procurement Pool"}
-              </span>
-              <StatusBadge status={pool.threshold_status} />
-            </div>
-            <h2 className="text-lg font-bold mt-1 text-slate-900 dark:text-white">
-              {pool.product_name}
-            </h2>
-            <p className="text-xs mt-0.5 flex items-center text-slate-500 dark:text-slate-400">
-              <MapPin className="w-3.5 h-3.5 mr-1 text-slate-400" />
-              {t('avgRadius')}: <strong className="ml-1 text-slate-700 dark:text-slate-200">{pool.average_cluster_distance_km} km</strong>
-            </p>
+      <div className="border border-slate-200 dark:border-slate-700 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+        {/* Top Commodity Image Strip */}
+        <div className="relative h-32 w-full overflow-hidden bg-slate-900 flex-shrink-0">
+          <img 
+            src={visual.image} 
+            alt={pool.product_name} 
+            className="w-full h-full object-cover opacity-90"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" />
+
+          {/* Overlaid Badges */}
+          <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-black/60 text-white backdrop-blur-md border border-white/20">
+              {visual.categoryName}
+            </span>
+            <button 
+              onClick={onClose}
+              className="p-1 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 transition cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
-          <button 
-            onClick={onClose}
-            className="p-1.5 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-white transition"
-          >
-            <X className="w-4 h-4" />
-          </button>
+
+          {/* Overlaid Title & Commodity Sub-Label */}
+          <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white drop-shadow-sm">
+            <div>
+              <div className="text-[11px] font-medium text-white/80">
+                {visual.commodityType} • {visual.defaultUnit}
+              </div>
+              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug">
+                {pool.product_name}
+              </h2>
+            </div>
+            <StatusBadge status={pool.threshold_status} />
+          </div>
+        </div>
+
+        {/* Subheader bar with cluster info */}
+        <div className="px-4 py-2 border-b border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/60 flex items-center justify-between text-xs text-slate-500">
+          <span className="flex items-center">
+            <MapPin className="w-3.5 h-3.5 mr-1 text-slate-400" />
+            {t('avgRadius')}: <strong className="ml-1 text-slate-700 dark:text-slate-200">{pool.average_cluster_distance_km} km</strong>
+          </span>
+          <span className="text-[11px] text-slate-400">
+            Pool ID: <span className="font-mono">{pool.id || pool.pool_id}</span>
+          </span>
         </div>
 
         {/* Content Body */}

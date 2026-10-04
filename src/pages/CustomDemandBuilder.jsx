@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ShoppingBag, Plus, Minus, ArrowRight, ShieldCheck, Tag } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatINR } from '../utils/currency';
+import { getCommodityVisual } from '../utils/commodityVisuals';
 
 const CATALOG_ITEMS = [
   {
@@ -171,69 +172,94 @@ export default function CustomDemandBuilder() {
             {CATALOG_ITEMS.map((item) => {
               const qty = quantities[item.id] || 0;
               const unitDiscountPct = Math.round(((item.retailPrice - item.wholesalePrice) / item.retailPrice) * 100);
+              const visual = getCommodityVisual(item.name, item.category);
 
               return (
                 <div 
                   key={item.id}
-                  className={`rounded-lg p-4 border transition-all duration-200 flex flex-col justify-between ${
+                  className={`rounded-2xl border transition-all duration-200 overflow-hidden flex flex-col justify-between group ${
                     qty > 0
-                      ? 'bg-white dark:bg-slate-800 border-emerald-700 shadow-sm'
-                      : 'bg-white dark:bg-slate-800 border-slate-200/90 dark:border-slate-700/80 shadow-sm'
+                      ? 'bg-white dark:bg-slate-850 border-emerald-700 shadow-md ring-1 ring-emerald-700/30'
+                      : 'bg-white dark:bg-slate-850 border-slate-200/90 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
-                  <div>
-                    {/* Header badges */}
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+                  {/* Top Commodity Image Strip */}
+                  <div className="relative h-28 w-full overflow-hidden bg-slate-900 flex-shrink-0">
+                    <img 
+                      src={visual.image} 
+                      alt={item.name} 
+                      className="w-full h-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20" />
+
+                    {/* Overlaid Badges */}
+                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-black/60 text-white backdrop-blur-md border border-white/20">
                         {item.category}
                       </span>
-                      <span className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-800 text-white shadow-sm">
                         {unitDiscountPct}% Bulk Margin
                       </span>
                     </div>
 
-                    <h4 className="text-sm font-bold mt-2 text-slate-900 dark:text-white">
-                      {item.name}
-                    </h4>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
-                      Supplier: {item.supplier}
-                    </p>
-
-                    {/* Price Comparison */}
-                    <div className="mt-2.5 grid grid-cols-2 gap-2 p-2 rounded-md border bg-slate-50/60 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 text-xs">
-                      <div>
-                        <span className="text-[10px] text-slate-400 block">Retail Benchmark</span>
-                        <span className="text-slate-400 line-through font-medium">{formatINR(item.retailPrice)}</span>
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-emerald-800 dark:text-emerald-400 font-medium block">Wholesale Rate</span>
-                        <span className="text-emerald-800 dark:text-emerald-400 font-bold">{formatINR(item.wholesalePrice)}</span>
-                      </div>
+                    {/* Overlaid Commodity Sub-Label */}
+                    <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white drop-shadow-sm">
+                      <span className="text-[11px] font-semibold text-white/90 truncate">
+                        {visual.commodityType}
+                      </span>
+                      <span className="text-[10px] font-medium text-white/70">
+                        {item.unit}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Quantity Stepper Control */}
-                  <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
-                    <span className="text-xs text-slate-500">
-                      {t('unitMeasure')}: <strong className="text-slate-700 dark:text-slate-300 font-semibold">{item.unit}</strong>
-                    </span>
+                  {/* Card Content */}
+                  <div className="p-4 flex flex-col flex-1 justify-between">
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white line-clamp-1">
+                        {item.name}
+                      </h4>
+                      <p className="text-[11px] text-slate-500 mt-0.5">
+                        Supplier: {item.supplier}
+                      </p>
 
-                    <div className="flex items-center space-x-1.5">
-                      <button
-                        onClick={() => updateQuantity(item.id, -1)}
-                        className="w-7 h-7 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 flex items-center justify-center transition"
-                      >
-                        <Minus className="w-3.5 h-3.5" />
-                      </button>
-                      <span className="w-7 text-center text-xs font-bold text-slate-900 dark:text-white">
-                        {qty}
+                      {/* Price Comparison */}
+                      <div className="mt-2.5 grid grid-cols-2 gap-2 p-2.5 rounded-xl border bg-slate-50/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-800 text-xs">
+                        <div>
+                          <span className="text-[10px] text-slate-400 block">Retail Benchmark</span>
+                          <span className="text-slate-400 line-through font-medium">{formatINR(item.retailPrice)}</span>
+                        </div>
+                        <div>
+                          <span className="text-[10px] text-emerald-800 dark:text-emerald-400 font-medium block">Wholesale Rate</span>
+                          <span className="text-emerald-800 dark:text-emerald-400 font-bold">{formatINR(item.wholesalePrice)}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Quantity Stepper Control */}
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                      <span className="text-xs text-slate-500">
+                        {t('unitMeasure')}: <strong className="text-slate-700 dark:text-slate-300 font-semibold">{item.unit}</strong>
                       </span>
-                      <button
-                        onClick={() => updateQuantity(item.id, 1)}
-                        className="w-7 h-7 rounded bg-emerald-800 text-white flex items-center justify-center hover:bg-emerald-900 transition shadow-sm"
-                      >
-                        <Plus className="w-3.5 h-3.5" />
-                      </button>
+
+                      <div className="flex items-center space-x-1.5">
+                        <button
+                          onClick={() => updateQuantity(item.id, -1)}
+                          className="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 flex items-center justify-center transition cursor-pointer"
+                        >
+                          <Minus className="w-3.5 h-3.5" />
+                        </button>
+                        <span className="w-7 text-center text-xs font-bold text-slate-900 dark:text-white">
+                          {qty}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(item.id, 1)}
+                          className="w-7 h-7 rounded-lg bg-emerald-800 text-white flex items-center justify-center hover:bg-emerald-900 transition shadow-sm cursor-pointer"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

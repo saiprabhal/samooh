@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Store, MapPin, Package, Check, X, AlertTriangle, Info, ChevronDown, ChevronUp, Layers } from 'lucide-react';
 import { formatINR } from '../utils/currency';
+import { getCommodityVisual } from '../utils/commodityVisuals';
 
 export default function ProcurementOpportunityCard({ opportunity, onFormPool }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -34,47 +35,49 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
     isDemo
   } = opportunity;
 
+  const visual = getCommodityVisual(productName, category);
+
   // Status Styling & Badge
   const getStatusBadge = () => {
     switch (status) {
       case 'FEASIBLE':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-            <Check className="w-3 h-3 mr-1 text-emerald-600 stroke-[3]" />
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-800 text-white shadow-2xs">
+            <Check className="w-3 h-3 mr-1 stroke-[2.5]" />
             FEASIBLE
           </span>
         );
       case 'BELOW_MOQ':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
-            <AlertTriangle className="w-3 h-3 mr-1 text-amber-600" />
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-700 text-white shadow-2xs">
+            <AlertTriangle className="w-3 h-3 mr-1" />
             BELOW MOQ
           </span>
         );
       case 'INSUFFICIENT_STOCK':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
-            <X className="w-3 h-3 mr-1 text-rose-600" />
-            INSUFFICIENT STOCK
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-rose-700 text-white shadow-2xs">
+            <X className="w-3 h-3 mr-1" />
+            LOW STOCK
           </span>
         );
       case 'ALREADY_IN_POOL':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
-            <Layers className="w-3 h-3 mr-1 text-blue-600" />
-            ALREADY IN POOL
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-700 text-white shadow-2xs">
+            <Layers className="w-3 h-3 mr-1" />
+            IN POOL
           </span>
         );
       case 'LOCATION_REQUIRED':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300 border border-slate-300">
-            <MapPin className="w-3 h-3 mr-1 text-slate-500" />
-            LOCATION REQUIRED
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-700 text-white shadow-2xs">
+            <MapPin className="w-3 h-3 mr-1" />
+            LOCATION NEEDED
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300 border border-slate-200">
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-700 text-white">
             {status}
           </span>
         );
@@ -82,34 +85,56 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
   };
 
   return (
-    <div className="glass-card p-4 sm:p-5 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+    <div className="glass-card rounded-2xl flex flex-col justify-between relative overflow-hidden group border border-slate-200/80 dark:border-slate-800 hover:shadow-lg transition-all duration-200">
       <div>
-        {/* Header: Category Badge & Status Badge */}
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center space-x-1.5 flex-wrap">
-            <span className="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
-              {category || 'Commodity'}
-            </span>
-            {isDemo && (
-              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-100/60 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
-                Demo
+        {/* Top Photographic Commodity Strip */}
+        <div className="relative h-28 w-full overflow-hidden bg-slate-900 select-none">
+          <img 
+            src={visual.image} 
+            alt={productName}
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 brightness-90"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-black/40" />
+
+          {/* Overlaid Badges */}
+          <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+            <div className="flex items-center space-x-1.5 flex-wrap">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-black/60 text-white backdrop-blur-md border border-white/20">
+                {visual.categoryName}
               </span>
-            )}
+              {isDemo && (
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-800/80 text-white">
+                  Demo
+                </span>
+              )}
+            </div>
+            {getStatusBadge()}
           </div>
-          {getStatusBadge()}
+
+          <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white drop-shadow-sm">
+            <span className="text-[11px] font-semibold text-white/90 truncate">
+              {visual.commodityType}
+            </span>
+            <span className="text-[10px] font-medium text-white/70">
+              {visual.defaultUnit}
+            </span>
+          </div>
         </div>
 
-        {/* Product Title & Canonical ID */}
-        <div className="mt-2.5">
-          <h3 className="text-base font-bold text-slate-900 dark:text-white line-clamp-1">
-            {productName}
-          </h3>
-          {canonicalProductId && (
-            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-500 mt-0.5 truncate">
-              ID: {canonicalProductId}
-            </p>
-          )}
-        </div>
+        {/* Card Body */}
+        <div className="p-4 sm:p-5 pt-3.5">
+          {/* Product Title & Canonical ID */}
+          <div>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white line-clamp-1">
+              {productName}
+            </h3>
+            {canonicalProductId && (
+              <p className="text-[10px] font-mono text-slate-400 dark:text-slate-500 mt-0.5 truncate">
+                ID: {canonicalProductId}
+              </p>
+            )}
+          </div>
 
         {/* Retailer Count & Distance */}
         <div className="mt-2.5 flex items-center justify-between text-xs text-slate-500 border-b border-slate-100 dark:border-slate-700/80 pb-2.5">
@@ -236,6 +261,7 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
           )}
         </div>
       </div>
+    </div>
 
       {/* Footer: Deterministic Score & Action */}
       <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/80 flex items-center justify-between text-xs">
