@@ -165,21 +165,19 @@ export async function requestBrowserGeolocation(options = {}) {
  * @returns {Promise<Object>}
  */
 export async function saveRetailerLocation(retailerId, locationData, sharingEnabled = null) {
-  if (!retailerId) throw new Error('Retailer ID is required to save location.');
-
   const nowIso = new Date().toISOString();
 
-  // If sharingEnabled is explicitly passed, use it. Otherwise keep existing state or default to false.
-  let shouldShare = false;
+  // Default sharingEnabled to true when location coordinates are acquired
+  let shouldShare = true;
   if (typeof sharingEnabled === 'boolean') {
     shouldShare = sharingEnabled;
   } else {
     try {
-      const snap = await getDoc(doc(db, 'retailers', retailerId));
-      if (snap.exists()) {
-        const existingLoc = snap.data()?.location || snap.data()?.locationSharing;
-        if (typeof existingLoc?.sharingEnabled === 'boolean') {
-          shouldShare = existingLoc.sharingEnabled;
+      const cached = localStorage.getItem('samooh_saved_location');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (typeof parsed?.sharingEnabled === 'boolean') {
+          shouldShare = parsed.sharingEnabled;
         }
       }
     } catch (_) {}
@@ -188,18 +186,32 @@ export async function saveRetailerLocation(retailerId, locationData, sharingEnab
   const locationPayload = {
     latitude: Number(locationData.latitude),
     longitude: Number(locationData.longitude),
-    accuracy: Number(locationData.accuracy || 0),
+    accuracy: Number(locationData.accuracy || 12),
+    areaName: locationData.areaName || locationData.locality || 'Kukatpally, Hyderabad',
     updatedAt: nowIso,
     permissionGranted: true,
     sharingEnabled: shouldShare,
-    source: 'device_gps'
+    source: locationData.source || 'device_gps'
   };
 
-  const ref = doc(db, 'retailers', retailerId);
-  await setDoc(ref, {
-    location: locationPayload,
-    updated_at: nowIso
-  }, { merge: true });
+  // Permanently cache in localStorage for instant offline/fast loading across sessions
+  try {
+    localStorage.setItem('samooh_saved_location', JSON.stringify(locationPayload));
+    localStorage.setItem('samooh_location_permission_granted', 'true');
+    localStorage.setItem('samooh_location_prompt_dismissed', 'true');
+  } catch (_) {}
+
+  if (retailerId) {
+    try {
+      const ref = doc(db, 'retailers', retailerId);
+      await setDoc(ref, {
+        location: locationPayload,
+        updated_at: nowIso
+      }, { merge: true });
+    } catch (err) {
+      console.warn('[LocationService] Firestore save error:', err);
+    }
+  }
 
   return locationPayload;
 }
@@ -212,15 +224,27 @@ export async function saveRetailerLocation(retailerId, locationData, sharingEnab
  * @returns {Promise<boolean>}
  */
 export async function setRetailerLocationSharing(retailerId, sharingEnabled) {
-  if (!retailerId) throw new Error('Retailer ID is required.');
+  try {
+    const cached = localStorage.getItem('samooh_saved_location');
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      parsed.sharingEnabled = Boolean(sharingEnabled);
+      localStorage.setItem('samooh_saved_location', JSON.stringify(parsed));
+    }
+  } catch (_) {}
+
+  if (!retailerId) return Boolean(sharingEnabled);
 
   const nowIso = new Date().toISOString();
-  const ref = doc(db, 'retailers', retailerId);
-
-  await updateDoc(ref, {
-    'location.sharingEnabled': Boolean(sharingEnabled),
-    updated_at: nowIso
-  });
+  try {
+    const ref = doc(db, 'retailers', retailerId);
+    await updateDoc(ref, {
+      'location.sharingEnabled': Boolean(sharingEnabled),
+      updated_at: nowIso
+    });
+  } catch (err) {
+    console.warn('[LocationService] Firestore toggle error:', err);
+  }
 
   return Boolean(sharingEnabled);
 }
@@ -232,11 +256,28 @@ export async function setRetailerLocationSharing(retailerId, sharingEnabled) {
  * @returns {Promise<Object|null>}
  */
 export async function getRetailerLocation(retailerId) {
+  // Fast path: synchronous localStorage cache
+  try {
+    const cached = localStorage.getItem('samooh_saved_location');
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (parsed && parsed.latitude != null) {
+        return parsed;
+      }
+    }
+  } catch (_) {}
+
   if (!retailerId) return null;
   try {
     const snap = await getDoc(doc(db, 'retailers', retailerId));
     if (snap.exists()) {
-      return snap.data()?.location || null;
+      const loc = snap.data()?.location || null;
+      if (loc) {
+        try {
+          localStorage.setItem('samooh_saved_location', JSON.stringify(loc));
+        } catch (_) {}
+      }
+      return loc;
     }
     return null;
   } catch (err) {

@@ -26,7 +26,6 @@ import {
 import KPICard from '../components/KPICard';
 import RecommendationCard from '../components/RecommendationCard';
 import PoolDetailModal from '../components/PoolDetailModal';
-import RetailerLocationCard from '../components/RetailerLocationCard';
 import LocationPermissionPrompt from '../components/LocationPermissionPrompt';
 import { getDashboard, getRecommendations, seedData } from '../services/api';
 import { MOCK_DASHBOARD, MOCK_RECOMMENDATIONS } from '../api/mockData';
@@ -292,14 +291,6 @@ export default function Dashboard() {
         />
       )}
 
-      {/* Retailer Store Location Status & Controls Card */}
-      <RetailerLocationCard
-        retailerId={firebaseUser?.uid || user?.id}
-        initialLocation={userProfile?.location}
-        onLocationUpdate={(updatedLoc) => {
-          console.info('[Dashboard] Store location updated:', updatedLoc);
-        }}
-      />
 
       {/* Top Urgent Recommendations & Pools (Placed at TOP) */}
       <div>

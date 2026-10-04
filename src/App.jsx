@@ -187,13 +187,7 @@ function MainLayout() {
       <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 relative z-10 ${
         isDesktopCollapsed ? 'md:ml-14' : 'md:ml-60'
       }`}>
-        <TopNav 
-          isLiveApi={isLiveApi}
-          onToggleApi={() => setIsLiveApi(!isLiveApi)}
-          onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
-          isDesktopCollapsed={isDesktopCollapsed}
-          onToggleDesktopSidebar={() => setIsDesktopCollapsed(prev => !prev)}
-        />
+        <TopNav />
         <main className="flex-1 overflow-y-auto pb-24 md:pb-6">
           <Suspense fallback={<PageLoader />}>
             <Routes>
