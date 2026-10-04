@@ -48,35 +48,26 @@ export default function Sidebar({
 
   // Desktop Collapsed Sidebar Content (Thin Line / Rail)
   const collapsedDesktopContent = (
-    <aside className="glass-panel fixed top-0 left-0 bottom-0 h-screen w-14 flex flex-col justify-between items-center py-3.5 z-30 transition-all duration-300">
-      {/* Top: Logo & Expand Button */}
-      <div className="flex flex-col items-center space-y-4 w-full">
-        <button
-          type="button"
-          onClick={onToggleCollapse}
-          className="w-9 h-9 rounded-xl flex items-center justify-center transition shadow-md group relative bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-[0_0_16px_rgba(16,185,129,0.35)] border border-white/20"
-          title="Open Navigation Menu"
-        >
-          {isSupplier ? <Truck className="w-4 h-4" /> : <Layers className="w-4 h-4" />}
-          
-          {/* Tooltip */}
-          <span className="absolute left-12 glass-panel text-slate-800 dark:text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg shadow-xl whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition z-50">
-            Open Menu
-          </span>
-        </button>
-
-        {/* Toggle Arrow Button */}
-        <button
-          type="button"
-          onClick={onToggleCollapse}
-          className="p-1.5 rounded-xl border border-white/30 dark:border-white/10 bg-white/30 dark:bg-white/5 text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 transition"
-          title="Expand sidebar"
-        >
-          <ChevronRight className="w-3.5 h-3.5" />
-        </button>
+    <aside className="glass-panel fixed top-0 left-0 bottom-0 h-screen w-14 flex flex-col justify-between items-center py-3 z-30 transition-all duration-300">
+      {/* Top: Clean Expand Button (Aligned with TopNav) */}
+      <div className="flex flex-col items-center w-full">
+        <div className="h-10 flex items-center justify-center w-full mb-1">
+          <button
+            type="button"
+            onClick={onToggleCollapse}
+            className="p-2 rounded-xl border border-white/40 dark:border-white/10 bg-white/40 dark:bg-white/5 hover:bg-white/70 dark:hover:bg-white/15 text-slate-500 hover:text-emerald-700 dark:hover:text-emerald-400 transition shadow-sm group relative"
+            title="Expand Navigation Menu"
+            aria-label="Expand sidebar"
+          >
+            <ChevronRight className="w-4 h-4" />
+            <span className="absolute left-12 glass-panel text-slate-800 dark:text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg shadow-xl whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition z-50">
+              Expand Menu
+            </span>
+          </button>
+        </div>
 
         {/* Icon-Only Navigation Links */}
-        <nav className="flex flex-col items-center space-y-2 w-full px-1.5 mt-2">
+        <nav className="flex flex-col items-center space-y-2 w-full px-1.5 mt-1">
           {currentNavItems.map((item) => {
             const Icon = item.icon;
             const labelText = item.label || t(item.labelKey) || 'Item';
@@ -136,33 +127,15 @@ export default function Sidebar({
   const expandedSidebarContent = (
     <aside className="glass-panel w-full md:w-60 flex flex-col justify-between p-3.5 pb-10 md:pb-3.5 flex-shrink-0 h-screen overflow-y-auto">
       <div>
-        {/* Brand Logo Header & Collapse/Close Button */}
-        <div className="flex items-center justify-between px-2 py-2 mb-3">
-          <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white bg-gradient-to-br from-emerald-600 to-teal-700 shadow-[0_0_15px_rgba(16,185,129,0.35)] border border-white/20">
-              {isSupplier ? (
-                <Truck className="w-4 h-4 text-white" />
-              ) : (
-                <Layers className="w-4 h-4 text-white" />
-              )}
-            </div>
-            <div>
-              <div className="flex items-center space-x-1.5">
-                <span className={`text-sm font-bold tracking-tight ${
-                  theme === 'light' ? 'text-slate-900' : 'text-white'
-                }`}>
-                  {t('brandName')}
-                </span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium glass-pill text-emerald-700 dark:text-emerald-400">
-                  {isSupplier ? 'SUPPLIER' : 'RETAIL'}
-                </span>
-              </div>
-              <p className={`text-[11px] truncate max-w-[130px] ${
-                theme === 'light' ? 'text-slate-500' : 'text-slate-400'
-              }`}>
-                {isSupplier ? (currentSupplier?.name || 'Wholesale Portal') : t('brandSubtitle')}
-              </p>
-            </div>
+        {/* Navigation Header & Collapse/Close Button */}
+        <div className="flex items-center justify-between px-2 py-2 mb-3 border-b border-white/20 dark:border-white/10 pb-3">
+          <div className="flex items-center space-x-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Navigation
+            </span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-bold glass-pill text-emerald-700 dark:text-emerald-400">
+              {isSupplier ? 'SUPPLIER' : 'RETAIL'}
+            </span>
           </div>
 
           {/* Desktop Collapse Button */}
@@ -189,7 +162,7 @@ export default function Sidebar({
         </div>
 
         {/* Navigation Links */}
-        <nav className="space-y-1.5 mt-4">
+        <nav className="space-y-1.5 mt-2">
           <div className="px-2.5 text-[10px] font-semibold uppercase tracking-wider mb-2 text-slate-400 dark:text-slate-500">
             {isSupplier ? 'Wholesale Operations' : 'Procurement'}
           </div>
