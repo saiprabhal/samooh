@@ -291,7 +291,7 @@ export default function TopNav() {
           className="flex items-center space-x-2 cursor-pointer select-none flex-shrink-0 group"
           title="Go to Samooh Home"
         >
-          <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white bg-gradient-to-br from-emerald-600 to-teal-700 shadow-[0_0_16px_rgba(16,185,129,0.35)] border border-white/20 transition-transform duration-200 group-hover:scale-105">
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white bg-emerald-800 shadow-xs border border-white/20 transition-transform duration-200 group-hover:scale-105">
             {isSupplier ? <Truck className="w-4 h-4 text-white" /> : <Layers className="w-4 h-4 text-white" />}
           </div>
           <div className="flex items-center space-x-1.5">
@@ -300,30 +300,30 @@ export default function TopNav() {
             }`}>
               {t('brandName') || 'Samooh'}
             </span>
-            <span className="hidden md:inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full glass-pill text-emerald-700 dark:text-emerald-400">
+            <span className="hidden md:inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800">
               {isSupplier ? 'Supplier' : 'Retail'}
             </span>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="hidden sm:block h-5 w-px bg-white/30 dark:bg-white/10" />
+        <div className="hidden sm:block h-5 w-px bg-slate-200 dark:bg-slate-800" />
 
         {/* Location Dropdown Pill */}
         <div className="relative" ref={locationRef}>
           <button
             type="button"
             onClick={() => setIsLocationOpen(prev => !prev)}
-            className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl glass-pill hover:bg-white/40 dark:hover:bg-white/10 transition cursor-pointer text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm"
+            className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-2xs"
             title="Click to view & configure store location"
             aria-label="Store Location & Pooling Hub"
           >
             <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
               storeLocation.sharingEnabled 
-                ? 'bg-emerald-500 animate-pulse' 
-                : 'bg-amber-500'
+                ? 'bg-emerald-700 dark:bg-emerald-500' 
+                : 'bg-amber-600'
             }`} />
-            <MapPin className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+            <MapPin className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 flex-shrink-0" />
             <span className="truncate max-w-[80px] sm:max-w-[130px] md:max-w-[160px] text-xs">
               {storeLocation.areaName || 'Kukatpally, Hyderabad'}
             </span>
@@ -334,11 +334,11 @@ export default function TopNav() {
 
           {/* Frosted Glass Dropdown Popover */}
           {isLocationOpen && (
-            <div className="glass-panel p-4 rounded-2xl w-80 sm:w-96 shadow-2xl absolute top-12 left-0 z-50 animate-fade-in border border-white/30 dark:border-white/10 space-y-3.5">
+            <div className="glass-panel p-4 rounded-2xl w-80 sm:w-96 shadow-xl absolute top-12 left-0 z-50 animate-fade-in border border-slate-200 dark:border-slate-800 space-y-3.5">
               {/* Popover Header */}
-              <div className="flex items-center justify-between pb-2.5 border-b border-white/20 dark:border-white/10">
+              <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80 dark:border-slate-800">
                 <div className="flex items-center space-x-2">
-                  <div className="w-7 h-7 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                  <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center">
                     <MapPin className="w-3.5 h-3.5" />
                   </div>
                   <div>
@@ -347,10 +347,10 @@ export default function TopNav() {
                   </div>
                 </div>
 
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full glass-pill ${
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
                   storeLocation.sharingEnabled 
-                    ? 'text-emerald-700 dark:text-emerald-400' 
-                    : 'text-amber-600 dark:text-amber-400'
+                    ? 'text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800' 
+                    : 'text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800'
                 }`}>
                   {storeLocation.sharingEnabled ? 'Location Shared' : 'Paused'}
                 </span>
@@ -360,20 +360,20 @@ export default function TopNav() {
               {locationNotice && (
                 <div className={`p-2.5 rounded-xl text-[11px] font-medium flex items-center space-x-1.5 ${
                   locationNotice.type === 'success'
-                    ? 'glass-pill text-emerald-800 dark:text-emerald-300'
-                    : 'glass-pill text-rose-800 dark:text-rose-300 border-rose-500/30'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
+                    : 'bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800'
                 }`}>
                   {locationNotice.type === 'success' ? (
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 flex-shrink-0" />
                   ) : (
-                    <AlertCircle className="w-3.5 h-3.5 text-rose-600 flex-shrink-0" />
+                    <AlertCircle className="w-3.5 h-3.5 text-rose-700 flex-shrink-0" />
                   )}
                   <span>{locationNotice.text}</span>
                 </div>
               )}
 
               {/* Current Active Location Info */}
-              <div className="p-3 rounded-xl glass-pill space-y-1.5 text-xs">
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-1.5 text-xs">
                 <div className="flex justify-between items-center text-slate-500 dark:text-slate-400 text-[11px]">
                   <span>Current Area:</span>
                   <span className="font-bold text-slate-800 dark:text-slate-200">{storeLocation.areaName}</span>
@@ -396,7 +396,7 @@ export default function TopNav() {
                   type="button"
                   disabled={isUpdatingGps}
                   onClick={handleUpdateLiveGps}
-                  className="py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs transition shadow-md shadow-emerald-600/20 flex items-center justify-center space-x-1.5 disabled:opacity-60 border border-white/20"
+                  className="py-2 px-3 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs transition shadow-sm flex items-center justify-center space-x-1.5 disabled:opacity-60 cursor-pointer"
                 >
                   {isUpdatingGps ? (
                     <>
@@ -414,7 +414,7 @@ export default function TopNav() {
                 <button
                   type="button"
                   onClick={handleToggleSharing}
-                  className="py-2 px-3 rounded-xl border border-white/40 dark:border-white/10 bg-white/40 dark:bg-white/5 hover:bg-white/70 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 font-semibold text-xs transition flex items-center justify-center space-x-1.5 shadow-sm"
+                  className="py-2 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs transition flex items-center justify-center space-x-1.5 shadow-2xs cursor-pointer"
                 >
                   {storeLocation.sharingEnabled ? (
                     <>
@@ -423,7 +423,7 @@ export default function TopNav() {
                     </>
                   ) : (
                     <>
-                      <Eye className="w-3.5 h-3.5 text-emerald-600" />
+                      <Eye className="w-3.5 h-3.5 text-emerald-800 dark:text-emerald-400" />
                       <span>Resume Share</span>
                     </>
                   )}
@@ -431,7 +431,7 @@ export default function TopNav() {
               </div>
 
               {/* Quick Wholesale Hub Selector */}
-              <div className="space-y-1.5 pt-1 border-t border-white/20 dark:border-white/10">
+              <div className="space-y-1.5 pt-1 border-t border-slate-200/80 dark:border-slate-800">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
                   Quick Hub Selection
                 </span>
@@ -445,12 +445,12 @@ export default function TopNav() {
                         onClick={() => handleSelectCluster(cl)}
                         className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition flex items-center justify-between ${
                           isCurrent 
-                            ? 'glass-nav-active text-emerald-800 dark:text-emerald-300 font-bold' 
-                            : 'hover:bg-white/40 dark:hover:bg-white/5 text-slate-600 dark:text-slate-300'
+                            ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-800' 
+                            : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300'
                         }`}
                       >
                         <span className="truncate">{cl.name}</span>
-                        {isCurrent && <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />}
+                        {isCurrent && <Check className="w-3 h-3 text-emerald-800 dark:text-emerald-400" />}
                       </button>
                     );
                   })}
@@ -460,18 +460,18 @@ export default function TopNav() {
           )}
         </div>
 
-        {/* Desktop Search Bar with Pure Frosted Glass, Restored Magnifier & Typewriter Animation */}
+        {/* Desktop Search Bar with Clean Solid Styling & Typewriter Animation */}
         <div 
           className="relative flex-1 max-w-xs sm:max-w-sm md:max-w-md hidden sm:block" 
           ref={searchContainerRef}
         >
           <form onSubmit={handleSearchSubmit} className="relative w-full">
-            {/* Prominent High-Contrast Magnifier Icon */}
+            {/* Clean Slate Magnifier Icon */}
             <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10 pointer-events-none flex items-center justify-center">
-              <Search className="w-4 h-4 text-emerald-600 dark:text-emerald-400 drop-shadow-sm transition-transform duration-200" />
+              <Search className="w-4 h-4 text-slate-400 dark:text-slate-400" />
             </div>
 
-            {/* Pure Glass Input Field */}
+            {/* Input Field */}
             <input 
               ref={inputRef}
               type="text"
@@ -481,17 +481,17 @@ export default function TopNav() {
               onKeyDown={(e) => {
                 if (e.key === 'Escape') setIsSearchFocused(false);
               }}
-              className="glass-input w-full rounded-xl pl-9 pr-8 py-1.5 text-xs sm:text-sm font-medium focus:outline-none transition-all duration-200 border border-white/30 dark:border-white/10 shadow-inner"
+              className="glass-input w-full rounded-xl pl-9 pr-8 py-1.5 text-xs sm:text-sm font-medium focus:outline-none transition-all duration-200 border border-slate-200 dark:border-slate-800"
             />
 
-            {/* Dynamic Typewriter Animated Text with Glowing Emerald Blinking Cursor */}
+            {/* Dynamic Typewriter Text with Neutral Blinking Cursor */}
             {!searchTerm && (
               <div 
                 onClick={() => inputRef.current?.focus()}
                 className="absolute left-9 right-8 top-1/2 -translate-y-1/2 pointer-events-none flex items-center select-none text-xs sm:text-sm text-slate-400 dark:text-slate-400/90 truncate font-normal"
               >
                 <span>{animatedPrompt}</span>
-                <span className="w-1.5 h-3.5 bg-emerald-500 ml-1 rounded-xs animate-pulse opacity-90 inline-block" />
+                <span className="w-1.5 h-3.5 bg-slate-600 dark:bg-slate-300 ml-1 rounded-xs inline-block" />
               </div>
             )}
 
@@ -500,7 +500,7 @@ export default function TopNav() {
               <button
                 type="button"
                 onClick={handleClearSearch}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-10 p-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-white/20 transition cursor-pointer"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-10 p-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
                 title="Clear Search"
               >
                 <X className="w-3.5 h-3.5" />
@@ -510,38 +510,32 @@ export default function TopNav() {
 
           {/* Live Search Results Dropdown Popup */}
           {isSearchFocused && (
-            <div className="glass-panel p-2.5 rounded-2xl w-full sm:w-[380px] md:w-[440px] shadow-2xl absolute top-12 left-0 z-50 animate-fade-in border border-white/30 dark:border-white/10 space-y-2 backdrop-blur-2xl">
-              <div className="flex items-center justify-between px-2 pt-1 pb-1 border-b border-white/15 dark:border-white/10">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center space-x-1">
-                  <Sparkles className="w-3 h-3 text-emerald-500" />
-                  <span>{searchTerm.trim() ? 'Matching Opportunities' : 'Popular Kirana Deals'}</span>
+            <div className="glass-panel p-2.5 rounded-2xl w-full sm:w-[380px] md:w-[440px] shadow-xl absolute top-12 left-0 z-50 animate-fade-in border border-slate-200 dark:border-slate-800 space-y-2">
+              <div className="flex items-center justify-between px-2 pt-1 pb-1 border-b border-slate-200/80 dark:border-slate-800">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center space-x-1.5">
+                  <Search className="w-3 h-3 text-slate-500" />
+                  <span>{searchTerm.trim() ? 'Matching Deals' : 'Popular Kirana Pools'}</span>
                 </span>
                 <span className="text-[10px] text-slate-400">
                   {filteredItems.length} results
                 </span>
               </div>
 
-              <div className="max-h-64 overflow-y-auto space-y-1 divide-y divide-white/10 dark:divide-white/5">
+              <div className="max-h-64 overflow-y-auto space-y-1 divide-y divide-slate-100 dark:divide-slate-800/60">
                 {filteredItems.length > 0 ? (
                   filteredItems.map((item) => (
                     <button
                       key={item.id}
                       type="button"
                       onClick={() => handleSelectItem(item)}
-                      className="w-full text-left p-2 rounded-xl hover:bg-white/40 dark:hover:bg-white/10 transition flex items-center justify-between group cursor-pointer"
+                      className="w-full text-left p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center justify-between group cursor-pointer"
                     >
                       <div className="flex items-center space-x-2.5 min-w-0 pr-2">
-                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                          item.type === 'product'
-                            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
-                            : item.type === 'pool'
-                            ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400'
-                            : 'bg-purple-500/15 text-purple-600 dark:text-purple-400'
-                        }`}>
+                        <div className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0">
                           {item.type === 'product' ? <Tag className="w-3.5 h-3.5" /> : item.type === 'pool' ? <Box className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
                         </div>
                         <div className="min-w-0">
-                          <h5 className="text-xs font-bold text-slate-900 dark:text-white truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          <h5 className="text-xs font-semibold text-slate-900 dark:text-white truncate group-hover:text-emerald-800 dark:group-hover:text-emerald-400 transition-colors">
                             {item.title}
                           </h5>
                           <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
@@ -550,13 +544,7 @@ export default function TopNav() {
                         </div>
                       </div>
 
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full glass-pill flex-shrink-0 ${
-                        item.type === 'product'
-                          ? 'text-emerald-700 dark:text-emerald-400'
-                          : item.type === 'pool'
-                          ? 'text-blue-700 dark:text-blue-400'
-                          : 'text-purple-700 dark:text-purple-400'
-                      }`}>
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 flex-shrink-0">
                         {item.badge}
                       </span>
                     </button>
@@ -567,7 +555,7 @@ export default function TopNav() {
                     <button
                       type="button"
                       onClick={handleSearchSubmit}
-                      className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                      className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 hover:underline"
                     >
                       Search across all procurement opportunities →
                     </button>
@@ -576,11 +564,11 @@ export default function TopNav() {
               </div>
 
               {/* Enter Key Tip */}
-              <div className="pt-1.5 px-2 border-t border-white/15 dark:border-white/10 flex items-center justify-between text-[10px] text-slate-400">
+              <div className="pt-1.5 px-2 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
                 <span>Press <strong className="font-semibold text-slate-600 dark:text-slate-300">↵ Enter</strong> to view full results</span>
                 <span 
                   onClick={handleSearchSubmit}
-                  className="font-bold text-emerald-600 dark:text-emerald-400 cursor-pointer hover:underline"
+                  className="font-bold text-emerald-800 dark:text-emerald-400 cursor-pointer hover:underline"
                 >
                   View in Opportunities
                 </span>
@@ -598,10 +586,10 @@ export default function TopNav() {
               if (mobileInputRef.current) mobileInputRef.current.focus();
             }, 100);
           }}
-          className={`sm:hidden p-2 rounded-xl glass-pill transition cursor-pointer flex items-center justify-center ${
+          className={`sm:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 transition cursor-pointer flex items-center justify-center ${
             isMobileSearchOpen 
-              ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/40' 
-              : 'text-emerald-600 dark:text-emerald-400 hover:bg-white/40'
+              ? 'bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white' 
+              : 'bg-white/60 dark:bg-slate-900/60 text-slate-600 dark:text-slate-400 hover:bg-slate-100'
           }`}
           title="Search products and pools"
           aria-label="Open Mobile Search"
@@ -615,18 +603,18 @@ export default function TopNav() {
         <button
           type="button"
           onClick={() => navigate('/profile')}
-          className="glass-card flex items-center space-x-2.5 p-1 sm:px-2.5 sm:py-1 rounded-xl text-left focus:outline-none"
+          className="glass-card flex items-center space-x-2.5 p-1 sm:px-2.5 sm:py-1 rounded-xl text-left focus:outline-none border border-slate-200 dark:border-slate-800"
           title="Open Profile, Theme, Language & Notification Settings"
           aria-label="User Profile and Settings"
         >
           {isSupplier ? (
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-600 to-teal-700 flex items-center justify-center font-bold text-xs text-white shadow-sm border border-white/20">
+            <div className="w-7 h-7 rounded-lg bg-emerald-800 flex items-center justify-center font-bold text-xs text-white shadow-2xs border border-white/20">
               <Truck className="w-3.5 h-3.5" />
             </div>
           ) : user?.avatar ? (
-            <img src={user.avatar} alt="User Avatar" className="w-7 h-7 rounded-lg border border-white/30 object-cover shadow-sm" />
+            <img src={user.avatar} alt="User Avatar" className="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 object-cover shadow-2xs" />
           ) : (
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-slate-800 to-slate-900 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center font-bold text-xs text-white shadow-sm border border-white/20">
+            <div className="w-7 h-7 rounded-lg bg-slate-800 dark:bg-slate-700 flex items-center justify-center font-bold text-xs text-white shadow-2xs border border-white/20">
               {user?.storeName ? user.storeName.charAt(0) : 'S'}
             </div>
           )}
@@ -644,20 +632,20 @@ export default function TopNav() {
         </button>
       </div>
 
-      {/* Mobile Glassmorphic Search Bar Drawer (Slides down on mobile) */}
+      {/* Mobile Search Bar Drawer */}
       {isMobileSearchOpen && (
-        <div className="sm:hidden absolute top-14 left-0 right-0 p-3 glass-panel border-b border-white/20 dark:border-white/10 z-40 shadow-2xl backdrop-blur-2xl animate-fade-in space-y-2.5">
+        <div className="sm:hidden absolute top-14 left-0 right-0 p-3 glass-panel border-b border-slate-200 dark:border-slate-800 z-40 shadow-xl space-y-2.5">
           <form onSubmit={handleSearchSubmit} className="relative w-full flex items-center space-x-2">
             <div className="relative flex-1">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
-                <Search className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <Search className="w-4 h-4 text-slate-400" />
               </div>
               <input
                 ref={mobileInputRef}
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="glass-input w-full rounded-xl pl-9 pr-8 py-2 text-xs font-medium focus:outline-none"
+                className="glass-input w-full rounded-xl pl-9 pr-8 py-2 text-xs font-medium focus:outline-none border border-slate-200 dark:border-slate-800"
               />
               {!searchTerm && (
                 <div 
@@ -665,7 +653,7 @@ export default function TopNav() {
                   className="absolute left-9 right-8 top-1/2 -translate-y-1/2 pointer-events-none flex items-center select-none text-xs text-slate-400 dark:text-slate-400 truncate"
                 >
                   <span>{animatedPrompt}</span>
-                  <span className="w-1.5 h-3 bg-emerald-500 ml-0.5 rounded-xs animate-pulse opacity-90 inline-block" />
+                  <span className="w-1.5 h-3 bg-slate-600 dark:bg-slate-300 ml-0.5 rounded-xs inline-block" />
                 </div>
               )}
               {searchTerm && (
@@ -681,7 +669,7 @@ export default function TopNav() {
             <button
               type="button"
               onClick={() => setIsMobileSearchOpen(false)}
-              className="p-2 rounded-xl glass-pill text-slate-400 hover:text-slate-200 text-xs font-semibold"
+              className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-xs font-semibold"
             >
               Cancel
             </button>
@@ -698,7 +686,7 @@ export default function TopNav() {
                   navigate(`/opportunities?search=${encodeURIComponent(tag)}`);
                   setIsMobileSearchOpen(false);
                 }}
-                className="px-2.5 py-1 rounded-lg text-[11px] font-semibold glass-pill hover:bg-emerald-500/20 text-slate-700 dark:text-slate-300 flex-shrink-0"
+                className="px-2.5 py-1 rounded-lg text-[11px] font-semibold border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 flex-shrink-0"
               >
                 #{tag}
               </button>
@@ -706,20 +694,20 @@ export default function TopNav() {
           </div>
 
           {/* Mobile Instant Results List */}
-          <div className="max-h-56 overflow-y-auto space-y-1 divide-y divide-white/10 dark:divide-white/5 pt-1">
+          <div className="max-h-56 overflow-y-auto space-y-1 divide-y divide-slate-100 dark:divide-slate-800/60 pt-1">
             {filteredItems.map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => handleSelectItem(item)}
-                className="w-full text-left p-2 rounded-xl hover:bg-white/40 dark:hover:bg-white/10 transition flex items-center justify-between"
+                className="w-full text-left p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center justify-between"
               >
                 <div className="flex items-center space-x-2 truncate pr-2">
-                  <div className="w-6 h-6 rounded-lg bg-emerald-500/15 flex items-center justify-center flex-shrink-0 text-emerald-600 dark:text-emerald-400">
+                  <div className="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center flex-shrink-0 border border-slate-200 dark:border-slate-700">
                     <Tag className="w-3 h-3" />
                   </div>
                   <div className="truncate">
-                    <h5 className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                    <h5 className="text-xs font-semibold text-slate-900 dark:text-white truncate">
                       {item.title}
                     </h5>
                     <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
@@ -727,7 +715,7 @@ export default function TopNav() {
                     </p>
                   </div>
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full glass-pill text-emerald-700 dark:text-emerald-400 flex-shrink-0">
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex-shrink-0">
                   {item.badge}
                 </span>
               </button>

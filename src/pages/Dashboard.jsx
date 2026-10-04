@@ -245,21 +245,21 @@ export default function Dashboard() {
   return (
     <div className="p-3 sm:p-6 space-y-5 max-w-7xl mx-auto">
       {/* Hero Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/20 dark:border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200/80 dark:border-slate-800">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-lg shadow-emerald-600/20 border border-white/20 flex-shrink-0">
-            <Sparkles className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-800 flex items-center justify-center text-white shadow-2xs border border-white/20 flex-shrink-0">
+            <Layers className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <h1 className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+              <h1 className="text-lg sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Live Wholesale Pools
               </h1>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30">
+              <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800">
                 {user?.storeName || 'Sri Lakshmi Kirana'}
               </span>
             </div>
-            <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+            <p className="text-xs font-normal text-slate-500 dark:text-slate-400">
               Nearby Kirana group orders unlocking wholesale tier rates
             </p>
           </div>
@@ -270,10 +270,10 @@ export default function Dashboard() {
             type="button"
             onClick={handleSeedData}
             disabled={isSeeding}
-            className="px-3.5 py-1.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/40 dark:bg-white/5 text-slate-700 dark:text-slate-200 text-xs font-bold hover:bg-white/70 dark:hover:bg-white/15 transition flex items-center space-x-1.5 shadow-sm cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition flex items-center space-x-1.5 shadow-2xs cursor-pointer"
             title="Refresh active mandi pool prices"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isSeeding ? 'animate-spin text-emerald-600' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isSeeding ? 'animate-spin text-emerald-800' : ''}`} />
             <span>Sync Deals</span>
           </button>
         </div>
@@ -307,7 +307,7 @@ export default function Dashboard() {
             <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
               <span>High-Discount Pools</span>
             </h2>
-            <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-600 text-white shadow-sm">
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-800 text-white">
               Live Mandi
             </span>
           </div>
@@ -315,7 +315,7 @@ export default function Dashboard() {
             <button
               type="button"
               onClick={() => navigate('/opportunities')}
-              className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+              className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 hover:underline cursor-pointer"
             >
               View all ({recommendations.length}) →
             </button>
@@ -335,7 +335,7 @@ export default function Dashboard() {
             ))}
           </div>
         ) : (
-          <div className="p-8 text-center rounded-3xl glass-card">
+          <div className="p-8 text-center rounded-2xl glass-card">
             <p className="text-slate-500 text-xs">{t('noPools') || 'No active pools currently match your store location.'}</p>
           </div>
         )}
@@ -344,10 +344,10 @@ export default function Dashboard() {
       {/* Performance & Community Savings Metrics (Placed at BOTTOM) */}
       <div className="pt-2">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-xs font-black uppercase tracking-wider text-slate-400">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
             Cluster Impact & Savings
           </h3>
-          <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+          <span className="text-[11px] font-semibold text-slate-500">
             Kukatpally Zone
           </span>
         </div>
@@ -357,28 +357,24 @@ export default function Dashboard() {
             value={formatINR(data?.metrics?.total_community_savings_inr || 84520)}
             badge="+24.5%"
             icon={IndianRupee}
-            color="emerald"
           />
           <KPICard
             title={t('retailersBenefited')}
             value={data?.metrics?.total_retailers || 30}
             badge="Joined"
             icon={Users}
-            color="blue"
           />
           <KPICard
             title={t('procurementPools')}
             value={data?.metrics?.total_active_pools || 12}
             badge={`${data?.metrics?.pools_achieved_threshold || 9} Met`}
             icon={Layers}
-            color="purple"
           />
           <KPICard
             title={t('avgSavingsPct')}
             value={`${data?.metrics?.average_savings_percentage || 18.5}%`}
             badge="Wholesale"
             icon={Percent}
-            color="amber"
           />
         </div>
       </div>
@@ -386,14 +382,14 @@ export default function Dashboard() {
       {/* Charts Grid Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Main Monthly Savings Trend Chart */}
-        <div className="lg:col-span-2 rounded-3xl glass-card p-5 border border-white/40 dark:border-white/10">
-          <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/20 dark:border-white/10">
+        <div className="lg:col-span-2 rounded-2xl glass-card p-5 border border-slate-200/80 dark:border-slate-800">
+          <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-200/80 dark:border-slate-800">
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                 Monthly Savings Growth
               </h3>
             </div>
-            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full glass-pill text-emerald-800 dark:text-emerald-300">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40">
               ₹84.5k Total Saved
             </span>
           </div>
@@ -403,8 +399,8 @@ export default function Dashboard() {
               <AreaChart data={data?.monthly_savings_trend || MOCK_DASHBOARD.monthly_savings_trend}>
                 <defs>
                   <linearGradient id="savingsGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#059669" stopOpacity={0.4}/>
-                    <stop offset="95%" stopColor="#059669" stopOpacity={0.0}/>
+                    <stop offset="5%" stopColor="#15803D" stopOpacity={0.25}/>
+                    <stop offset="95%" stopColor="#15803D" stopOpacity={0.0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke={theme === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'} />
@@ -412,23 +408,21 @@ export default function Dashboard() {
                 <YAxis stroke="#64748B" fontSize={11} tickFormatter={(v) => `₹${v/1000}k`} />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(15, 23, 42, 0.85)', 
-                    backdropFilter: 'blur(16px)',
-                    borderColor: theme === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.1)',
-                    borderRadius: '16px',
-                    fontSize: '12px',
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.2)'
+                    backgroundColor: theme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(15, 23, 42, 0.95)', 
+                    borderColor: theme === 'light' ? '#E2E8F0' : 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    fontSize: '12px'
                   }}
                   formatter={(val) => [formatINR(val), 'Group Savings']}
                 />
-                <Area type="monotone" dataKey="savings" stroke="#059669" strokeWidth={2.5} fillOpacity={1} fill="url(#savingsGrad)" />
+                <Area type="monotone" dataKey="savings" stroke="#15803D" strokeWidth={2} fillOpacity={1} fill="url(#savingsGrad)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Category Breakdown Donut Chart */}
-        <div className="rounded-3xl glass-card p-5 border border-white/40 dark:border-white/10 flex flex-col justify-between">
+        <div className="rounded-2xl glass-card p-5 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-2 border-b border-white/20 dark:border-white/10 mb-3">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">
