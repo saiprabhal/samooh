@@ -235,7 +235,7 @@ export default function Dashboard() {
 
   const categoryBreakdown = data?.category_breakdown || {};
   const totalSavings = data?.metrics?.total_community_savings_inr || 84520;
-  const pieColors = ['#22C55E', '#FFDE59', '#FF70A6', '#60A5FA', '#FB923C'];
+  const pieColors = ['#166534', '#334155', '#475569', '#64748B', '#94A3B8'];
   const pieData = Object.keys(categoryBreakdown).map((cat, idx) => ({
     name: cat,
     value: categoryBreakdown[cat],
@@ -245,21 +245,21 @@ export default function Dashboard() {
   return (
     <div className="p-3 sm:p-6 space-y-5 max-w-7xl mx-auto">
       {/* Hero Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b-2 border-black dark:border-white">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200/80 dark:border-slate-800">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-[#22C55E] flex items-center justify-center text-black border-2 border-black dark:border-white shadow-[2.5px_2.5px_0px_0px_#000] dark:shadow-[2.5px_2.5px_0px_0px_#FFF] flex-shrink-0">
-            <Layers className="w-5 h-5 text-black stroke-[2.5]" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-800 flex items-center justify-center text-white shadow-2xs border border-white/20 flex-shrink-0">
+            <Layers className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <h1 className="text-lg sm:text-2xl font-black tracking-tight text-black dark:text-white">
+              <h1 className="text-lg sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Live Wholesale Pools
               </h1>
-              <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md border-2 border-black text-black bg-[#FFDE59] shadow-[1.5px_1.5px_0px_0px_#000]">
+              <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800">
                 {user?.storeName || 'Sri Lakshmi Kirana'}
               </span>
             </div>
-            <p className="text-xs font-semibold text-slate-600 dark:text-slate-400">
+            <p className="text-xs font-normal text-slate-500 dark:text-slate-400">
               Nearby Kirana group orders unlocking wholesale tier rates
             </p>
           </div>
@@ -270,10 +270,10 @@ export default function Dashboard() {
             type="button"
             onClick={handleSeedData}
             disabled={isSeeding}
-            className="px-3.5 py-1.5 rounded-xl border-2 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] text-black dark:text-white text-xs font-black uppercase hover:bg-[#FFDE59] transition flex items-center space-x-1.5 shadow-[2.5px_2.5px_0px_0px_#000] dark:shadow-[2.5px_2.5px_0px_0px_#FFF] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition flex items-center space-x-1.5 shadow-2xs cursor-pointer"
             title="Refresh active mandi pool prices"
           >
-            <RefreshCw className={`w-3.5 h-3.5 stroke-[2.5] ${isSeeding ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isSeeding ? 'animate-spin text-emerald-800' : ''}`} />
             <span>Sync Deals</span>
           </button>
         </div>
@@ -304,10 +304,10 @@ export default function Dashboard() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <h2 className="text-base sm:text-lg font-black text-black dark:text-white flex items-center space-x-2">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
               <span>High-Discount Pools</span>
             </h2>
-            <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border-2 border-black bg-[#22C55E] text-black shadow-[1.5px_1.5px_0px_0px_#000]">
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-800 text-white">
               Live Mandi
             </span>
           </div>
@@ -315,7 +315,7 @@ export default function Dashboard() {
             <button
               type="button"
               onClick={() => navigate('/opportunities')}
-              className="text-xs font-black text-black dark:text-white underline cursor-pointer"
+              className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 hover:underline cursor-pointer"
             >
               View all ({recommendations.length}) →
             </button>
@@ -382,14 +382,14 @@ export default function Dashboard() {
       {/* Charts Grid Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Main Monthly Savings Trend Chart */}
-        <div className="lg:col-span-2 rounded-2xl glass-card p-5 border border-slate-200/80 dark:border-slate-800">
-          <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-200/80 dark:border-slate-800">
+        <div className="lg:col-span-2 rounded-2.5xl soft-card p-6 border border-slate-200/70 dark:border-slate-800 shadow-soft">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                 Monthly Savings Growth
               </h3>
             </div>
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40">
+            <span className="text-xs font-semibold px-3 py-0.5 rounded-full border border-emerald-200/80 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 bg-emerald-50/80 dark:bg-emerald-950/40">
               ₹84.5k Total Saved
             </span>
           </div>
@@ -403,32 +403,33 @@ export default function Dashboard() {
                     <stop offset="95%" stopColor="#15803D" stopOpacity={0.0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke={theme === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'} />
-                <XAxis dataKey="month" stroke="#64748B" fontSize={11} />
-                <YAxis stroke="#64748B" fontSize={11} tickFormatter={(v) => `₹${v/1000}k`} />
+                <CartesianGrid strokeDasharray="3 3" stroke={theme === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)'} />
+                <XAxis dataKey="month" stroke="#94A3B8" fontSize={11} />
+                <YAxis stroke="#94A3B8" fontSize={11} tickFormatter={(v) => `₹${v/1000}k`} />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: theme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(15, 23, 42, 0.95)', 
+                    backgroundColor: theme === 'light' ? '#FFFFFF' : '#0F172A', 
                     borderColor: theme === 'light' ? '#E2E8F0' : 'rgba(255, 255, 255, 0.1)',
-                    borderRadius: '8px',
+                    borderRadius: '12px',
+                    boxShadow: '0 8px 24px -4px rgba(15, 23, 42, 0.08)',
                     fontSize: '12px'
                   }}
                   formatter={(val) => [formatINR(val), 'Group Savings']}
                 />
-                <Area type="monotone" dataKey="savings" stroke="#15803D" strokeWidth={2} fillOpacity={1} fill="url(#savingsGrad)" />
+                <Area type="monotone" dataKey="savings" stroke="#15803D" strokeWidth={2.5} fillOpacity={1} fill="url(#savingsGrad)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Category Breakdown Donut Chart */}
-        <div className="rounded-2xl glass-card p-5 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between">
+        <div className="rounded-2.5xl soft-card p-6 border border-slate-200/70 dark:border-slate-800 shadow-soft flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between pb-2 border-b border-white/20 dark:border-white/10 mb-3">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                 Commodity Volume
               </h3>
-              <span className="text-[10px] font-bold text-slate-400">
+              <span className="text-[10px] font-semibold text-slate-400">
                 Categories
               </span>
             </div>
@@ -452,8 +453,9 @@ export default function Dashboard() {
                   <Tooltip 
                     contentStyle={{ 
                       backgroundColor: theme === 'light' ? '#FFFFFF' : '#1E293B', 
-                      borderColor: '#CBD5E1',
+                      borderColor: '#E2E8F0',
                       borderRadius: '12px',
+                      boxShadow: '0 8px 24px -4px rgba(15, 23, 42, 0.08)',
                       fontSize: '12px'
                     }}
                   />
@@ -463,9 +465,9 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-2 gap-2 text-xs pt-2">
               {pieData.map((item) => (
-                <div key={item.name} className="flex items-center space-x-1.5 p-1 rounded-lg glass-pill">
+                <div key={item.name} className="flex items-center space-x-1.5 p-1.5 rounded-full soft-pill">
                   <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
-                  <span className="font-bold truncate text-slate-700 dark:text-slate-300 text-[11px]">
+                  <span className="font-semibold truncate text-slate-700 dark:text-slate-300 text-[11px]">
                     {item.name}: {item.value}
                   </span>
                 </div>

@@ -89,7 +89,7 @@ export default function BottomNav({ onOpenMoreMenu }) {
   return (
     <nav 
       aria-label="Mobile Bottom Navigation"
-      className="md:hidden fixed bottom-3 left-3 right-3 z-40 max-w-md mx-auto rounded-2xl py-1.5 px-2 transition-all duration-300 border-2.5 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#FFF]"
+      className="md:hidden fixed bottom-3 left-3 right-3 z-40 max-w-md mx-auto rounded-3xl bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border border-slate-200/80 dark:border-white/[0.08] shadow-soft-lg py-2 px-2.5 transition-all duration-300"
     >
       <div className="flex items-center justify-around">
         {currentTabs.map((tab) => {
@@ -102,29 +102,42 @@ export default function BottomNav({ onOpenMoreMenu }) {
             <NavLink
               key={tab.id}
               to={tab.path}
-              className={`flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all duration-150 relative group ${
+              className={`flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-2xl transition-all duration-150 relative group ${
                 isActive
-                  ? 'text-black dark:text-white font-black'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white'
+                  ? isSupplier
+                    ? 'text-emerald-700 dark:text-emerald-400 font-semibold'
+                    : 'text-emerald-800 dark:text-emerald-400 font-semibold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
+              {/* Active Tab Glow Pill */}
+              {isActive && (
+                <span 
+                  className={`absolute -top-2 w-6 h-1 rounded-full transition-all duration-300 ${
+                    isSupplier ? 'bg-emerald-600' : 'bg-emerald-700 dark:bg-emerald-400'
+                  }`} 
+                />
+              )}
+
               {/* Icon Container with Badge */}
               <div className="relative flex items-center justify-center">
-                <div className={`p-1.5 rounded-lg transition-transform duration-150 active:scale-90 ${
+                <div className={`p-1.5 rounded-xl transition-transform duration-150 active:scale-90 ${
                   isActive 
-                    ? 'bg-[#FFDE59] text-black border-2 border-black shadow-[1.5px_1.5px_0px_0px_#000]'
+                    ? theme === 'light'
+                      ? 'bg-emerald-50 text-emerald-800 shadow-soft-sm'
+                      : 'bg-emerald-950/60 text-emerald-300 shadow-soft-sm'
                     : ''
                 }`}>
-                  <Icon className="w-4 h-4 stroke-[2.5]" />
+                  <Icon className="w-5 h-5 stroke-[2.2]" />
                 </div>
 
                 {tab.badge && (
-                  <span className={`absolute -top-1 -right-2 px-1 py-0.2 rounded-md text-[9px] font-black uppercase tracking-tight border border-black shadow-[1px_1px_0px_0px_#000] ${
+                  <span className={`absolute -top-1 -right-2 px-1.5 py-0.2 rounded-full text-[9px] font-bold tracking-tight shadow-soft-sm scale-90 ${
                     tab.badge === 'AI'
-                      ? 'bg-[#22C55E] text-black'
+                      ? 'bg-emerald-800 text-white'
                       : tab.badge === 'LIVE'
-                        ? 'bg-[#FF70A6] text-black animate-pulse'
-                        : 'bg-[#FFDE59] text-black'
+                        ? 'bg-rose-700 text-white animate-pulse'
+                        : 'bg-amber-600 text-white'
                   }`}>
                     {tab.badge}
                   </span>
@@ -133,7 +146,7 @@ export default function BottomNav({ onOpenMoreMenu }) {
 
               {/* Label */}
               <span className={`text-[10px] mt-0.5 tracking-tight truncate max-w-[62px] leading-tight ${
-                isActive ? 'font-black' : 'font-semibold'
+                isActive ? 'font-bold' : 'font-medium'
               }`}>
                 {tab.label}
               </span>
@@ -145,13 +158,13 @@ export default function BottomNav({ onOpenMoreMenu }) {
         <button
           type="button"
           onClick={onOpenMoreMenu}
-          className={`flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all duration-150 relative text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white active:scale-95 cursor-pointer`}
+          className={`flex-1 flex flex-col items-center justify-center py-1 px-1 rounded-2xl transition-all duration-150 relative text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 active:scale-95 cursor-pointer`}
           aria-label="Open More Operations Menu"
         >
-          <div className="p-1 rounded-lg">
-            <Menu className="w-5 h-5 stroke-[2.5]" />
+          <div className="p-1.5 rounded-xl">
+            <Menu className="w-5 h-5 stroke-[2.2]" />
           </div>
-          <span className="text-[10px] mt-0.5 tracking-tight font-bold leading-tight">
+          <span className="text-[10px] mt-0.5 tracking-tight font-medium leading-tight">
             More
           </span>
         </button>

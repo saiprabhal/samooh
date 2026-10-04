@@ -8,265 +8,218 @@
   }
 
   body {
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
   html.dark body {
-    background-color: #0E0E12;
-    color: #FFFFFF;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-color: #0A0E17;
+    color: #F8FAFC;
   }
 
   html.light body {
-    background-color: #FAF7EE;
-    color: #000000;
-    background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-color: #F8FAFC;
+    color: #0F172A;
   }
 }
 
-/* Neo-Brutalist Hard-Edged Scrollbars */
+/* Custom Smooth Soft Scrollbars */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
 }
 
 html.dark ::-webkit-scrollbar-track {
-  background: #14141B;
-  border-left: 2px solid #FFFFFF;
+  background: transparent;
 }
 html.dark ::-webkit-scrollbar-thumb {
-  background: #3B82F6;
-  border: 2px solid #FFFFFF;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
 }
 html.dark ::-webkit-scrollbar-thumb:hover {
-  background: #60A5FA;
+  background: rgba(255, 255, 255, 0.22);
 }
 
 html.light ::-webkit-scrollbar-track {
-  background: #F4F0E6;
-  border-left: 2px solid #000000;
+  background: transparent;
 }
 html.light ::-webkit-scrollbar-thumb {
-  background: #000000;
-  border: 1px solid #000000;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 9999px;
 }
 html.light ::-webkit-scrollbar-thumb:hover {
-  background: #22C55E;
+  background: rgba(0, 0, 0, 0.22);
 }
 
 /* ============================================================
-   NEO-BRUTALISM DESIGN SYSTEM
-   Solid High-Contrast Borders, Hard Offset Block Shadows,
-   Tactile Kinetic Buttons, and Geometric Framing.
+   SOFT UI & MODERN MINIMALISM DESIGN SYSTEM (Light & Dark)
    ============================================================ */
 
-/* 1. Neo-Brutalist Panels (Headers, Sidebars, Footers, Navbars) */
-html.dark .glass-panel {
-  background: #16161F;
-  border: 2.5px solid #FFFFFF;
-  box-shadow: 4px 4px 0px 0px #FFFFFF;
+/* 1. Soft Panels (Headers, Navbars, Drawers, Floating Bars) */
+html.dark .glass-panel,
+html.dark .soft-panel {
+  background: rgba(17, 24, 39, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.45);
 }
 
-html.light .glass-panel {
+html.light .glass-panel,
+html.light .soft-panel {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+}
+
+/* 2. Soft Cards (Pillowed Cards, Recommendations, KPI Cards) */
+html.dark .glass-card,
+html.dark .soft-card {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35), 0 2px 8px -2px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.dark .glass-card:hover,
+html.dark .soft-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.55), 0 4px 12px -2px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+html.light .glass-card,
+html.light .soft-card {
   background: #FFFFFF;
-  border: 2.5px solid #000000;
-  box-shadow: 4px 4px 0px 0px #000000;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.04), 0 2px 8px -2px rgba(15, 23, 42, 0.02);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Top Navigation Bar specific border flush */
-html.dark header.glass-panel {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 2.5px solid #FFFFFF;
-  box-shadow: 0 4px 0px 0px #FFFFFF;
-}
-html.light header.glass-panel {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 2.5px solid #000000;
-  box-shadow: 0 4px 0px 0px #000000;
+html.light .glass-card:hover,
+html.light .soft-card:hover {
+  border-color: rgba(203, 213, 225, 0.95);
+  box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.07), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  transform: translateY(-2px);
 }
 
-/* Sidebar specific border flush */
-html.dark aside.glass-panel {
-  border-top: none;
-  border-bottom: none;
-  border-left: none;
-  border-right: 2.5px solid #FFFFFF;
-  box-shadow: 4px 0px 0px 0px #FFFFFF;
-}
-html.light aside.glass-panel {
-  border-top: none;
-  border-bottom: none;
-  border-left: none;
-  border-right: 2.5px solid #000000;
-  box-shadow: 4px 0px 0px 0px #000000;
+/* 3. Static Soft Card (No translateY on hover) */
+html.dark .glass-card-static,
+html.dark .soft-card-static {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
 }
 
-/* Bottom Nav specific border flush */
-html.dark nav.glass-panel,
-html.dark .bottom-nav-neo {
-  border-bottom: none;
-  border-left: none;
-  border-right: none;
-  border-top: 2.5px solid #FFFFFF;
-  box-shadow: 0 -4px 0px 0px #FFFFFF;
-}
-html.light nav.glass-panel,
-html.light .bottom-nav-neo {
-  border-bottom: none;
-  border-left: none;
-  border-right: none;
-  border-top: 2.5px solid #000000;
-  box-shadow: 0 -4px 0px 0px #000000;
-}
-
-/* 2. Neo-Brutalist Interactive Cards */
-html.dark .glass-card {
-  background: #181822;
-  border: 2.5px solid #FFFFFF !important;
-  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
-  border-radius: 14px;
-  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-html.dark .glass-card:hover {
-  background: #1E1E2B;
-  border-color: #FFFFFF !important;
-  box-shadow: 6px 6px 0px 0px #FFFFFF !important;
-  transform: translate(-2px, -2px);
-}
-
-html.light .glass-card {
+html.light .glass-card-static,
+html.light .soft-card-static {
   background: #FFFFFF;
-  border: 2.5px solid #000000 !important;
-  box-shadow: 4px 4px 0px 0px #000000 !important;
-  border-radius: 14px;
-  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.04), 0 2px 8px -2px rgba(15, 23, 42, 0.02);
 }
 
-html.light .glass-card:hover {
+/* 4. Soft Inset Containers (Recessed metrics, steppers, sub-boxes) */
+html.dark .soft-inset {
+  background: #0B1120;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 0.875rem;
+}
+
+html.light .soft-inset {
+  background: #F8FAFC;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: inset 0 1px 3px 0 rgba(15, 23, 42, 0.025);
+  border-radius: 0.875rem;
+}
+
+/* 5. Soft Inputs (Form inputs, search bars) */
+html.dark .glass-input,
+html.dark .soft-input {
+  background: #0E1629;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F8FAFC;
+  border-radius: 0.875rem;
+  box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+}
+html.dark .glass-input:focus,
+html.dark .soft-input:focus {
+  background: #111C33;
+  border-color: #22C55E;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+}
+
+html.light .glass-input,
+html.light .soft-input {
+  background: #F8FAFC;
+  border: 1px solid #CBD5E1;
+  color: #0F172A;
+  border-radius: 0.875rem;
+  box-shadow: inset 0 1px 2px 0 rgba(15, 23, 42, 0.02);
+  transition: all 0.2s ease;
+}
+html.light .glass-input:focus,
+html.light .soft-input:focus {
   background: #FFFFFF;
-  border-color: #000000 !important;
-  box-shadow: 6px 6px 0px 0px #000000 !important;
-  transform: translate(-2px, -2px);
+  border-color: #166534;
+  box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.12);
 }
 
-/* 3. Static Neo-Brutalist Cards */
-html.dark .glass-card-static {
-  background: #181822;
-  border: 2.5px solid #FFFFFF !important;
-  box-shadow: 4px 4px 0px 0px #FFFFFF !important;
-  border-radius: 14px;
+/* 6. Soft Pills & Badges */
+html.dark .glass-pill,
+html.dark .soft-pill {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
 }
 
-html.light .glass-card-static {
-  background: #FFFFFF;
-  border: 2.5px solid #000000 !important;
-  box-shadow: 4px 4px 0px 0px #000000 !important;
-  border-radius: 14px;
+html.light .glass-pill,
+html.light .soft-pill {
+  background: #F1F5F9;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 9999px;
 }
 
-/* 4. Neo-Brutalist Form Inputs */
-html.dark .glass-input {
-  background: #121218;
-  border: 2px solid #FFFFFF !important;
-  box-shadow: 3px 3px 0px 0px #FFFFFF !important;
+/* 7. Soft Active Nav Pill */
+html.dark .glass-nav-active,
+html.dark .soft-nav-active {
+  background: rgba(22, 101, 52, 0.22);
+  color: #4ADE80;
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.3);
+}
+
+html.light .glass-nav-active,
+html.light .soft-nav-active {
+  background: #F0FDF4;
+  color: #166534;
+  border: 1px solid #BBF7D0;
+  box-shadow: 0 2px 8px -1px rgba(22, 101, 52, 0.08);
+}
+
+/* 8. Soft Buttons (Rounded-xl tactile buttons) */
+.soft-button-primary {
+  background-color: #166534;
   color: #FFFFFF;
-  border-radius: 10px;
-  font-weight: 600;
-  transition: all 0.12s ease;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px -2px rgba(22, 101, 52, 0.25);
+  transition: all 0.2s ease;
 }
-html.dark .glass-input:focus {
-  background: #1A1A24;
-  border-color: #FFFFFF !important;
-  box-shadow: 5px 5px 0px 0px #FFFFFF !important;
-  transform: translate(-1px, -1px);
-  outline: none;
+.soft-button-primary:hover {
+  background-color: #15803D;
+  box-shadow: 0 6px 16px -2px rgba(22, 101, 52, 0.32);
+  transform: translateY(-1px);
 }
-
-html.light .glass-input {
-  background: #FFFFFF;
-  border: 2px solid #000000 !important;
-  box-shadow: 3px 3px 0px 0px #000000 !important;
-  color: #000000;
-  border-radius: 10px;
-  font-weight: 600;
-  transition: all 0.12s ease;
-}
-html.light .glass-input:focus {
-  background: #FFFFFF;
-  border-color: #000000 !important;
-  box-shadow: 5px 5px 0px 0px #000000 !important;
-  transform: translate(-1px, -1px);
-  outline: none;
-}
-
-/* 5. Neo-Brutalist Badges & Micro-Pills */
-html.dark .glass-pill {
-  background: #252533;
-  border: 2px solid #FFFFFF !important;
-  box-shadow: 2px 2px 0px 0px #FFFFFF !important;
-  color: #FFFFFF;
-  font-weight: 800;
-}
-
-html.light .glass-pill {
-  background: #FFFDF5;
-  border: 2px solid #000000 !important;
-  box-shadow: 2px 2px 0px 0px #000000 !important;
-  color: #000000;
-  font-weight: 800;
-}
-
-/* 6. Active Neo Navigation Item */
-html.dark .glass-nav-active {
-  background: #10B981 !important;
-  border: 2px solid #FFFFFF !important;
-  box-shadow: 3px 3px 0px 0px #FFFFFF !important;
-  color: #000000 !important;
-  font-weight: 900 !important;
-}
-
-html.light .glass-nav-active {
-  background: #86EFAC !important;
-  border: 2px solid #000000 !important;
-  box-shadow: 3px 3px 0px 0px #000000 !important;
-  color: #000000 !important;
-  font-weight: 900 !important;
-}
-
-/* 7. Kinetic Tactile Neo-Brutalist Buttons */
-button.cursor-pointer,
-.neo-btn,
-button[type="submit"] {
-  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
-}
-
-button.cursor-pointer:active,
-.neo-btn:active,
-button[type="submit"]:active {
-  transform: translate(2px, 2px) !important;
-}
-
-/* 8. Popups & Dialogs in Neo-Brutalism */
-.animate-fade-in > div,
-[role="dialog"] > div {
-  border: 3px solid #000000 !important;
-  box-shadow: 8px 8px 0px 0px #000000 !important;
-  border-radius: 16px;
-}
-
-html.dark .animate-fade-in > div,
-html.dark [role="dialog"] > div {
-  border: 3px solid #FFFFFF !important;
-  box-shadow: 8px 8px 0px 0px #FFFFFF !important;
-  border-radius: 16px;
+.soft-button-primary:active {
+  transform: translateY(0);
 }

@@ -312,53 +312,53 @@ export default function Opportunities() {
         </div>
       </div>
 
-      {/* Tab Navigation: Opportunities Engine vs Compatibility vs Active Pools */}
-      <div className="flex flex-wrap items-center gap-2 border-b-2 border-black dark:border-white pb-3">
+      {/* Tab Navigation: Soft Minimalist Segmented Pill Bar */}
+      <div className="p-1.5 rounded-2xl bg-slate-100/80 dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800/80 inline-flex items-center space-x-1.5 w-full sm:w-auto overflow-x-auto shadow-inner">
         <button
           type="button"
           onClick={() => setActiveTab('OPPORTUNITIES')}
-          className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition flex items-center space-x-1.5 cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
+          className={`py-2 px-3.5 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap cursor-pointer ${
             activeTab === 'OPPORTUNITIES'
-              ? 'border-2 border-black bg-[#FFDE59] text-black shadow-[3px_3px_0px_0px_#000]'
-              : 'border-2 border-black/20 dark:border-white/20 text-slate-700 dark:text-slate-300 hover:border-black dark:hover:border-white bg-white dark:bg-black/20'
+              ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-soft font-bold'
+              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
+          <Sparkles className="w-3.5 h-3.5 text-emerald-800 dark:text-emerald-400" />
           <span>Procurement Opportunities ({opportunities.length})</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('COMPATIBILITY')}
-          className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition flex items-center space-x-1.5 cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
+          className={`py-2 px-3.5 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap cursor-pointer ${
             activeTab === 'COMPATIBILITY'
-              ? 'border-2 border-black bg-[#FFDE59] text-black shadow-[3px_3px_0px_0px_#000]'
-              : 'border-2 border-black/20 dark:border-white/20 text-slate-700 dark:text-slate-300 hover:border-black dark:hover:border-white bg-white dark:bg-black/20'
+              ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-soft font-bold'
+              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
-          <Users className="w-3.5 h-3.5 stroke-[2.5]" />
+          <Users className="w-3.5 h-3.5 text-emerald-800 dark:text-emerald-400" />
           <span>Retailer Compatibility ({compatibilities.length})</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('POOLS')}
-          className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition flex items-center space-x-1.5 cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
+          className={`py-2 px-3.5 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap cursor-pointer ${
             activeTab === 'POOLS'
-              ? 'border-2 border-black bg-[#FFDE59] text-black shadow-[3px_3px_0px_0px_#000]'
-              : 'border-2 border-black/20 dark:border-white/20 text-slate-700 dark:text-slate-300 hover:border-black dark:hover:border-white bg-white dark:bg-black/20'
+              ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-soft font-bold'
+              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
-          <Layers className="w-3.5 h-3.5 stroke-[2.5]" />
+          <Layers className="w-3.5 h-3.5 text-emerald-800 dark:text-emerald-400" />
           <span>Active Procurement Pools ({recommendations.length})</span>
         </button>
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="glass-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+      <div className="soft-card p-4 rounded-2.5xl flex flex-wrap items-center justify-between gap-3 shadow-soft border border-slate-200/70 dark:border-slate-800 bg-white dark:bg-slate-900">
         {/* Search */}
         <div className="relative flex-1 min-w-[240px]">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-black dark:text-white stroke-[2.5]" />
+          <Search className="w-3.5 h-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input 
             type="text"
             placeholder={
@@ -370,24 +370,24 @@ export default function Opportunities() {
             }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-xl pl-9 pr-3 py-1.5 text-xs font-bold border-2 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] text-black dark:text-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#FFF] focus:outline-none"
+            className="soft-input w-full rounded-xl pl-9 pr-3.5 py-2 text-xs focus:outline-none"
           />
         </div>
 
         {/* Status Pills */}
         <div className="flex items-center space-x-1.5 overflow-x-auto py-1">
-          <span className="text-xs font-black uppercase text-black dark:text-white flex items-center mr-1">
-            <Filter className="w-3.5 h-3.5 mr-1 stroke-[2.5]" /> Status:
+          <span className="text-xs font-medium text-slate-400 flex items-center mr-1">
+            <Filter className="w-3.5 h-3.5 mr-1 text-slate-400" /> Status:
           </span>
           {activeTab === 'OPPORTUNITIES' ? (
             ['ALL', 'FEASIBLE', 'BELOW_MOQ', 'INSUFFICIENT_STOCK', 'ALREADY_IN_POOL'].map((status) => (
               <button
                 key={status}
                 onClick={() => setOppFilterStatus(status)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-black uppercase transition whitespace-nowrap border-2 border-black cursor-pointer shadow-[1.5px_1.5px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
+                className={`px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap cursor-pointer ${
                   oppFilterStatus === status 
-                    ? 'bg-[#22C55E] text-black'
-                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-[#FFDE59] hover:text-black'
+                    ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-sm'
+                    : 'bg-slate-100/80 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70'
                 }`}
               >
                 {status === 'ALL' ? 'All Opportunities' : status.replace('_', ' ')}
@@ -398,10 +398,10 @@ export default function Opportunities() {
               <button
                 key={status}
                 onClick={() => setCompatFilterStatus(status)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-black uppercase transition whitespace-nowrap border-2 border-black cursor-pointer shadow-[1.5px_1.5px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
+                className={`px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap cursor-pointer ${
                   compatFilterStatus === status 
-                    ? 'bg-[#22C55E] text-black'
-                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-[#FFDE59] hover:text-black'
+                    ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-sm'
+                    : 'bg-slate-100/80 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70'
                 }`}
               >
                 {status === 'ALL' ? 'All Partners' : status.replace('_', ' ')}
@@ -412,10 +412,10 @@ export default function Opportunities() {
               <button
                 key={status}
                 onClick={() => setFilterStatus(status)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-black uppercase transition whitespace-nowrap border-2 border-black cursor-pointer shadow-[1.5px_1.5px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
+                className={`px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap cursor-pointer ${
                   filterStatus === status 
-                    ? 'bg-[#22C55E] text-black'
-                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-[#FFDE59] hover:text-black'
+                    ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-sm'
+                    : 'bg-slate-100/80 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70'
                 }`}
               >
                 {status === 'ALL' ? t('allOpps') : status === 'ACHIEVED' ? t('achieved') : status === 'NEAR_THRESHOLD' ? t('nearThreshold') : t('inProgress')}
@@ -428,7 +428,7 @@ export default function Opportunities() {
         <select
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value)}
-          className="border border-slate-200 dark:border-slate-700 rounded-md px-3 py-1.5 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-800"
+          className="soft-input rounded-xl px-3 py-2 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none cursor-pointer"
         >
           <option value="ALL">All Categories</option>
           <option value="Grains">Grains & Pulses</option>

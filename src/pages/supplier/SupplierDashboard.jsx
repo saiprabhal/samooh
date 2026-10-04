@@ -172,24 +172,24 @@ export default function SupplierDashboard() {
       )}
 
       {/* 8 KPI Cards Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4">
         {kpis.map((kpi, idx) => {
           const Icon = kpi.icon;
           return (
             <div 
               key={idx}
-              className="p-4 rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm"
+              className="soft-card p-5 rounded-2.5xl border border-slate-200/80 dark:border-white/[0.08] shadow-soft hover:shadow-soft-lg transition-all"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
                   {kpi.label}
                 </span>
-                <div className={`p-1.5 rounded-md ${
+                <div className={`w-8 h-8 rounded-2xl flex items-center justify-center ${
                   kpi.alert 
                     ? 'bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' 
-                    : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
+                    : 'soft-inset text-slate-600 dark:text-slate-300'
                 }`}>
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-4 h-4" />
                 </div>
               </div>
               <div className="text-xl sm:text-2xl font-bold mt-2 tracking-tight text-slate-900 dark:text-white">
@@ -204,17 +204,17 @@ export default function SupplierDashboard() {
       </div>
 
       {/* Nearby Retailers Interactive Map Quick Access Banner */}
-      <div className="p-4 sm:p-5 rounded-lg border border-blue-200 dark:border-blue-900/60 bg-blue-50/60 dark:bg-blue-950/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+      <div className="soft-card p-5 sm:p-6 rounded-2.5xl border border-blue-200/70 dark:border-blue-900/40 bg-blue-50/40 dark:bg-blue-950/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-soft">
         <div className="flex items-start space-x-3.5">
-          <div className="p-2.5 rounded-lg bg-blue-700 text-white flex-shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-blue-700 text-white flex items-center justify-center flex-shrink-0 shadow-soft-sm">
             <MapPin className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                 Nearby Retailers Map
               </h3>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-semibold border border-blue-200 dark:border-blue-800">
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-300 font-bold border border-blue-200 dark:border-blue-800">
                 MapLibre + OpenStreetMap + ORS
               </span>
             </div>
@@ -225,7 +225,7 @@ export default function SupplierDashboard() {
         </div>
         <button
           onClick={() => navigate('/supplier/nearby-retailers')}
-          className="px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold transition shadow-sm flex items-center space-x-1.5 flex-shrink-0"
+          className="px-4 py-2 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold transition shadow-soft-sm flex items-center space-x-1.5 flex-shrink-0 cursor-pointer"
         >
           <span>Open Nearby Retailers</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -233,10 +233,10 @@ export default function SupplierDashboard() {
       </div>
 
       {/* Recent Orders Section */}
-      <div className="rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm overflow-hidden">
-        <div className="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+      <div className="soft-card rounded-2.5xl border border-slate-200/80 dark:border-white/[0.08] shadow-soft overflow-hidden">
+        <div className="p-5 border-b border-slate-100 dark:border-white/[0.06] flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center space-x-2">
+            <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
               <PackageCheck className="w-4 h-4 text-emerald-800 dark:text-emerald-400" />
               <span>Incoming Procurement Orders</span>
             </h2>
@@ -247,7 +247,7 @@ export default function SupplierDashboard() {
 
           <button
             onClick={() => navigate('/supplier/orders')}
-            className="text-xs font-medium text-emerald-800 dark:text-emerald-400 hover:underline flex items-center space-x-1"
+            className="text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:underline flex items-center space-x-1 cursor-pointer"
           >
             <span>View All Orders</span>
             <ArrowRight className="w-3.5 h-3.5" />

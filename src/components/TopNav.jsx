@@ -282,7 +282,7 @@ export default function TopNav() {
   };
 
   return (
-    <header className="glass-panel h-14 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 relative">
+    <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-b border-slate-200/70 dark:border-white/[0.06] shadow-soft-sm h-14 px-3 sm:px-6 flex items-center justify-between">
       {/* Left Group: Brand Logo + Location Dropdown + Search Bar */}
       <div className="flex items-center space-x-2.5 sm:space-x-4 flex-1 min-w-0 pr-2 sm:pr-3">
         {/* Brand Logo & Name */}
@@ -291,50 +291,50 @@ export default function TopNav() {
           className="flex items-center space-x-2 cursor-pointer select-none flex-shrink-0 group"
           title="Go to Samooh Home"
         >
-          <div className="w-8 h-8 rounded-xl flex items-center justify-center text-black bg-[#22C55E] border-2 border-black dark:border-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#FFF] transition-transform duration-200 group-hover:scale-105">
-            {isSupplier ? <Truck className="w-4 h-4 text-black stroke-[2.5]" /> : <Layers className="w-4 h-4 text-black stroke-[2.5]" />}
+          <div className="w-8 h-8 rounded-2xl flex items-center justify-center text-white bg-emerald-800 shadow-soft transition-transform duration-200 group-hover:scale-105">
+            {isSupplier ? <Truck className="w-4 h-4 text-white" /> : <Layers className="w-4 h-4 text-white" />}
           </div>
           <div className="flex items-center space-x-1.5">
-            <span className={`text-base font-black tracking-tight ${
-              theme === 'light' ? 'text-black' : 'text-white'
+            <span className={`text-base font-bold tracking-tight ${
+              theme === 'light' ? 'text-slate-900' : 'text-white'
             }`}>
               {t('brandName') || 'Samooh'}
             </span>
-            <span className="hidden md:inline-block text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-md border-2 border-black text-black bg-[#FFDE59] shadow-[1.5px_1.5px_0px_0px_#000]">
+            <span className="hidden md:inline-block text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full border border-slate-200/80 dark:border-white/[0.08] text-slate-700 dark:text-slate-300 bg-slate-100/80 dark:bg-slate-800/80">
               {isSupplier ? 'Supplier' : 'Retail'}
             </span>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="hidden sm:block h-6 w-[2px] bg-black dark:bg-white" />
+        <div className="hidden sm:block h-5 w-px bg-slate-200/80 dark:bg-white/[0.08]" />
 
         {/* Location Dropdown Pill */}
         <div className="relative" ref={locationRef}>
           <button
             type="button"
             onClick={() => setIsLocationOpen(prev => !prev)}
-            className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl border-2 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] hover:bg-[#FFDE59] dark:hover:bg-[#252530] transition cursor-pointer text-xs font-bold text-black dark:text-white shadow-[2.5px_2.5px_0px_0px_#000] dark:shadow-[2.5px_2.5px_0px_0px_#FFF] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full border border-slate-200/80 dark:border-white/[0.08] bg-slate-50/80 dark:bg-slate-900/80 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-soft-sm"
             title="Click to view & configure store location"
             aria-label="Store Location & Pooling Hub"
           >
-            <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 border border-black ${
+            <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
               storeLocation.sharingEnabled 
-                ? 'bg-[#22C55E]' 
-                : 'bg-[#FF70A6]'
+                ? 'bg-emerald-700 dark:bg-emerald-500' 
+                : 'bg-amber-600'
             }`} />
-            <MapPin className="w-3.5 h-3.5 text-black dark:text-white flex-shrink-0 stroke-[2.2]" />
-            <span className="truncate max-w-[80px] sm:max-w-[130px] md:max-w-[160px] text-xs font-black">
+            <MapPin className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 flex-shrink-0" />
+            <span className="truncate max-w-[80px] sm:max-w-[130px] md:max-w-[160px] text-xs font-medium">
               {storeLocation.areaName || 'Kukatpally, Hyderabad'}
             </span>
-            <ChevronDown className={`w-3.5 h-3.5 text-black dark:text-white transition-transform duration-200 stroke-[2.5] ${
+            <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform duration-200 ${
               isLocationOpen ? 'rotate-180' : ''
             }`} />
           </button>
 
-          {/* Neo-Brutalist Dropdown Popover */}
+          {/* Soft Dropdown Popover */}
           {isLocationOpen && (
-            <div className="p-4 rounded-2xl w-80 sm:w-96 absolute top-12 left-0 z-50 animate-fade-in border-3 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#FFF] space-y-3.5">
+            <div className="soft-panel p-4 rounded-2.5xl w-80 sm:w-96 shadow-soft-lg absolute top-12 left-0 z-50 animate-fade-in border border-slate-200/80 dark:border-white/[0.08] space-y-3.5">
               {/* Popover Header */}
               <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80 dark:border-slate-800">
                 <div className="flex items-center space-x-2">
@@ -460,7 +460,7 @@ export default function TopNav() {
           )}
         </div>
 
-        {/* Desktop Search Bar with Neo-Brutalist Styling & Typewriter Animation */}
+        {/* Desktop Search Bar with Clean Solid Styling & Typewriter Animation */}
         <div 
           className="relative flex-1 max-w-xs sm:max-w-sm md:max-w-md hidden sm:block" 
           ref={searchContainerRef}
@@ -468,7 +468,7 @@ export default function TopNav() {
           <form onSubmit={handleSearchSubmit} className="relative w-full">
             {/* Clean Slate Magnifier Icon */}
             <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10 pointer-events-none flex items-center justify-center">
-              <Search className="w-4 h-4 text-black dark:text-white stroke-[2.5]" />
+              <Search className="w-4 h-4 text-slate-400 dark:text-slate-400" />
             </div>
 
             {/* Input Field */}
@@ -481,17 +481,17 @@ export default function TopNav() {
               onKeyDown={(e) => {
                 if (e.key === 'Escape') setIsSearchFocused(false);
               }}
-              className="w-full rounded-xl pl-9 pr-8 py-1.5 text-xs sm:text-sm font-bold focus:outline-none transition-all duration-200 border-2 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] text-black dark:text-white shadow-[2.5px_2.5px_0px_0px_#000] dark:shadow-[2.5px_2.5px_0px_0px_#FFF] focus:shadow-[4px_4px_0px_0px_#000] dark:focus:shadow-[4px_4px_0px_0px_#FFF] focus:-translate-y-0.5"
+              className="soft-input w-full rounded-full pl-9 pr-8 py-1.5 text-xs sm:text-sm font-medium focus:outline-none transition-all duration-200 border border-slate-200/80 dark:border-white/[0.08]"
             />
 
             {/* Dynamic Typewriter Text with Neutral Blinking Cursor */}
             {!searchTerm && (
               <div 
                 onClick={() => inputRef.current?.focus()}
-                className="absolute left-9 right-8 top-1/2 -translate-y-1/2 pointer-events-none flex items-center select-none text-xs sm:text-sm text-slate-500 dark:text-slate-400 truncate font-semibold"
+                className="absolute left-9 right-8 top-1/2 -translate-y-1/2 pointer-events-none flex items-center select-none text-xs sm:text-sm text-slate-400 dark:text-slate-400/90 truncate font-normal"
               >
                 <span>{animatedPrompt}</span>
-                <span className="w-1.5 h-3.5 bg-black dark:bg-white ml-1 rounded-xs inline-block animate-pulse" />
+                <span className="w-1.5 h-3.5 bg-slate-600 dark:bg-slate-300 ml-1 rounded-xs inline-block" />
               </div>
             )}
 
@@ -500,62 +500,62 @@ export default function TopNav() {
               <button
                 type="button"
                 onClick={handleClearSearch}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-10 p-1 rounded-lg text-black dark:text-white hover:bg-[#FF70A6] transition cursor-pointer"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-10 p-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
                 title="Clear Search"
               >
-                <X className="w-3.5 h-3.5 stroke-[2.5]" />
+                <X className="w-3.5 h-3.5" />
               </button>
             )}
           </form>
 
           {/* Live Search Results Dropdown Popup */}
           {isSearchFocused && (
-            <div className="p-3 rounded-2xl w-full sm:w-[380px] md:w-[440px] absolute top-12 left-0 z-50 animate-fade-in border-3 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] shadow-[6px_6px_0px_0px_#000] dark:shadow-[6px_6px_0px_0px_#FFF] space-y-2">
-              <div className="flex items-center justify-between px-2 pt-1 pb-1 border-b-2 border-black dark:border-white">
-                <span className="text-[11px] font-black uppercase tracking-wider text-black dark:text-white flex items-center space-x-1.5">
-                  <Search className="w-3.5 h-3.5 stroke-[2.5]" />
+            <div className="soft-panel p-2.5 rounded-2.5xl w-full sm:w-[380px] md:w-[440px] shadow-soft-lg absolute top-12 left-0 z-50 animate-fade-in border border-slate-200/80 dark:border-white/[0.08] space-y-2">
+              <div className="flex items-center justify-between px-2 pt-1 pb-1 border-b border-slate-200/80 dark:border-slate-800">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center space-x-1.5">
+                  <Search className="w-3 h-3 text-slate-500" />
                   <span>{searchTerm.trim() ? 'Matching Deals' : 'Popular Kirana Pools'}</span>
                 </span>
-                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded border border-black bg-[#FFDE59] text-black">
+                <span className="text-[10px] text-slate-400">
                   {filteredItems.length} results
                 </span>
               </div>
 
-              <div className="max-h-64 overflow-y-auto space-y-1 divide-y divide-black/10 dark:divide-white/10">
+              <div className="max-h-64 overflow-y-auto space-y-1 divide-y divide-slate-100 dark:divide-slate-800/60">
                 {filteredItems.length > 0 ? (
                   filteredItems.map((item) => (
                     <button
                       key={item.id}
                       type="button"
                       onClick={() => handleSelectItem(item)}
-                      className="w-full text-left p-2 rounded-xl hover:bg-[#FFDE59]/30 dark:hover:bg-[#252530] transition flex items-center justify-between group cursor-pointer border border-transparent hover:border-black dark:hover:border-white"
+                      className="w-full text-left p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center justify-between group cursor-pointer"
                     >
                       <div className="flex items-center space-x-2.5 min-w-0 pr-2">
-                        <div className="w-7 h-7 rounded-lg bg-[#FFDE59] text-black border-2 border-black flex items-center justify-center flex-shrink-0 shadow-[1.5px_1.5px_0px_0px_#000]">
-                          {item.type === 'product' ? <Tag className="w-3.5 h-3.5 stroke-[2.5]" /> : item.type === 'pool' ? <Box className="w-3.5 h-3.5 stroke-[2.5]" /> : <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />}
+                        <div className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0">
+                          {item.type === 'product' ? <Tag className="w-3.5 h-3.5" /> : item.type === 'pool' ? <Box className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
                         </div>
                         <div className="min-w-0">
-                          <h5 className="text-xs font-bold text-black dark:text-white truncate">
+                          <h5 className="text-xs font-semibold text-slate-900 dark:text-white truncate group-hover:text-emerald-800 dark:group-hover:text-emerald-400 transition-colors">
                             {item.title}
                           </h5>
-                          <p className="text-[10px] text-slate-600 dark:text-slate-400 truncate font-medium">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
                             {item.subtitle}
                           </p>
                         </div>
                       </div>
 
-                      <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded border-2 border-black bg-[#22C55E] text-black shadow-[1.5px_1.5px_0px_0px_#000] flex-shrink-0">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 flex-shrink-0">
                         {item.badge}
                       </span>
                     </button>
                   ))
                 ) : (
                   <div className="p-4 text-center space-y-1">
-                    <p className="text-xs font-bold text-slate-600 dark:text-slate-400">No direct item found for "{searchTerm}"</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">No direct item found for "{searchTerm}"</p>
                     <button
                       type="button"
                       onClick={handleSearchSubmit}
-                      className="text-xs font-black text-black dark:text-white underline"
+                      className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 hover:underline"
                     >
                       Search across all procurement opportunities →
                     </button>
@@ -564,11 +564,11 @@ export default function TopNav() {
               </div>
 
               {/* Enter Key Tip */}
-              <div className="pt-1.5 px-2 border-t-2 border-black dark:border-white flex items-center justify-between text-[10px] text-slate-600 dark:text-slate-300">
-                <span>Press <strong className="font-black text-black dark:text-white">↵ Enter</strong> to view full results</span>
+              <div className="pt-1.5 px-2 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
+                <span>Press <strong className="font-semibold text-slate-600 dark:text-slate-300">↵ Enter</strong> to view full results</span>
                 <span 
                   onClick={handleSearchSubmit}
-                  className="font-black text-black dark:text-white underline cursor-pointer"
+                  className="font-bold text-emerald-800 dark:text-emerald-400 cursor-pointer hover:underline"
                 >
                   View in Opportunities
                 </span>
@@ -586,15 +586,15 @@ export default function TopNav() {
               if (mobileInputRef.current) mobileInputRef.current.focus();
             }, 100);
           }}
-          className={`sm:hidden p-2 rounded-xl border-2 border-black dark:border-white shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#FFF] transition cursor-pointer flex items-center justify-center active:translate-x-[1px] active:translate-y-[1px] active:shadow-none ${
+          className={`sm:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 transition cursor-pointer flex items-center justify-center ${
             isMobileSearchOpen 
-              ? 'bg-[#FFDE59] text-black' 
-              : 'bg-[#FAF7EE] dark:bg-[#18181F] text-black dark:text-white hover:bg-[#FFDE59]'
+              ? 'bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white' 
+              : 'bg-white/60 dark:bg-slate-900/60 text-slate-600 dark:text-slate-400 hover:bg-slate-100'
           }`}
           title="Search products and pools"
           aria-label="Open Mobile Search"
         >
-          <Search className="w-4 h-4 stroke-[2.5]" />
+          <Search className="w-4 h-4" />
         </button>
       </div>
 
@@ -603,38 +603,38 @@ export default function TopNav() {
         <button
           type="button"
           onClick={() => navigate('/profile')}
-          className="flex items-center space-x-2.5 p-1 sm:px-2.5 sm:py-1 rounded-xl text-left focus:outline-none border-2 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] shadow-[2.5px_2.5px_0px_0px_#000] dark:shadow-[2.5px_2.5px_0px_0px_#FFF] hover:bg-[#FFDE59] dark:hover:bg-[#252530] transition active:translate-x-[1px] active:translate-y-[1px] active:shadow-none cursor-pointer"
+          className="soft-card flex items-center space-x-2.5 p-1 sm:px-3 sm:py-1.5 rounded-full text-left focus:outline-none border border-slate-200/80 dark:border-white/[0.08] shadow-soft-sm hover:shadow-soft transition-all"
           title="Open Profile, Theme, Language & Notification Settings"
           aria-label="User Profile and Settings"
         >
           {isSupplier ? (
-            <div className="w-7 h-7 rounded-lg bg-[#22C55E] text-black flex items-center justify-center font-black text-xs border-2 border-black shadow-[1.5px_1.5px_0px_0px_#000]">
-              <Truck className="w-3.5 h-3.5 stroke-[2.5]" />
+            <div className="w-7 h-7 rounded-full bg-emerald-800 flex items-center justify-center font-bold text-xs text-white shadow-soft-sm">
+              <Truck className="w-3.5 h-3.5" />
             </div>
           ) : user?.avatar ? (
-            <img src={user.avatar} alt="User Avatar" className="w-7 h-7 rounded-lg border-2 border-black object-cover shadow-[1.5px_1.5px_0px_0px_#000]" />
+            <img src={user.avatar} alt="User Avatar" className="w-7 h-7 rounded-full border border-slate-200/80 dark:border-slate-700 object-cover shadow-soft-sm" />
           ) : (
-            <div className="w-7 h-7 rounded-lg bg-[#FFDE59] text-black flex items-center justify-center font-black text-xs border-2 border-black shadow-[1.5px_1.5px_0px_0px_#000]">
+            <div className="w-7 h-7 rounded-full bg-slate-800 dark:bg-slate-700 flex items-center justify-center font-bold text-xs text-white shadow-soft-sm">
               {user?.storeName ? user.storeName.charAt(0) : 'S'}
             </div>
           )}
 
           <div className="hidden sm:block text-left">
-            <h4 className={`text-xs font-black leading-tight ${theme === 'light' ? 'text-black' : 'text-white'}`}>
+            <h4 className={`text-xs font-bold leading-tight ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
               {isSupplier ? (currentSupplier?.name || 'Wholesale Supplier') : (user?.storeName || 'Sri Lakshmi Kirana')}
             </h4>
-            <span className={`text-[10px] block font-semibold ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+            <span className={`text-[10px] block ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>
               Profile & Settings
             </span>
           </div>
 
-          <User className="w-3.5 h-3.5 text-black dark:text-white stroke-[2.5] hidden sm:block" />
+          <User className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
         </button>
       </div>
 
       {/* Mobile Search Bar Drawer */}
       {isMobileSearchOpen && (
-        <div className="sm:hidden absolute top-14 left-0 right-0 p-3 glass-panel border-b border-slate-200 dark:border-slate-800 z-40 shadow-xl space-y-2.5">
+        <div className="sm:hidden absolute top-14 left-0 right-0 p-3 soft-panel border-b border-slate-200/80 dark:border-white/[0.08] z-40 shadow-soft-lg space-y-2.5">
           <form onSubmit={handleSearchSubmit} className="relative w-full flex items-center space-x-2">
             <div className="relative flex-1">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
@@ -645,7 +645,7 @@ export default function TopNav() {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="glass-input w-full rounded-xl pl-9 pr-8 py-2 text-xs font-medium focus:outline-none border border-slate-200 dark:border-slate-800"
+                className="soft-input w-full rounded-full pl-9 pr-8 py-2 text-xs font-medium focus:outline-none border border-slate-200/80 dark:border-white/[0.08]"
               />
               {!searchTerm && (
                 <div 

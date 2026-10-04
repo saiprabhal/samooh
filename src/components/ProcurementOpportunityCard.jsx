@@ -37,47 +37,47 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
 
   const visual = getCommodityVisual(productName, category);
 
-  // Status Styling & Badge (Neo-Brutalist)
+  // Status Styling & Badge
   const getStatusBadge = () => {
     switch (status) {
       case 'FEASIBLE':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-[#22C55E] text-black border-2 border-black shadow-[2px_2px_0px_0px_#000]">
-            <Check className="w-3 h-3 mr-1 stroke-[3]" />
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-800 text-white shadow-2xs">
+            <Check className="w-3 h-3 mr-1 stroke-[2.5]" />
             FEASIBLE
           </span>
         );
       case 'BELOW_MOQ':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-[#FFDE59] text-black border-2 border-black shadow-[2px_2px_0px_0px_#000]">
-            <AlertTriangle className="w-3 h-3 mr-1 stroke-[2.5]" />
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-700 text-white shadow-2xs">
+            <AlertTriangle className="w-3 h-3 mr-1" />
             BELOW MOQ
           </span>
         );
       case 'INSUFFICIENT_STOCK':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-[#FF70A6] text-black border-2 border-black shadow-[2px_2px_0px_0px_#000]">
-            <X className="w-3 h-3 mr-1 stroke-[3]" />
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-rose-700 text-white shadow-2xs">
+            <X className="w-3 h-3 mr-1" />
             LOW STOCK
           </span>
         );
       case 'ALREADY_IN_POOL':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-[#60A5FA] text-black border-2 border-black shadow-[2px_2px_0px_0px_#000]">
-            <Layers className="w-3 h-3 mr-1 stroke-[2.5]" />
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-700 text-white shadow-2xs">
+            <Layers className="w-3 h-3 mr-1" />
             IN POOL
           </span>
         );
       case 'LOCATION_REQUIRED':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-slate-200 text-black border-2 border-black shadow-[2px_2px_0px_0px_#000]">
-            <MapPin className="w-3 h-3 mr-1 stroke-[2.5]" />
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-700 text-white shadow-2xs">
+            <MapPin className="w-3 h-3 mr-1" />
             LOCATION NEEDED
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-slate-200 text-black border-2 border-black shadow-[2px_2px_0px_0px_#000]">
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-700 text-white">
             {status}
           </span>
         );
@@ -85,26 +85,26 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
   };
 
   return (
-    <div className="glass-card rounded-2xl flex flex-col justify-between relative overflow-hidden group border-2 border-black dark:border-white shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#FFF] hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-[6px_6px_0px_0px_#FFF] transition-all duration-200">
+    <div className="soft-card rounded-2.5xl flex flex-col justify-between relative overflow-hidden group border border-slate-200/70 dark:border-slate-800/80 bg-white dark:bg-slate-900 shadow-soft hover:shadow-soft-lg transition-all duration-250">
       <div>
         {/* Top Photographic Commodity Strip */}
-        <div className="relative h-28 w-full overflow-hidden bg-slate-900 select-none border-b-2 border-black dark:border-white">
+        <div className="relative h-28 w-full overflow-hidden bg-slate-950 select-none">
           <img 
             src={visual.image} 
             alt={productName}
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 brightness-90"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/25" />
 
           {/* Overlaid Badges */}
           <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
             <div className="flex items-center space-x-1.5 flex-wrap">
-              <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-white text-black border-2 border-black shadow-[2px_2px_0px_0px_#000]">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20">
                 {visual.categoryName}
               </span>
               {isDemo && (
-                <span className="text-[10px] font-black uppercase px-1.5 py-0.5 rounded-md bg-[#FFDE59] text-black border-2 border-black shadow-[2px_2px_0px_0px_#000]">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-800/80 text-white">
                   Demo
                 </span>
               )}
@@ -113,17 +113,17 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
           </div>
 
           <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white drop-shadow-sm">
-            <span className="text-[11px] font-bold text-white truncate">
+            <span className="text-[11px] font-medium text-white/90 truncate">
               {visual.commodityType}
             </span>
-            <span className="text-[10px] font-bold text-white/90">
+            <span className="text-[10px] font-normal text-white/70">
               {visual.defaultUnit}
             </span>
           </div>
         </div>
 
         {/* Card Body */}
-        <div className="p-4 sm:p-5 pt-3.5">
+        <div className="p-4 sm:p-5 pt-3.5 space-y-3">
           {/* Product Title & Canonical ID */}
           <div>
             <h3 className="text-base font-bold text-slate-900 dark:text-white line-clamp-1">
@@ -137,7 +137,7 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
           </div>
 
         {/* Retailer Count & Distance */}
-        <div className="mt-2.5 flex items-center justify-between text-xs text-slate-500 border-b border-slate-100 dark:border-slate-700/80 pb-2.5">
+        <div className="flex items-center justify-between text-xs text-slate-500 border-b border-slate-100 dark:border-slate-800 pb-2.5">
           <span className="flex items-center">
             <Store className="w-3.5 h-3.5 mr-1 text-slate-400" />
             <strong>{retailerCount}</strong>&nbsp;compatible {retailerCount === 1 ? 'store' : 'stores'}
@@ -148,8 +148,8 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
           </span>
         </div>
 
-        {/* Key Operational Metrics Grid */}
-        <div className="mt-3 grid grid-cols-2 gap-2 text-xs bg-slate-50/70 dark:bg-slate-900/40 p-2.5 rounded-md border border-slate-100 dark:border-slate-800">
+        {/* Key Operational Metrics Grid (Soft Inset) */}
+        <div className="grid grid-cols-2 gap-2 text-xs soft-inset p-3 rounded-2xl">
           <div>
             <span className="text-[11px] text-slate-400 block">Combined Demand</span>
             <span className="font-bold text-slate-800 dark:text-slate-200 text-sm">
@@ -281,7 +281,7 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
           <button
             type="button"
             onClick={() => onFormPool && onFormPool(opportunity)}
-            className="px-3 py-1.5 rounded bg-emerald-800 hover:bg-emerald-900 text-white font-semibold transition text-xs shadow-xs"
+            className="px-3.5 py-1.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-semibold transition text-xs shadow-soft active:scale-98 cursor-pointer"
           >
             Form Procurement Pool
           </button>

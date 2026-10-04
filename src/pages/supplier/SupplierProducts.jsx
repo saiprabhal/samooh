@@ -215,19 +215,19 @@ export default function SupplierProducts() {
             placeholder="Search catalog products..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full border border-slate-200 dark:border-slate-700 rounded-md pl-9 pr-3 py-1.5 text-xs bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-800"
+            className="soft-input w-full rounded-full pl-9 pr-3 py-1.5 text-xs border border-slate-200/80 dark:border-white/[0.08]"
           />
         </div>
 
-        <div className="flex items-center space-x-1 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+        <div className="p-1 rounded-xl bg-slate-100/80 dark:bg-slate-850/80 border border-slate-200/70 dark:border-white/[0.06] flex items-center space-x-1 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 shadow-soft-inset">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1 rounded-md text-xs font-medium transition whitespace-nowrap ${
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition whitespace-nowrap cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900'
-                  : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50'
+                  ? 'bg-white dark:bg-[#111827] text-slate-900 dark:text-white shadow-soft-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {cat}
@@ -237,7 +237,7 @@ export default function SupplierProducts() {
       </div>
 
       {/* Products Table (Clean B2B Data Layout) */}
-      <div className="rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm overflow-hidden">
+      <div className="soft-card rounded-2.5xl border border-slate-200/80 dark:border-white/[0.08] shadow-soft overflow-hidden">
         {filtered.length === 0 ? (
           <div className="p-12 text-center text-slate-500 text-xs">
             No products found matching your search criteria.
@@ -353,8 +353,8 @@ export default function SupplierProducts() {
       {/* Add / Edit Product Modal */}
       {(isAddModalOpen || editingProduct) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-2xl rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 p-6 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-700">
+          <div className="w-full max-w-2xl rounded-3xl border border-slate-200/80 dark:border-white/[0.08] soft-panel p-6 sm:p-8 shadow-soft-lg space-y-4 max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b pb-3 border-slate-200/80 dark:border-white/[0.06]">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                 <Tag className="w-4 h-4 text-emerald-800 dark:text-emerald-400" />
                 <span>{editingProduct ? 'Edit Commercial Terms' : 'Add Wholesale Product'}</span>
@@ -362,7 +362,7 @@ export default function SupplierProducts() {
               <button
                 type="button"
                 onClick={handleCloseModal}
-                className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer"
+                className="p-1 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -370,7 +370,7 @@ export default function SupplierProducts() {
 
             <form onSubmit={handleSaveProduct} className="space-y-4 text-xs">
               {/* MANDATORY PRODUCT IMAGE SECTION */}
-              <div className="p-3.5 rounded-xl border border-slate-200/90 dark:border-slate-750 bg-slate-50/70 dark:bg-slate-900/60 space-y-3">
+              <div className="p-4 rounded-2.5xl soft-inset border border-slate-200/60 dark:border-white/[0.04] space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <ImageIcon className="w-4 h-4 text-emerald-800 dark:text-emerald-400" />

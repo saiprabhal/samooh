@@ -48,19 +48,19 @@ export default function Sidebar({
 
   // Desktop Collapsed Sidebar Content (Thin Line / Rail)
   const collapsedDesktopContent = (
-    <aside className="glass-panel fixed top-0 left-0 bottom-0 h-screen w-14 flex flex-col justify-between items-center py-3 z-30 transition-all duration-300 border-r-2.5 border-black dark:border-white">
+    <aside className="bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-r border-slate-200/70 dark:border-white/[0.06] shadow-soft-sm fixed top-0 left-0 bottom-0 h-screen w-14 flex flex-col justify-between items-center py-3 z-30 transition-all duration-300">
       {/* Top: Clean Expand Button (Aligned with TopNav) */}
       <div className="flex flex-col items-center w-full">
         <div className="h-10 flex items-center justify-center w-full mb-1">
           <button
             type="button"
             onClick={onToggleCollapse}
-            className="p-2 rounded-xl border-2 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] text-black dark:text-white hover:bg-[#FFDE59] dark:hover:bg-[#252530] transition shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#FFF] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none group relative cursor-pointer"
+            className="p-2 rounded-2xl border border-slate-200/80 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-850 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 hover:text-emerald-800 dark:hover:text-emerald-300 transition shadow-soft-sm group relative cursor-pointer"
             title="Expand Navigation Menu"
             aria-label="Expand sidebar"
           >
-            <ChevronRight className="w-4 h-4 stroke-[2.5]" />
-            <span className="absolute left-12 text-black dark:text-white bg-[#FAF7EE] dark:bg-[#18181F] border-2 border-black dark:border-white text-[11px] font-black px-2.5 py-1 rounded-lg shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#FFF] whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition z-50">
+            <ChevronRight className="w-4 h-4" />
+            <span className="absolute left-12 soft-panel text-slate-800 dark:text-white text-[11px] font-semibold px-2.5 py-1 rounded-xl shadow-soft-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition z-50">
               Expand Menu
             </span>
           </button>
@@ -81,22 +81,22 @@ export default function Sidebar({
                 to={item.path}
                 end={item.path === '/' || item.path === '/supplier'}
                 className={({ isActive: active }) =>
-                  `w-10 h-10 rounded-xl flex items-center justify-center transition relative group ${
+                  `w-10 h-10 rounded-2xl flex items-center justify-center transition relative group ${
                     active
-                      ? 'glass-nav-active text-black font-black'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-[#FFDE59]/40'
+                      ? 'soft-nav-active text-emerald-800 dark:text-emerald-300 font-bold shadow-soft-sm'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100/60 dark:hover:bg-slate-850/60'
                   }`
                 }
               >
-                <Icon className="w-4 h-4 stroke-[2.2]" />
+                <Icon className="w-4 h-4" />
                 
                 {/* Active Indicator dot */}
                 {isActive && (
-                  <span className="absolute right-1 top-1 w-2 h-2 rounded-full bg-black dark:bg-white border border-black" />
+                  <span className="absolute right-1 top-1 w-1.5 h-1.5 rounded-full bg-emerald-700 dark:bg-emerald-400" />
                 )}
 
                 {/* Tooltip on Hover */}
-                <span className="absolute left-12 text-black dark:text-white bg-[#FAF7EE] dark:bg-[#18181F] border-2 border-black dark:border-white text-[11px] font-black px-2.5 py-1 rounded-lg shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#FFF] whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition z-50">
+                <span className="absolute left-12 soft-panel text-slate-800 dark:text-white text-[11px] font-semibold px-2.5 py-1 rounded-xl shadow-soft-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition z-50">
                   {labelText}
                   {item.badge && ` (${item.badge})`}
                 </span>
@@ -111,11 +111,11 @@ export default function Sidebar({
         <button
           type="button"
           onClick={() => isSupplier ? setIsSupplierHelpOpen(true) : setIsHelpOpen(true)}
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-black dark:text-white hover:bg-[#FFDE59] transition relative group border border-transparent hover:border-2 hover:border-black cursor-pointer"
+          className="w-10 h-10 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100/60 dark:hover:bg-slate-850/60 transition relative group cursor-pointer"
           title="Help & Support"
         >
-          <HelpCircle className="w-4 h-4 stroke-[2.2]" />
-          <span className="absolute left-12 text-black dark:text-white bg-[#FAF7EE] dark:bg-[#18181F] border-2 border-black dark:border-white text-[11px] font-black px-2.5 py-1 rounded-lg shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#FFF] whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition z-50">
+          <HelpCircle className="w-4 h-4" />
+          <span className="absolute left-12 soft-panel text-slate-800 dark:text-white text-[11px] font-semibold px-2.5 py-1 rounded-xl shadow-soft-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition z-50">
             Help & Support
           </span>
         </button>
@@ -125,15 +125,15 @@ export default function Sidebar({
 
   // Desktop Expanded & Mobile Drawer Sidebar Content (Full Width)
   const expandedSidebarContent = (
-    <aside className="glass-panel w-full md:w-60 flex flex-col justify-between p-3.5 pb-10 md:pb-3.5 flex-shrink-0 h-screen overflow-y-auto border-r-2.5 border-black dark:border-white">
+    <aside className="bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-r border-slate-200/70 dark:border-white/[0.06] shadow-soft-sm w-full md:w-60 flex flex-col justify-between p-3.5 pb-10 md:pb-3.5 flex-shrink-0 h-screen overflow-y-auto">
       <div>
         {/* Navigation Header & Collapse/Close Button */}
-        <div className="flex items-center justify-between px-2 py-2 mb-3 border-b-2 border-black dark:border-white pb-3">
+        <div className="flex items-center justify-between px-2 py-2 mb-3 border-b border-slate-200/70 dark:border-white/[0.06] pb-3">
           <div className="flex items-center space-x-2">
-            <span className="text-xs font-black uppercase tracking-wider text-black dark:text-white">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Navigation
             </span>
-            <span className="text-[10px] px-2 py-0.5 rounded-md font-black border-2 border-black bg-[#FFDE59] text-black shadow-[1.5px_1.5px_0px_0px_#000]">
+            <span className="text-[10px] px-2.5 py-0.5 rounded-full font-bold soft-pill text-emerald-800 dark:text-emerald-300">
               {isSupplier ? 'SUPPLIER' : 'RETAIL'}
             </span>
           </div>
@@ -143,10 +143,10 @@ export default function Sidebar({
             <button
               type="button"
               onClick={onToggleCollapse}
-              className="hidden md:flex p-1.5 rounded-xl border-2 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] text-black dark:text-white hover:bg-[#FFDE59] transition shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#FFF] cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+              className="hidden md:flex p-1.5 rounded-xl border border-slate-200/80 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-850 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition shadow-soft-sm cursor-pointer"
               title="Collapse to thin line"
             >
-              <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
           )}
 
@@ -154,9 +154,9 @@ export default function Sidebar({
           {onCloseMobile && (
             <button
               onClick={onCloseMobile}
-              className="md:hidden p-1.5 rounded-xl border-2 border-black text-black hover:bg-[#FF70A6] shadow-[2px_2px_0px_0px_#000]"
+              className="md:hidden p-1.5 rounded-xl border border-slate-200/80 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-850 text-slate-400 hover:text-slate-600 transition cursor-pointer"
             >
-              <X className="w-4 h-4 stroke-[2.5]" />
+              <X className="w-4 h-4" />
             </button>
           )}
         </div>
@@ -175,19 +175,19 @@ export default function Sidebar({
                 end={item.path === '/' || item.path === '/supplier'}
                 onClick={onCloseMobile}
                 className={({ isActive }) =>
-                  `flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200 ${
+                  `flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-medium transition-all duration-200 ${
                     isActive
-                      ? 'glass-nav-active text-black font-black'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-[#FFDE59]/40 font-bold'
+                      ? 'soft-nav-active text-emerald-800 dark:text-emerald-300 font-bold shadow-soft-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-850/60'
                   }`
                 }
               >
                 <div className="flex items-center space-x-2.5">
-                  <Icon className="w-4 h-4 stroke-[2.2]" />
+                  <Icon className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                   <span>{item.label || t(item.labelKey) || 'Nearby Retailers'}</span>
                 </div>
                 {item.badge && (
-                  <span className="px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase border-2 border-black bg-[#FFDE59] text-black shadow-[1.5px_1.5px_0px_0px_#000]">
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-bold soft-pill text-emerald-800 dark:text-emerald-300">
                     {item.badge}
                   </span>
                 )}
@@ -199,32 +199,32 @@ export default function Sidebar({
 
       <div className="space-y-2.5">
         {/* Help & Support Trigger Option */}
-        <div className="pt-2 border-t-2 border-black dark:border-white">
+        <div className="pt-2 border-t border-slate-200/70 dark:border-white/[0.06]">
           <button
             type="button"
             onClick={() => {
               if (onCloseMobile) onCloseMobile();
               isSupplier ? setIsSupplierHelpOpen(true) : setIsHelpOpen(true);
             }}
-            className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-[#FFDE59]/40 transition border border-transparent hover:border-black cursor-pointer"
+            className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-850/60 transition cursor-pointer"
             title="Help & Support"
           >
             <div className="flex items-center space-x-2.5">
-              <HelpCircle className="w-4 h-4 stroke-[2.2]" />
+              <HelpCircle className="w-4 h-4 text-slate-400" />
               <span>{t('helpSupport') || 'Help & Support'}</span>
             </div>
           </button>
         </div>
 
         {/* System Status Footer Card */}
-        <div className="p-3 rounded-xl text-xs border-2 border-black dark:border-white bg-[#FAF7EE] dark:bg-[#18181F] shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#FFF]">
-          <div className="flex items-center space-x-2 font-bold mb-1">
-            <ShieldCheck className="w-4 h-4 text-black dark:text-white stroke-[2.5]" />
-            <span className="text-xs font-black text-black dark:text-white">
+        <div className="soft-card p-3.5 rounded-2.5xl text-xs border border-slate-200/80 dark:border-white/[0.08] shadow-soft-sm">
+          <div className="flex items-center space-x-2 font-medium mb-1">
+            <ShieldCheck className={`w-3.5 h-3.5 ${isSupplier ? 'text-emerald-700 dark:text-emerald-400' : 'text-emerald-700 dark:text-emerald-400'}`} />
+            <span className="text-xs font-bold text-slate-900 dark:text-white">
               {isSupplier ? 'Verified Supplier' : 'Samooh Network'}
             </span>
           </div>
-          <p className="text-[11px] text-slate-600 dark:text-slate-400 font-medium leading-normal">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">
             {isSupplier ? 'Wholesale bulk orders protected with escrow guarantees.' : t('clusterStatusText')}
           </p>
         </div>

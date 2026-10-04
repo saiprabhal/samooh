@@ -44,10 +44,10 @@ export default function PoolDetailModal({ pool, onClose, onAccept }) {
     const visual = getCommodityVisual(pool.product_name, pool.category);
 
     return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 animate-fade-in">
-      <div className="border-3 border-black dark:border-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#FFF] bg-[#FAF7EE] dark:bg-[#18181F] text-black dark:text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+      <div className="border border-slate-200/80 dark:border-white/[0.08] rounded-3xl w-full max-w-2xl overflow-hidden shadow-soft-lg soft-panel text-slate-900 dark:text-white">
         {/* Top Commodity Image Strip */}
-        <div className="relative h-32 w-full overflow-hidden bg-black flex-shrink-0 border-b-2.5 border-black dark:border-white">
+        <div className="relative h-32 w-full overflow-hidden bg-slate-900 flex-shrink-0">
           <img 
             src={visual.image} 
             alt={pool.product_name} 
@@ -58,24 +58,24 @@ export default function PoolDetailModal({ pool, onClose, onAccept }) {
 
           {/* Overlaid Badges */}
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-            <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-[#FFDE59] text-black border-2 border-black shadow-[1.5px_1.5px_0px_0px_#000]">
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20">
               {visual.categoryName}
             </span>
             <button 
               onClick={onClose}
-              className="p-1 rounded-lg bg-[#FF70A6] text-black border-2 border-black hover:bg-[#FF70A6]/80 transition cursor-pointer shadow-[1.5px_1.5px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+              className="p-1 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 transition cursor-pointer"
             >
-              <X className="w-4 h-4 stroke-[3]" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Overlaid Title & Commodity Sub-Label */}
           <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white drop-shadow-sm">
             <div>
-              <div className="text-[11px] font-bold text-white/90">
+              <div className="text-[11px] font-medium text-white/80">
                 {visual.commodityType} • {visual.defaultUnit}
               </div>
-              <h2 className="text-lg sm:text-xl font-black text-white tracking-tight leading-snug">
+              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug">
                 {pool.product_name}
               </h2>
             </div>
@@ -84,13 +84,13 @@ export default function PoolDetailModal({ pool, onClose, onAccept }) {
         </div>
 
         {/* Subheader bar with cluster info */}
-        <div className="px-4 py-2 border-b-2 border-black dark:border-white bg-[#FFDE59]/20 flex items-center justify-between text-xs font-bold text-black dark:text-white">
+        <div className="px-5 py-2.5 border-b border-slate-200/80 dark:border-white/[0.06] soft-inset flex items-center justify-between text-xs text-slate-500">
           <span className="flex items-center">
-            <MapPin className="w-3.5 h-3.5 mr-1 text-black dark:text-white stroke-[2.5]" />
-            {t('avgRadius')}: <strong className="ml-1 text-black dark:text-white font-black">{pool.average_cluster_distance_km} km</strong>
+            <MapPin className="w-3.5 h-3.5 mr-1 text-slate-400" />
+            {t('avgRadius')}: <strong className="ml-1 text-slate-700 dark:text-slate-200">{pool.average_cluster_distance_km} km</strong>
           </span>
-          <span className="text-[11px] font-mono font-bold">
-            Pool ID: <span>{pool.id || pool.pool_id}</span>
+          <span className="text-[11px] text-slate-400">
+            Pool ID: <span className="font-mono">{pool.id || pool.pool_id}</span>
           </span>
         </div>
 
@@ -101,18 +101,18 @@ export default function PoolDetailModal({ pool, onClose, onAccept }) {
 
           {/* Pricing & Progress Highlights */}
           <div className="grid grid-cols-3 gap-3">
-            <div className="p-3 rounded-xl border-2 border-black dark:border-white bg-white dark:bg-black/30 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#FFF]">
-              <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">{t('unitRetailPrice')}</span>
-              <div className="text-base font-black text-slate-700 dark:text-slate-300 mt-0.5">₹{unitRetail.toLocaleString()}</div>
+            <div className="p-3.5 rounded-2xl soft-inset border border-slate-200/60 dark:border-white/[0.04]">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block">{t('unitRetailPrice')}</span>
+              <div className="text-base font-bold text-slate-700 dark:text-slate-300 mt-0.5">₹{unitRetail.toLocaleString()}</div>
             </div>
-            <div className="p-3 rounded-xl border-2 border-black dark:border-white bg-white dark:bg-black/30 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#FFF]">
-              <span className="text-[11px] font-bold text-black dark:text-white block">{t('unitWholesalePrice')}</span>
-              <div className="text-base font-black text-black dark:text-white mt-0.5">₹{unitWholesale.toLocaleString()}</div>
+            <div className="p-3.5 rounded-2xl soft-inset border border-slate-200/60 dark:border-white/[0.04]">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block">{t('unitWholesalePrice')}</span>
+              <div className="text-base font-bold text-emerald-800 dark:text-emerald-400 mt-0.5">₹{unitWholesale.toLocaleString()}</div>
             </div>
-            <div className="p-3 rounded-xl border-2 border-black dark:border-white bg-[#22C55E]/30 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#FFF]">
-              <span className="text-[11px] font-black text-black dark:text-white uppercase block">{t('totalGroupSavings')}</span>
-              <div className="text-base font-black text-black dark:text-white mt-0.5">₹{pool.estimated_total_savings.toLocaleString()}</div>
-              <span className="text-[10px] font-black uppercase text-black dark:text-white">({pool.estimated_savings_percentage}% margin)</span>
+            <div className="p-3 rounded-md border border-emerald-200 bg-emerald-50/60 dark:bg-emerald-950/20 dark:border-emerald-900/50">
+              <span className="text-[11px] text-emerald-800 dark:text-emerald-400 font-medium block">{t('totalGroupSavings')}</span>
+              <div className="text-base font-bold text-emerald-900 dark:text-emerald-300 mt-0.5">₹{pool.estimated_total_savings.toLocaleString()}</div>
+              <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-medium">({pool.estimated_savings_percentage}% margin)</span>
             </div>
           </div>
 
@@ -246,10 +246,10 @@ export default function PoolDetailModal({ pool, onClose, onAccept }) {
         </div>
 
         {/* Modal Actions */}
-        <div className="p-3.5 border-t-2 border-black dark:border-white flex items-center justify-end space-x-2.5 bg-[#FAF7EE] dark:bg-[#18181F]">
+        <div className="p-4 border-t border-slate-200/80 dark:border-white/[0.06] flex items-center justify-end space-x-2.5 bg-slate-50/50 dark:bg-slate-900/50">
           <button 
             onClick={onClose}
-            className="px-4 py-2 rounded-xl border-2 border-black dark:border-white text-xs font-black uppercase text-black dark:text-white bg-white dark:bg-black/30 hover:bg-[#FF70A6] hover:text-black transition shadow-[2.5px_2.5px_0px_0px_#000] dark:shadow-[2.5px_2.5px_0px_0px_#FFF] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none cursor-pointer"
+            className="px-4 py-2 rounded-xl border border-slate-200/80 dark:border-white/[0.08] text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100/70 dark:hover:bg-slate-800 transition cursor-pointer"
           >
             Close
           </button>
@@ -258,9 +258,9 @@ export default function PoolDetailModal({ pool, onClose, onAccept }) {
               onAccept(pool);
               onClose();
             }}
-            className="px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-[#22C55E] text-black border-2 border-black flex items-center space-x-2 transition shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#FFF] hover:bg-[#22C55E]/85 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none cursor-pointer"
+            className="soft-button-primary px-5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition shadow-soft cursor-pointer"
           >
-            <CheckCircle2 className="w-4 h-4 stroke-[3]" />
+            <CheckCircle2 className="w-4 h-4" />
             <span>{t('acceptPoolBtn')}</span>
           </button>
         </div>

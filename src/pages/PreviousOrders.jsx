@@ -86,14 +86,16 @@ export default function PreviousOrders() {
 
       {/* Overview Stat Cards Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm">
+        <div className="soft-card p-5 rounded-2.5xl border border-slate-200/80 dark:border-white/[0.08] shadow-soft hover:shadow-soft-lg transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
               {t('totalOrders')}
             </span>
-            <PackageCheck className="w-4 h-4 text-slate-400" />
+            <div className="w-8 h-8 rounded-2xl soft-inset flex items-center justify-center text-slate-500 dark:text-slate-400">
+              <PackageCheck className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-xl font-bold mt-1 text-slate-900 dark:text-white">
+          <p className="text-2xl font-bold mt-2 text-slate-900 dark:text-white">
             {totalOrdersCount}
           </p>
           <span className="text-[11px] text-slate-400 block mt-0.5">
@@ -101,14 +103,16 @@ export default function PreviousOrders() {
           </span>
         </div>
 
-        <div className="p-4 rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm">
+        <div className="soft-card p-5 rounded-2.5xl border border-slate-200/80 dark:border-white/[0.08] shadow-soft hover:shadow-soft-lg transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
               {t('lifetimeSavings')}
             </span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+            <div className="w-8 h-8 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 flex items-center justify-center">
+              <CheckCircle2 className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-xl font-bold mt-1 text-emerald-800 dark:text-emerald-400">
+          <p className="text-2xl font-bold mt-2 text-emerald-800 dark:text-emerald-400">
             {formatINR(totalUserSavings)}
           </p>
           <span className="text-[11px] text-slate-400 block mt-0.5">
@@ -116,14 +120,16 @@ export default function PreviousOrders() {
           </span>
         </div>
 
-        <div className="p-4 rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm">
+        <div className="soft-card p-5 rounded-2.5xl border border-slate-200/80 dark:border-white/[0.08] shadow-soft hover:shadow-soft-lg transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
               Total Items Procured
             </span>
-            <Tag className="w-4 h-4 text-slate-400" />
+            <div className="w-8 h-8 rounded-2xl soft-inset flex items-center justify-center text-slate-500 dark:text-slate-400">
+              <Tag className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-xl font-bold mt-1 text-slate-900 dark:text-white">
+          <p className="text-2xl font-bold mt-2 text-slate-900 dark:text-white">
             {totalItemsProcured} Units
           </p>
           <span className="text-[11px] text-slate-400 block mt-0.5">
@@ -134,16 +140,16 @@ export default function PreviousOrders() {
 
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        {/* Status Filter Badges */}
-        <div className="flex items-center space-x-1 overflow-x-auto pb-1 sm:pb-0">
+        {/* Status Filter Badges Segmented Pill */}
+        <div className="p-1.5 rounded-2xl bg-slate-100/80 dark:bg-slate-850/80 border border-slate-200/70 dark:border-white/[0.06] flex items-center space-x-1.5 overflow-x-auto shadow-soft-inset">
           {['All', 'Delivered', 'In Transit', 'Processing'].map((status) => (
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
-              className={`px-3 py-1 rounded-md text-xs font-medium transition whitespace-nowrap ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer ${
                 statusFilter === status
-                  ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900'
-                  : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50'
+                  ? 'bg-white dark:bg-[#111827] text-slate-900 dark:text-white shadow-soft'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {status}
@@ -159,13 +165,13 @@ export default function PreviousOrders() {
             placeholder="Search by invoice or item..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full border border-slate-200 dark:border-slate-700 rounded-md pl-9 pr-3 py-1.5 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-800"
+            className="soft-input w-full rounded-full pl-9 pr-3 py-1.5 text-xs border border-slate-200/80 dark:border-white/[0.08]"
           />
         </div>
       </div>
 
       {/* Orders List / Cards Grid */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {filteredOrders.length > 0 ? (
           filteredOrders.map((order) => {
             const isDelivered = order.status === 'Delivered';
@@ -174,16 +180,16 @@ export default function PreviousOrders() {
             return (
               <div
                 key={order.id}
-                className="rounded-lg p-4 border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm"
+                className="soft-card rounded-2.5xl p-5 border border-slate-200/80 dark:border-white/[0.08] shadow-soft hover:shadow-soft-lg transition-all space-y-3"
               >
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-white/[0.06]">
                   {/* Order ID & Date */}
-                  <div className="space-y-0.5">
-                    <div className="flex items-center space-x-2">
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2.5">
                       <span className="font-mono text-xs font-bold text-slate-900 dark:text-white">
                         {order.invoiceNo}
                       </span>
-                      <span className={`px-2 py-0.5 rounded text-[11px] font-medium border flex items-center space-x-1 ${
+                      <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border flex items-center space-x-1 ${
                         isDelivered
                           ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
                           : isInTransit
@@ -195,7 +201,7 @@ export default function PreviousOrders() {
                       </span>
                     </div>
 
-                    <div className="flex items-center space-x-3 text-xs text-slate-500">
+                    <div className="flex items-center space-x-3 text-xs text-slate-500 dark:text-slate-400">
                       <span className="flex items-center">
                         <Calendar className="w-3 h-3 mr-1 text-slate-400" />
                         {order.date}
@@ -208,7 +214,7 @@ export default function PreviousOrders() {
                   </div>
 
                   {/* Financial & Items Summary */}
-                  <div className="flex items-center space-x-5 text-xs">
+                  <div className="flex items-center space-x-4 sm:space-x-6 text-xs soft-inset p-3 rounded-2xl border border-slate-200/60 dark:border-white/[0.04]">
                     <div>
                       <span className="block text-[10px] text-slate-400">Total Items</span>
                       <span className="font-semibold text-slate-800 dark:text-white">{order.itemsCount} Units</span>
@@ -221,29 +227,29 @@ export default function PreviousOrders() {
 
                     <div>
                       <span className="block text-[10px] text-slate-400">Wholesale Value</span>
-                      <span className="font-semibold text-slate-900 dark:text-white">{formatINR(order.totalWholesaleCost || 0)}</span>
+                      <span className="font-bold text-slate-900 dark:text-white">{formatINR(order.totalWholesaleCost || 0)}</span>
                     </div>
 
-                    <div className="p-1.5 rounded bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-center">
-                      <span className="block text-[9px] font-semibold text-emerald-800 dark:text-emerald-400 uppercase">Saved</span>
+                    <div className="p-1.5 px-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center">
+                      <span className="block text-[9px] font-bold text-emerald-800 dark:text-emerald-400 uppercase">Saved</span>
                       <span className="font-bold text-emerald-800 dark:text-emerald-300 text-xs">{formatINR(order.totalSavings || 0)}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Items Preview Chips & View Invoice Action */}
-                <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
                   <div className="flex items-center space-x-1.5 overflow-x-auto py-0.5">
                     {order.items && order.items.slice(0, 3).map((it, idx) => (
                       <span
                         key={idx}
-                        className="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600 whitespace-nowrap"
+                        className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-slate-100/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/[0.08] whitespace-nowrap"
                       >
                         {it.name} ({it.qty}x)
                       </span>
                     ))}
                     {order.items && order.items.length > 3 && (
-                      <span className="text-[10px] text-slate-500 font-medium">
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
                         +{order.items.length - 3} more
                       </span>
                     )}
@@ -251,17 +257,17 @@ export default function PreviousOrders() {
 
                   <button
                     onClick={() => handleViewInvoice(order)}
-                    className="w-full sm:w-auto px-3.5 py-1 rounded-md bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-xs shadow-sm transition flex items-center justify-center space-x-1"
+                    className="soft-button-primary w-full sm:w-auto px-4 py-2 rounded-xl font-bold text-xs shadow-soft transition flex items-center justify-center space-x-1 cursor-pointer"
                   >
                     <span>{t('viewInvoice')}</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
             );
           })
         ) : (
-          <div className="p-12 text-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+          <div className="p-12 text-center rounded-2.5xl soft-card border border-slate-200/80 dark:border-white/[0.08]">
             <p className="text-slate-400 text-xs">{t('noOrdersMatching')}</p>
           </div>
         )}

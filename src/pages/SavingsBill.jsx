@@ -248,12 +248,12 @@ Amount Payable: ₹${(invoice.finalPayable || 0).toLocaleString()}`;
       </div>
 
       {/* Main Printable Invoice Card */}
-      <div className="rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 p-5 sm:p-8 shadow-sm">
+      <div className="soft-card rounded-3xl border border-slate-200/80 dark:border-white/[0.08] p-6 sm:p-10 shadow-soft-lg">
         {/* Invoice Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between pb-5 border-b border-slate-200 dark:border-slate-700 gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between pb-5 border-b border-slate-200/80 dark:border-white/[0.06] gap-4">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Samooh <span className="text-xs font-semibold uppercase px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600">Wholesale Invoice</span>
+              Samooh <span className="text-xs font-bold uppercase px-2.5 py-0.5 rounded-full soft-pill text-emerald-800 dark:text-emerald-300">Wholesale Invoice</span>
             </h1>
             <p className="text-xs mt-1 text-slate-500 dark:text-slate-400">
               Kirana Wholesale Procurement Platform
@@ -261,10 +261,10 @@ Amount Payable: ₹${(invoice.finalPayable || 0).toLocaleString()}`;
           </div>
 
           <div className="text-left md:text-right">
-            <span className="text-xs font-mono font-semibold text-slate-700 dark:text-slate-300">
+            <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
               {t('invoiceNo')}: <strong className="text-slate-900 dark:text-white">{invoice.invoiceNo}</strong>
             </span>
-            <div className="text-xs mt-1 flex items-center md:justify-end text-slate-500">
+            <div className="text-xs mt-1 flex items-center md:justify-end text-slate-500 dark:text-slate-400">
               <Calendar className="w-3.5 h-3.5 mr-1 text-slate-400" />
               {t('billingDate')}: <strong className="ml-1 text-slate-800 dark:text-slate-200">{invoice.date}</strong>
             </div>
@@ -272,7 +272,7 @@ Amount Payable: ₹${(invoice.finalPayable || 0).toLocaleString()}`;
         </div>
 
         {/* Store & Cluster Info Banner */}
-        <div className="my-5 grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 text-xs">
+        <div className="my-5 grid grid-cols-1 md:grid-cols-2 gap-4 p-5 rounded-2.5xl soft-inset border border-slate-200/60 dark:border-white/[0.04] text-xs">
           <div>
             <span className="text-[10px] uppercase font-semibold text-slate-400 block">
               {t('storeDetails')}
@@ -356,9 +356,9 @@ Amount Payable: ₹${(invoice.finalPayable || 0).toLocaleString()}`;
         {/* Financial Summary & Total Savings Highlight */}
         <div className="my-5 grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Dispatch Status Timeline */}
-          <div className="p-4 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col justify-between">
+          <div className="p-5 rounded-2.5xl soft-inset border border-slate-200/60 dark:border-white/[0.04] flex flex-col justify-between">
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-wider mb-3 flex items-center text-slate-800 dark:text-slate-200">
+              <h4 className="text-xs font-bold uppercase tracking-wider mb-3 flex items-center text-slate-800 dark:text-slate-200">
                 <Truck className="w-3.5 h-3.5 text-slate-500 mr-1.5" />
                 {t('dispatchStatus')}
               </h4>
@@ -383,7 +383,7 @@ Amount Payable: ₹${(invoice.finalPayable || 0).toLocaleString()}`;
             </div>
 
             {/* Verification */}
-            <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-[11px] text-slate-400">
+            <div className="mt-4 pt-3 border-t border-slate-200/80 dark:border-white/[0.06] flex items-center justify-between text-[11px] text-slate-400">
               <div className="flex items-center space-x-2">
                 <QrCode className="w-6 h-6 text-slate-500" />
                 <span>Verified commercial wholesale invoice</span>
@@ -393,8 +393,8 @@ Amount Payable: ₹${(invoice.finalPayable || 0).toLocaleString()}`;
           </div>
 
           {/* Financial Calculation Box */}
-          <div className="p-4 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 space-y-2.5 text-xs">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-800 dark:text-slate-200 border-b border-slate-200 dark:border-slate-700 pb-1.5">
+          <div className="p-5 rounded-2.5xl soft-inset border border-slate-200/60 dark:border-white/[0.04] space-y-2.5 text-xs">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 border-b border-slate-200/80 dark:border-white/[0.06] pb-2">
               {t('summaryHeading')}
             </h4>
 
@@ -410,7 +410,7 @@ Amount Payable: ₹${(invoice.finalPayable || 0).toLocaleString()}`;
 
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>{t('subtotalWholesale')}</span>
-              <span className="font-medium text-slate-900 dark:text-white">{formatINR(invoice.totalWholesaleCost)}</span>
+              <span className="font-semibold text-slate-900 dark:text-white">{formatINR(invoice.totalWholesaleCost)}</span>
             </div>
 
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
@@ -420,11 +420,11 @@ Amount Payable: ₹${(invoice.finalPayable || 0).toLocaleString()}`;
 
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>{t('logisticsDeliveryFee')}</span>
-              <span className="text-emerald-800 dark:text-emerald-400 font-medium">₹0 (Pooled Free Delivery)</span>
+              <span className="text-emerald-800 dark:text-emerald-400 font-semibold">₹0 (Pooled Free Delivery)</span>
             </div>
 
             {/* Total Payable Box */}
-            <div className="pt-2 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between font-bold text-sm">
+            <div className="pt-2 border-t border-slate-200/80 dark:border-white/[0.06] flex items-center justify-between font-bold text-sm">
               <span className="text-slate-900 dark:text-white">
                 {t('finalPayableAmount')}
               </span>
@@ -434,8 +434,8 @@ Amount Payable: ₹${(invoice.finalPayable || 0).toLocaleString()}`;
             </div>
 
             {/* Total Savings Highlight Badge */}
-            <div className="mt-2 p-3 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-900 text-center">
-              <span className="text-[10px] font-semibold uppercase tracking-wider block text-emerald-800">
+            <div className="mt-2 p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-300 text-center shadow-soft-sm">
+              <span className="text-[10px] font-bold uppercase tracking-wider block text-emerald-800 dark:text-emerald-400">
                 {t('totalSavedHighlight')}
               </span>
               <span className="text-lg font-bold block mt-0.5">

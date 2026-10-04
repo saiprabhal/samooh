@@ -134,11 +134,11 @@ export default function Impact() {
 
       {/* Savings Growth & ROI Chart */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="rounded-lg p-5 border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm">
-          <h3 className="text-xs font-semibold uppercase tracking-wider mb-1 text-slate-800 dark:text-white">
+        <div className="soft-card rounded-2.5xl p-6 border border-slate-200/80 dark:border-white/[0.08] shadow-soft">
+          <h3 className="text-xs font-bold uppercase tracking-wider mb-1 text-slate-800 dark:text-white">
             {t('cumulativeFinancialGrowth')}
           </h3>
-          <p className="text-xs mb-3 text-slate-500">
+          <p className="text-xs mb-3 text-slate-500 dark:text-slate-400">
             Cumulative money saved by participating small retailers
           </p>
           <div className="h-60">
@@ -154,10 +154,10 @@ export default function Impact() {
                 <XAxis dataKey="month" stroke="#64748B" fontSize={11} />
                 <YAxis stroke="#64748B" fontSize={11} tickFormatter={(v) => `₹${v/1000}k`} />
                 <Tooltip contentStyle={{ 
-                  backgroundColor: theme === 'light' ? '#FFFFFF' : '#1E293B', 
-                  borderColor: '#CBD5E1', 
-                  borderRadius: '6px',
-                  fontSize: '12px'
+                  backgroundColor: theme === 'light' ? '#FFFFFF' : '#111827', 
+                  borderColor: theme === 'light' ? '#E2E8F0' : '#374151', 
+                  borderRadius: '16px',
+                  boxShadow: '0 8px 24px -4px rgba(15, 23, 42, 0.08)'
                 }} />
                 <Area type="monotone" dataKey="savings" stroke="#166534" strokeWidth={2} fillOpacity={1} fill="url(#colorGreen)" />
               </AreaChart>
@@ -165,11 +165,11 @@ export default function Impact() {
           </div>
         </div>
 
-        <div className="rounded-lg p-5 border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm">
-          <h3 className="text-xs font-semibold uppercase tracking-wider mb-1 text-slate-800 dark:text-white">
+        <div className="soft-card rounded-2.5xl p-6 border border-slate-200/80 dark:border-white/[0.08] shadow-soft">
+          <h3 className="text-xs font-bold uppercase tracking-wider mb-1 text-slate-800 dark:text-white">
             {t('avgDiscountUnlocked')}
           </h3>
-          <p className="text-xs mb-3 text-slate-500">
+          <p className="text-xs mb-3 text-slate-500 dark:text-slate-400">
             Average discount percentage off benchmark single-store rates
           </p>
           <div className="h-60">
@@ -179,12 +179,12 @@ export default function Impact() {
                 <XAxis dataKey="month" stroke="#64748B" fontSize={11} />
                 <YAxis stroke="#64748B" fontSize={11} unit="%" />
                 <Tooltip contentStyle={{ 
-                  backgroundColor: theme === 'light' ? '#FFFFFF' : '#1E293B', 
-                  borderColor: '#CBD5E1', 
-                  borderRadius: '6px',
-                  fontSize: '12px'
+                  backgroundColor: theme === 'light' ? '#FFFFFF' : '#111827', 
+                  borderColor: theme === 'light' ? '#E2E8F0' : '#374151', 
+                  borderRadius: '16px',
+                  boxShadow: '0 8px 24px -4px rgba(15, 23, 42, 0.08)'
                 }} />
-                <Bar dataKey="roi" fill="#334155" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="roi" fill="#166534" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -192,44 +192,44 @@ export default function Impact() {
       </div>
 
       {/* Comparative Pricing Table */}
-      <div className="rounded-lg p-5 border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 shadow-sm">
-        <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100 dark:border-slate-700">
+      <div className="soft-card rounded-2.5xl p-6 border border-slate-200/80 dark:border-white/[0.08] shadow-soft overflow-hidden">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-white/[0.06]">
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-800 dark:text-white">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-white">
               {t('priceArbitrageAnalysis')}
             </h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Single-store retail price benchmark vs Samooh pooled wholesale rates
             </p>
           </div>
-          <span className="text-xs font-medium text-emerald-800 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800">
+          <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 soft-pill px-3 py-1 rounded-full">
             18.5% Net Average Margin
           </span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700">
+            <thead className="bg-slate-50/80 dark:bg-slate-900/60 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200/80 dark:border-white/[0.06]">
               <tr>
-                <th className="py-2.5 px-3">Product Name</th>
-                <th className="py-2.5 px-3 text-right">Individual Retail Price</th>
-                <th className="py-2.5 px-3 text-right">Samooh Group Price</th>
-                <th className="py-2.5 px-3 text-center">Discount %</th>
-                <th className="py-2.5 px-3 text-right">Est. Annual Savings</th>
+                <th className="py-3 px-3.5">Product Name</th>
+                <th className="py-3 px-3.5 text-right">Individual Retail Price</th>
+                <th className="py-3 px-3.5 text-right">Samooh Group Price</th>
+                <th className="py-3 px-3.5 text-center">Discount %</th>
+                <th className="py-3 px-3.5 text-right">Est. Annual Savings</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody className="divide-y divide-slate-100 dark:divide-white/[0.04]">
               {comparisonTable.map((row, idx) => (
-                <tr key={idx} className="border-b border-slate-100 dark:border-slate-800 text-xs">
-                  <td className="py-2.5 px-3 font-medium text-slate-800 dark:text-slate-200">{row.item}</td>
-                  <td className="py-2.5 px-3 text-right line-through text-slate-400">{formatINR(row.individual_price)}</td>
-                  <td className="py-2.5 px-3 text-right text-emerald-800 dark:text-emerald-400 font-semibold">{formatINR(row.pooled_price)}</td>
-                  <td className="py-2.5 px-3 text-right font-semibold text-emerald-800 dark:text-emerald-400">
-                    <span className="px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[10px]">
+                <tr key={idx} className="hover:bg-slate-50/60 dark:hover:bg-slate-850/40 transition">
+                  <td className="py-3 px-3.5 font-semibold text-slate-800 dark:text-slate-200">{row.item}</td>
+                  <td className="py-3 px-3.5 text-right line-through text-slate-400 font-medium">{formatINR(row.individual_price)}</td>
+                  <td className="py-3 px-3.5 text-right text-emerald-800 dark:text-emerald-400 font-bold">{formatINR(row.pooled_price)}</td>
+                  <td className="py-3 px-3.5 text-center font-bold text-emerald-800 dark:text-emerald-400">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[10px]">
                       {row.discount_pct}%
                     </span>
                   </td>
-                  <td className="py-2.5 px-3 text-right font-medium text-slate-700 dark:text-slate-300">{formatINR(row.annual_savings)} / yr</td>
+                  <td className="py-3 px-3.5 text-right font-semibold text-slate-700 dark:text-slate-300">{formatINR(row.annual_savings)} / yr</td>
                 </tr>
               ))}
             </tbody>
