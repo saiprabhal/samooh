@@ -41,7 +41,7 @@ export default function Sidebar({ mobileOpen = false, onCloseMobile }) {
   const currentNavItems = isSupplier ? supplierNavItems : retailerNavItems;
 
   const sidebarContent = (
-    <aside className={`w-60 border-r flex flex-col justify-between p-3.5 flex-shrink-0 min-h-screen transition-colors ${
+    <aside className={`w-full md:w-60 border-r flex flex-col justify-between p-3.5 pb-10 md:pb-3.5 flex-shrink-0 min-h-screen transition-colors ${
       theme === 'light'
         ? 'bg-white border-slate-200 text-slate-900'
         : 'bg-[#1E293B] border-slate-700/80 text-white'

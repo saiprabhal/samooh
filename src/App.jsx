@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import { AppProvider, useApp } from './context/AppContext';
 import Sidebar from './components/Sidebar';
 import TopNav from './components/TopNav';
+import BottomNav from './components/BottomNav';
 
 // Class-based Error Boundary to catch any render errors and prevent white screens
 class ErrorBoundary extends Component {
@@ -169,7 +170,7 @@ function MainLayout() {
           onToggleApi={() => setIsLiveApi(!isLiveApi)}
           onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
         />
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto pb-24 md:pb-6">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Retailer Routes */}
@@ -193,6 +194,9 @@ function MainLayout() {
             </Routes>
           </Suspense>
         </main>
+
+        {/* Mobile Bottom Navigation Bar */}
+        <BottomNav onOpenMoreMenu={() => setMobileMenuOpen(true)} />
       </div>
     </div>
   );
