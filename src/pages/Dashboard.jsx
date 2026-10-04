@@ -314,7 +314,7 @@ export default function Dashboard() {
             </p>
           </div>
           {recommendations.length > 0 && (
-            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full glass-pill text-emerald-800 dark:text-emerald-300">
               {recommendations.length} Active Pools
             </span>
           )}
@@ -333,7 +333,7 @@ export default function Dashboard() {
             ))}
           </div>
         ) : (
-          <div className="p-8 text-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+          <div className="p-8 text-center rounded-2xl glass-card">
             <p className="text-slate-500 text-xs">{t('noPools') || 'No active pools currently match your store location.'}</p>
           </div>
         )}
@@ -383,17 +383,17 @@ export default function Dashboard() {
       {/* Charts Grid Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Monthly Savings Trend Chart */}
-        <div className="lg:col-span-2 rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 p-5 shadow-sm">
-          <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100 dark:border-slate-700">
+        <div className="lg:col-span-2 rounded-2xl glass-card p-5">
+          <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/20 dark:border-white/10">
             <div>
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
                 {t('monthlySavingsGrowth')}
               </h3>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 {t('cumulativeSavingsDesc')}
               </p>
             </div>
-            <span className="text-xs font-medium px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full glass-pill text-emerald-800 dark:text-emerald-300">
               ₹84,520 {t('totalSaved')}
             </span>
           </div>
@@ -403,36 +403,38 @@ export default function Dashboard() {
               <AreaChart data={data?.monthly_savings_trend || MOCK_DASHBOARD.monthly_savings_trend}>
                 <defs>
                   <linearGradient id="savingsGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#166534" stopOpacity={0.2}/>
-                    <stop offset="95%" stopColor="#166534" stopOpacity={0.0}/>
+                    <stop offset="5%" stopColor="#059669" stopOpacity={0.4}/>
+                    <stop offset="95%" stopColor="#059669" stopOpacity={0.0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke={theme === 'light' ? '#F1F5F9' : '#1E293B'} />
+                <CartesianGrid strokeDasharray="3 3" stroke={theme === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'} />
                 <XAxis dataKey="month" stroke="#64748B" fontSize={11} />
                 <YAxis stroke="#64748B" fontSize={11} tickFormatter={(v) => `₹${v/1000}k`} />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: theme === 'light' ? '#FFFFFF' : '#1E293B', 
-                    borderColor: '#CBD5E1',
-                    borderRadius: '6px',
-                    fontSize: '12px'
+                    backgroundColor: theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(15, 23, 42, 0.85)', 
+                    backdropFilter: 'blur(16px)',
+                    borderColor: theme === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '12px',
+                    fontSize: '12px',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.2)'
                   }}
                   formatter={(val) => [formatINR(val), 'Group Savings']}
                 />
-                <Area type="monotone" dataKey="savings" stroke="#166534" strokeWidth={2} fillOpacity={1} fill="url(#savingsGrad)" />
+                <Area type="monotone" dataKey="savings" stroke="#059669" strokeWidth={2.5} fillOpacity={1} fill="url(#savingsGrad)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Category Breakdown Donut Chart */}
-        <div className="rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 p-5 shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl glass-card p-5 flex flex-col justify-between">
           <div>
-            <div className="pb-2 border-b border-slate-100 dark:border-slate-700 mb-3">
+            <div className="pb-2 border-b border-white/20 dark:border-white/10 mb-3">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
                 {t('categoryBreakdown')}
               </h3>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 {t('categoryDesc')}
               </p>
             </div>

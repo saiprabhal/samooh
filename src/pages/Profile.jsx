@@ -28,7 +28,7 @@ export default function Profile() {
 
   const isSupplier = userRole === 'supplier';
 
-  // Notification Preferences State (in-app switches)
+  // Notification Preferences State
   const [notifications, setNotifications] = useState({
     poolAlerts: true,
     priceDrops: true,
@@ -51,7 +51,7 @@ export default function Profile() {
     navigate('/login?logout=true');
   };
 
-  // Derive comprehensive user profile info
+  // User Profile Info
   const displayName = isSupplier 
     ? (currentSupplier?.name || userProfile?.businessName || 'Wholesale Supplier')
     : (user?.storeName || userProfile?.storeName || 'Kirana Retail Store');
@@ -83,26 +83,25 @@ export default function Profile() {
     ? 'North Telangana Logistics Grid #2'
     : (user?.clusterHub || `${city} South-West Cluster #4`);
 
-  const budget = user?.monthlyBudget || '₹2,50,000';
   const totalSaved = user?.totalSaved || '₹18,450';
   const rating = isSupplier ? (currentSupplier?.rating || 4.8) : (user?.rating || 4.9);
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-6">
-      {/* Top Breadcrumb & Header */}
-      <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+      {/* Top Header Bar */}
+      <div className="flex items-center justify-between pb-3 border-b border-white/20 dark:border-white/10">
         <div className="flex items-center space-x-3">
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition"
+            className="p-2 rounded-xl border border-white/40 dark:border-white/10 bg-white/40 dark:bg-white/5 hover:bg-white/70 dark:hover:bg-white/15 text-slate-600 dark:text-slate-300 transition shadow-sm"
             title="Go back"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Account & App Settings
+              Account & Preferences
             </h1>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               Manage your business profile, display theme, language, and alert preferences.
@@ -113,7 +112,7 @@ export default function Profile() {
         <button
           type="button"
           onClick={handleLogout}
-          className="py-1.5 px-3 rounded-lg border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 hover:bg-rose-100 text-xs font-semibold transition flex items-center space-x-1.5 shadow-sm"
+          className="py-2 px-3.5 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 dark:text-rose-300 text-xs font-bold transition flex items-center space-x-1.5 shadow-sm backdrop-blur-md"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Sign Out</span>
@@ -121,8 +120,8 @@ export default function Profile() {
       </div>
 
       {saveMessage && (
-        <div className="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-medium flex items-center space-x-2 animate-fade-in">
-          <Check className="w-4 h-4" />
+        <div className="p-3.5 rounded-xl glass-panel text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center space-x-2 animate-fade-in shadow-md">
+          <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           <span>{saveMessage}</span>
         </div>
       )}
@@ -132,17 +131,15 @@ export default function Profile() {
         
         {/* Left Column: Business & User Card */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm text-center relative overflow-hidden">
+          <div className="glass-card p-6 rounded-2xl text-center relative overflow-hidden group">
             {/* Top background accent */}
             <div className={`absolute top-0 left-0 right-0 h-16 ${
-              isSupplier ? 'bg-gradient-to-r from-emerald-800 to-teal-800' : 'bg-gradient-to-r from-emerald-900 to-slate-900'
+              isSupplier ? 'bg-gradient-to-r from-emerald-700 to-teal-800 opacity-60' : 'bg-gradient-to-r from-emerald-800 to-slate-900 opacity-60'
             }`} />
 
             {/* Avatar / Brand Icon */}
             <div className="relative pt-4 flex justify-center">
-              <div className={`w-20 h-20 rounded-2xl border-4 border-white dark:border-slate-800 flex items-center justify-center shadow-md font-bold text-2xl text-white ${
-                isSupplier ? 'bg-emerald-800' : 'bg-slate-900'
-              }`}>
+              <div className="w-20 h-20 rounded-2xl border-4 border-white/80 dark:border-white/10 flex items-center justify-center shadow-xl font-bold text-2xl text-white bg-gradient-to-br from-emerald-600 to-teal-700 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                 {isSupplier ? (
                   <Truck className="w-10 h-10" />
                 ) : user?.avatar ? (
@@ -153,7 +150,7 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="mt-3 space-y-1">
+            <div className="mt-4 space-y-1">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white truncate">
                 {displayName}
               </h2>
@@ -161,15 +158,11 @@ export default function Profile() {
                 {contactName}
               </p>
               
-              <div className="pt-2 flex items-center justify-center gap-2">
-                <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-tight border ${
-                  isSupplier 
-                    ? 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800'
-                    : 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800'
-                }`}>
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold glass-pill text-emerald-700 dark:text-emerald-300">
                   {isSupplier ? 'WHOLESALE SUPPLIER' : 'VERIFIED KIRANA RETAILER'}
                 </span>
-                <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center space-x-1">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold glass-pill text-slate-600 dark:text-slate-300 flex items-center space-x-1">
                   <ShieldCheck className="w-3 h-3 text-emerald-600" />
                   <span>KYC Active</span>
                 </span>
@@ -177,20 +170,20 @@ export default function Profile() {
             </div>
 
             {/* Quick Stats Grid */}
-            <div className="mt-6 pt-5 border-t border-slate-200/80 dark:border-slate-700/80 grid grid-cols-2 gap-3 text-left">
-              <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold block">
+            <div className="mt-6 pt-5 border-t border-white/20 dark:border-white/10 grid grid-cols-2 gap-3 text-left">
+              <div className="p-3 rounded-xl glass-pill">
+                <span className="text-[10px] text-slate-400 uppercase font-bold block tracking-wider">
                   {isSupplier ? 'Fulfillment' : 'Total Savings'}
                 </span>
                 <span className="text-sm font-bold text-slate-900 dark:text-white">
                   {isSupplier ? '98.5%' : totalSaved}
                 </span>
               </div>
-              <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold block">
+              <div className="p-3 rounded-xl glass-pill">
+                <span className="text-[10px] text-slate-400 uppercase font-bold block tracking-wider">
                   Platform Rating
                 </span>
-                <span className="text-sm font-bold text-amber-600 dark:text-amber-400 flex items-center space-x-1">
+                <span className="text-sm font-bold text-amber-500 flex items-center space-x-1">
                   <Award className="w-3.5 h-3.5 fill-current" />
                   <span>{rating} / 5.0</span>
                 </span>
@@ -199,30 +192,30 @@ export default function Profile() {
           </div>
 
           {/* Business Location & Cluster Card */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm space-y-3.5 text-xs">
+          <div className="glass-card p-5 rounded-2xl space-y-3.5 text-xs">
             <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center space-x-2">
-              <MapPin className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+              <MapPin className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>Location & Cluster Hub</span>
             </h3>
 
             <div className="space-y-2.5 text-slate-600 dark:text-slate-300">
               <div>
-                <span className="text-slate-400 block text-[11px]">Primary Address</span>
+                <span className="text-slate-400 block text-[11px] font-medium">Primary Address</span>
                 <span className="font-semibold text-slate-800 dark:text-slate-200">{address}</span>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <span className="text-slate-400 block text-[11px]">City / District</span>
+                  <span className="text-slate-400 block text-[11px] font-medium">City / District</span>
                   <span className="font-semibold text-slate-800 dark:text-slate-200">{city}, {state}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Pincode</span>
+                  <span className="text-slate-400 block text-[11px] font-medium">Pincode</span>
                   <span className="font-semibold text-slate-800 dark:text-slate-200">{pincode}</span>
                 </div>
               </div>
-              <div className="pt-2 border-t border-slate-100 dark:border-slate-700/80">
-                <span className="text-slate-400 block text-[11px]">Assigned Samooh Cluster</span>
-                <span className="font-bold text-emerald-800 dark:text-emerald-400">{clusterHub}</span>
+              <div className="pt-2 border-t border-white/20 dark:border-white/10">
+                <span className="text-slate-400 block text-[11px] font-medium">Assigned Samooh Cluster</span>
+                <span className="font-bold text-emerald-700 dark:text-emerald-400">{clusterHub}</span>
               </div>
             </div>
           </div>
@@ -232,18 +225,18 @@ export default function Profile() {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Section 1: Appearance & Display Theme */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 sm:p-6 shadow-sm space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-700">
+          <div className="glass-card p-5 sm:p-6 rounded-2xl space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-white/20 dark:border-white/10">
               <div>
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                   {theme === 'light' ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-emerald-400" />}
                   <span>Display Theme</span>
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Choose between high-contrast day mode or battery-saving dark mode.
+                  Choose between luminous glass day mode or deep obsidian night mode.
                 </p>
               </div>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full glass-pill text-slate-700 dark:text-slate-300">
                 {theme === 'light' ? 'Light Theme' : 'Dark Theme'}
               </span>
             </div>
@@ -254,16 +247,16 @@ export default function Profile() {
                 onClick={() => { if (theme !== 'light') toggleTheme(); }}
                 className={`p-4 rounded-xl border text-left transition flex items-center space-x-3 ${
                   theme === 'light'
-                    ? 'border-emerald-700 bg-emerald-50/50 ring-2 ring-emerald-700 text-slate-900'
-                    : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300'
+                    ? 'border-emerald-500/60 bg-emerald-500/15 ring-2 ring-emerald-500/30 text-slate-900 font-bold shadow-md'
+                    : 'glass-pill hover:border-white/30 text-slate-600 dark:text-slate-300'
                 }`}
               >
-                <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-amber-500 shadow-sm">
+                <div className="w-9 h-9 rounded-xl bg-white/80 border border-slate-200 flex items-center justify-center text-amber-500 shadow-sm">
                   <Sun className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs font-bold block">Light Mode</span>
-                  <span className="text-[11px] text-slate-500">Daytime clarity</span>
+                  <span className="text-xs font-bold block">Light Glass</span>
+                  <span className="text-[11px] text-slate-500 font-normal">Daytime luminous</span>
                 </div>
               </button>
 
@@ -272,27 +265,27 @@ export default function Profile() {
                 onClick={() => { if (theme !== 'dark') toggleTheme(); }}
                 className={`p-4 rounded-xl border text-left transition flex items-center space-x-3 ${
                   theme === 'dark'
-                    ? 'border-emerald-500 bg-emerald-950/40 ring-2 ring-emerald-500 text-white'
-                    : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300'
+                    ? 'border-emerald-500/60 bg-emerald-500/15 ring-2 ring-emerald-500/30 text-white font-bold shadow-md'
+                    : 'glass-pill hover:border-white/30 text-slate-600 dark:text-slate-300'
                 }`}
               >
-                <div className="w-9 h-9 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center text-emerald-400 shadow-sm">
+                <div className="w-9 h-9 rounded-xl bg-slate-900/80 border border-slate-700 flex items-center justify-center text-emerald-400 shadow-sm">
                   <Moon className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs font-bold block">Dark Mode</span>
-                  <span className="text-[11px] text-slate-500 dark:text-slate-400">Night & OLED optimized</span>
+                  <span className="text-xs font-bold block">Dark Obsidian</span>
+                  <span className="text-[11px] text-slate-400 font-normal">Night OLED glowing</span>
                 </div>
               </button>
             </div>
           </div>
 
           {/* Section 2: Regional Language Switcher */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 sm:p-6 shadow-sm space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-700">
+          <div className="glass-card p-5 sm:p-6 rounded-2xl space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-white/20 dark:border-white/10">
               <div>
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-                  <Languages className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+                  <Languages className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Platform Language (भाषा / భాష)</span>
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -313,10 +306,10 @@ export default function Profile() {
                       setSaveMessage(`Language set to ${langItem.nativeName}`);
                       setTimeout(() => setSaveMessage(''), 2500);
                     }}
-                    className={`p-3 rounded-lg border text-left transition flex items-center justify-between ${
+                    className={`p-3 rounded-xl border text-left transition flex items-center justify-between ${
                       isSelected
-                        ? 'border-emerald-700 bg-emerald-50/70 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-300 font-bold ring-1 ring-emerald-700 shadow-sm'
-                        : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200'
+                        ? 'border-emerald-500/60 bg-emerald-500/15 text-emerald-900 dark:text-emerald-300 font-bold ring-1 ring-emerald-500/30 shadow-md'
+                        : 'glass-pill hover:border-white/30 text-slate-700 dark:text-slate-200'
                     }`}
                   >
                     <div>
@@ -324,7 +317,7 @@ export default function Profile() {
                       <span className="text-[11px] text-slate-400 font-normal">{langItem.name}</span>
                     </div>
                     {isSelected && (
-                      <Check className="w-4 h-4 text-emerald-700 dark:text-emerald-400 stroke-[3]" />
+                      <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 stroke-[3]" />
                     )}
                   </button>
                 );
@@ -333,11 +326,11 @@ export default function Profile() {
           </div>
 
           {/* Section 3: Notification Alerts Center */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 sm:p-6 shadow-sm space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-700">
+          <div className="glass-card p-5 sm:p-6 rounded-2xl space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-white/20 dark:border-white/10">
               <div>
                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-                  <BellRing className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+                  <BellRing className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Procurement & Dispatch Notifications</span>
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -371,7 +364,7 @@ export default function Profile() {
               ].map((item) => (
                 <div 
                   key={item.key}
-                  className="flex items-center justify-between p-3 rounded-lg border border-slate-100 dark:border-slate-700/60 bg-slate-50/50 dark:bg-slate-800/40"
+                  className="flex items-center justify-between p-3 rounded-xl glass-pill"
                 >
                   <div className="pr-4">
                     <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 block">
@@ -387,8 +380,8 @@ export default function Profile() {
                     onClick={() => toggleNotification(item.key)}
                     className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 focus:outline-none flex-shrink-0 ${
                       notifications[item.key]
-                        ? 'bg-emerald-700 justify-end'
-                        : 'bg-slate-300 dark:bg-slate-600 justify-start'
+                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 justify-end shadow-sm'
+                        : 'bg-slate-300 dark:bg-slate-700 justify-start'
                     }`}
                   >
                     <span className="w-4 h-4 rounded-full bg-white shadow-md transform transition-transform" />
@@ -399,23 +392,23 @@ export default function Profile() {
           </div>
 
           {/* Section 4: Contact & Verification Details */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 sm:p-6 shadow-sm space-y-3.5">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider text-xs">
+          <div className="glass-card p-5 sm:p-6 rounded-2xl space-y-3.5">
+            <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Contact & Account Credentials
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700 space-y-1">
-                <span className="text-slate-400 text-[11px] flex items-center space-x-1">
-                  <Mail className="w-3.5 h-3.5" />
+              <div className="p-3.5 rounded-xl glass-pill space-y-1">
+                <span className="text-slate-400 text-[11px] flex items-center space-x-1 font-medium">
+                  <Mail className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Registered Email</span>
                 </span>
                 <span className="font-semibold text-slate-900 dark:text-white block truncate">{email}</span>
               </div>
 
-              <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700 space-y-1">
-                <span className="text-slate-400 text-[11px] flex items-center space-x-1">
-                  <Phone className="w-3.5 h-3.5" />
+              <div className="p-3.5 rounded-xl glass-pill space-y-1">
+                <span className="text-slate-400 text-[11px] flex items-center space-x-1 font-medium">
+                  <Phone className="w-3.5 h-3.5 text-emerald-600" />
                   <span>WhatsApp / Phone</span>
                 </span>
                 <span className="font-semibold text-slate-900 dark:text-white block">{phone}</span>

@@ -6,33 +6,30 @@ export default function KPICard({ title, value, change, isPositive = true, icon:
   const { theme } = useApp();
 
   return (
-    <div className={`p-4 sm:p-5 rounded-lg border transition-colors ${
-      theme === 'light'
-        ? 'bg-white border-slate-200/90 shadow-sm'
-        : 'bg-[#1E293B] border-slate-700/80 text-white'
-    }`}>
-      <div className="flex items-center justify-between">
-        <span className={`text-xs font-medium ${
-          theme === 'light' ? 'text-slate-500' : 'text-slate-400'
-        }`}>{title}</span>
+    <div className="glass-card p-4 sm:p-5 rounded-2xl relative overflow-hidden group">
+      {/* Ambient background glow on hover */}
+      <div className="absolute -top-10 -right-10 w-28 h-28 bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+
+      <div className="flex items-center justify-between relative z-10">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          {title}
+        </span>
         {Icon && (
-          <div className={`p-2 rounded-md ${
-            theme === 'light' ? 'bg-slate-100 text-slate-600' : 'bg-slate-800 text-slate-300'
-          }`}>
+          <div className="p-2.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/40 dark:bg-white/5 text-emerald-600 dark:text-emerald-400 shadow-sm transition-transform duration-300 group-hover:scale-110">
             <Icon className="w-4 h-4" />
           </div>
         )}
       </div>
 
-      <div className="mt-3 flex items-baseline justify-between gap-2">
-        <div className={`text-2xl font-semibold tracking-tight ${
-          theme === 'light' ? 'text-slate-900' : 'text-white'
-        }`}>{value}</div>
+      <div className="mt-3 flex items-baseline justify-between gap-2 relative z-10">
+        <div className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          {value}
+        </div>
         {change && (
-          <span className={`inline-flex items-center text-xs font-medium px-1.5 py-0.5 rounded ${
+          <span className={`inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded-full glass-pill ${
             isPositive 
-              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800/40' 
-              : 'bg-red-50 text-red-700 border border-red-200/60 dark:bg-red-950/40 dark:text-red-400 dark:border-red-800/40'
+              ? 'text-emerald-700 dark:text-emerald-400' 
+              : 'text-rose-700 dark:text-rose-400'
           }`}>
             {isPositive ? <TrendingUp className="w-3 h-3 mr-1" /> : <TrendingDown className="w-3 h-3 mr-1" />}
             {change}
@@ -41,9 +38,9 @@ export default function KPICard({ title, value, change, isPositive = true, icon:
       </div>
 
       {subtitle && (
-        <p className={`mt-1.5 text-xs ${
-          theme === 'light' ? 'text-slate-500' : 'text-slate-400'
-        }`}>{subtitle}</p>
+        <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 relative z-10">
+          {subtitle}
+        </p>
       )}
     </div>
   );

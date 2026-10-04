@@ -51,7 +51,7 @@ export default function RetailerCompatibilityCard({ result }) {
   }
 
   return (
-    <div className="rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 shadow-sm hover:border-stone-300 dark:hover:border-stone-700 transition p-4 sm:p-5 text-stone-800 dark:text-stone-100">
+    <div className="glass-card p-4 sm:p-5 rounded-2xl relative overflow-hidden group">
       {/* Top Header: Partner Store & Score Badge */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-stone-100 dark:border-stone-800">
         <div className="flex items-start sm:items-center space-x-3">

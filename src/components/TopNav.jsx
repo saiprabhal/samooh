@@ -16,18 +16,14 @@ export default function TopNav({
   const isSupplier = userRole === 'supplier' || location.pathname.startsWith('/supplier');
 
   return (
-    <header className={`h-14 border-b px-3 sm:px-5 flex items-center justify-between sticky top-0 z-20 transition-colors ${
-      theme === 'light'
-        ? 'bg-white border-slate-200 text-slate-900'
-        : 'bg-[#1E293B] border-slate-700/80 text-white'
-    }`}>
+    <header className="glass-panel h-14 px-3 sm:px-5 flex items-center justify-between sticky top-0 z-20">
       {/* Left: Mobile/Desktop Toggle + Logo & Brand Name + Search Bar */}
       <div className="flex items-center space-x-2.5 sm:space-x-4 flex-1 min-w-0 pr-3">
         {/* Mobile Hamburger Drawer Toggle */}
         <button
           type="button"
           onClick={onToggleMobileMenu}
-          className="md:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex-shrink-0"
+          className="md:hidden p-1.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/40 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:bg-white/70 dark:hover:bg-white/15 transition flex-shrink-0"
           aria-label="Toggle mobile navigation menu"
         >
           <Menu className="w-5 h-5" />
@@ -37,7 +33,7 @@ export default function TopNav({
         <button
           type="button"
           onClick={onToggleDesktopSidebar}
-          className="hidden md:flex p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition flex-shrink-0"
+          className="hidden md:flex p-1.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/40 dark:bg-white/5 hover:bg-white/70 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 transition flex-shrink-0 shadow-sm"
           title={isDesktopCollapsed ? "Open sidebar menu" : "Collapse sidebar menu"}
           aria-label="Toggle desktop sidebar"
         >
@@ -47,13 +43,11 @@ export default function TopNav({
         {/* Brand Logo & Name */}
         <div 
           onClick={() => navigate(isSupplier ? '/supplier' : '/')}
-          className="flex items-center space-x-2 cursor-pointer select-none flex-shrink-0"
+          className="flex items-center space-x-2.5 cursor-pointer select-none flex-shrink-0 group"
           title="Go to Samooh Home"
         >
-          <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white shadow-sm transition ${
-            isSupplier ? 'bg-emerald-800' : 'bg-emerald-700'
-          }`}>
-            {isSupplier ? <Truck className="w-4 h-4" /> : <Layers className="w-4 h-4" />}
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white bg-gradient-to-br from-emerald-600 to-teal-700 shadow-[0_0_16px_rgba(16,185,129,0.35)] border border-white/20 transition-transform duration-200 group-hover:scale-105">
+            {isSupplier ? <Truck className="w-4 h-4 text-white" /> : <Layers className="w-4 h-4 text-white" />}
           </div>
           <div className="flex items-center space-x-1.5">
             <span className={`text-base font-bold tracking-tight ${
@@ -61,31 +55,23 @@ export default function TopNav({
             }`}>
               {t('brandName') || 'Samooh'}
             </span>
-            <span className={`hidden sm:inline-block text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border ${
-              isSupplier 
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800' 
-                : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
-            }`}>
+            <span className="hidden sm:inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full glass-pill text-emerald-700 dark:text-emerald-400">
               {isSupplier ? 'Supplier' : 'Retail'}
             </span>
           </div>
         </div>
 
-        {/* Search Bar */}
+        {/* Search Bar with Pure Frosted Glass */}
         <div className="relative flex-1 max-w-xs sm:max-w-sm md:max-w-md">
           <Search className={`w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 ${
-            theme === 'light' ? 'text-slate-400' : 'text-slate-500'
+            theme === 'light' ? 'text-slate-400' : 'text-slate-400'
           }`} />
           <input 
             type="text"
             placeholder={t('searchPlaceholder') || "Search catalog, commodities, pools..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={`w-full border rounded-lg pl-9 pr-3 py-1.5 text-xs sm:text-sm transition focus:outline-none ${
-              theme === 'light'
-                ? 'bg-slate-50 border-slate-200 text-slate-800 placeholder-slate-400 focus:border-slate-400 focus:bg-white'
-                : 'bg-slate-800/80 border-slate-700 text-slate-200 placeholder-slate-500 focus:border-slate-600'
-            }`}
+            className="glass-input w-full rounded-xl pl-9 pr-3 py-1.5 text-xs sm:text-sm focus:outline-none"
           />
         </div>
       </div>
@@ -95,18 +81,18 @@ export default function TopNav({
         <button
           type="button"
           onClick={() => navigate('/profile')}
-          className="flex items-center space-x-2.5 p-1 sm:px-2.5 sm:py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition shadow-sm text-left focus:outline-none"
+          className="glass-card flex items-center space-x-2.5 p-1 sm:px-2.5 sm:py-1 rounded-xl text-left focus:outline-none"
           title="Open Profile, Theme, Language & Notification Settings"
           aria-label="User Profile and Settings"
         >
           {isSupplier ? (
-            <div className="w-7 h-7 rounded-md bg-emerald-800 flex items-center justify-center font-bold text-xs text-white shadow-sm">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-600 to-teal-700 flex items-center justify-center font-bold text-xs text-white shadow-sm border border-white/20">
               <Truck className="w-3.5 h-3.5" />
             </div>
           ) : user?.avatar ? (
-            <img src={user.avatar} alt="User Avatar" className="w-7 h-7 rounded-md border border-slate-300 object-cover shadow-sm" />
+            <img src={user.avatar} alt="User Avatar" className="w-7 h-7 rounded-lg border border-white/30 object-cover shadow-sm" />
           ) : (
-            <div className="w-7 h-7 rounded-md bg-slate-900 flex items-center justify-center font-bold text-xs text-white shadow-sm">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-slate-800 to-slate-900 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center font-bold text-xs text-white shadow-sm border border-white/20">
               {user?.storeName ? user.storeName.charAt(0) : 'S'}
             </div>
           )}

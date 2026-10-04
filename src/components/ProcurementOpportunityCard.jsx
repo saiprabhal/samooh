@@ -82,7 +82,7 @@ export default function ProcurementOpportunityCard({ opportunity, onFormPool }) 
   };
 
   return (
-    <div className="rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 p-4 shadow-sm flex flex-col justify-between transition hover:border-slate-300 dark:hover:border-slate-600">
+    <div className="glass-card p-4 sm:p-5 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
       <div>
         {/* Header: Category Badge & Status Badge */}
         <div className="flex items-center justify-between gap-2">

@@ -89,16 +89,9 @@ export default function BottomNav({ onOpenMoreMenu }) {
   return (
     <nav 
       aria-label="Mobile Bottom Navigation"
-      className={`md:hidden fixed bottom-0 left-0 right-0 z-40 transition-colors duration-200 border-t ${
-        theme === 'light'
-          ? 'bg-white/95 border-slate-200/90 text-slate-700 shadow-[0_-4px_25px_rgba(0,0,0,0.06)] backdrop-blur-md'
-          : 'bg-[#1E293B]/95 border-slate-800 text-slate-300 shadow-[0_-4px_25px_rgba(0,0,0,0.4)] backdrop-blur-md'
-      }`}
-      style={{
-        paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom, 0.5rem))'
-      }}
+      className="md:hidden fixed bottom-3 left-3 right-3 z-40 max-w-md mx-auto rounded-2xl glass-panel py-1.5 px-2 transition-all duration-300"
     >
-      <div className="flex items-center justify-around px-2 pt-1.5 max-w-md mx-auto">
+      <div className="flex items-center justify-around">
         {currentTabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = tab.exact 

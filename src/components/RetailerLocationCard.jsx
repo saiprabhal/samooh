@@ -120,12 +120,15 @@ export default function RetailerLocationCard({
   };
 
   return (
-    <div className="p-4 sm:p-5 rounded-xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-800/90 shadow-sm space-y-4">
+    <div className="glass-card p-4 sm:p-5 rounded-2xl space-y-4 relative overflow-hidden group">
+      {/* Ambient hover light */}
+      <div className="absolute -top-12 -left-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+
       {/* Header & Status Indicator */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-700/60">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/20 dark:border-white/10 relative z-10">
         <div className="flex items-center space-x-2.5">
-          <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white ${
-            isShared ? 'bg-emerald-800' : 'bg-slate-600'
+          <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-sm border border-white/20 ${
+            isShared ? 'bg-gradient-to-br from-emerald-600 to-teal-700' : 'bg-slate-700'
           }`}>
             <MapPin className="w-4 h-4" />
           </div>
@@ -142,12 +145,12 @@ export default function RetailerLocationCard({
         {/* Status Badge */}
         <div>
           {isShared ? (
-            <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold glass-pill text-emerald-800 dark:text-emerald-300">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Location Shared</span>
             </span>
           ) : (
-            <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold glass-pill text-slate-600 dark:text-slate-300">
               <EyeOff className="w-3.5 h-3.5" />
               <span>Location Not Shared</span>
             </span>
@@ -157,10 +160,10 @@ export default function RetailerLocationCard({
 
       {/* Notice Alert */}
       {notice && (
-        <div className={`p-3 rounded-lg text-xs flex items-start space-x-2 ${
+        <div className={`p-3 rounded-xl text-xs flex items-start space-x-2 backdrop-blur-md relative z-10 ${
           notice.type === 'success'
-            ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300'
-            : 'bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300'
+            ? 'glass-pill text-emerald-800 dark:text-emerald-300'
+            : 'glass-pill text-rose-800 dark:text-rose-300 border-rose-500/30'
         }`}>
           {notice.type === 'success' ? (
             <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
@@ -173,43 +176,43 @@ export default function RetailerLocationCard({
 
       {/* Metrics Row */}
       {isShared ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-          <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60">
-            <span className="text-[10px] text-slate-400 block font-medium">GPS Accuracy</span>
-            <span className="font-semibold text-slate-800 dark:text-slate-100">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs relative z-10">
+          <div className="p-3 rounded-xl glass-pill">
+            <span className="text-[10px] text-slate-400 block font-semibold uppercase tracking-wider">GPS Accuracy</span>
+            <span className="font-bold text-slate-800 dark:text-slate-100">
               ±{location?.accuracy || 15} meters
             </span>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60">
-            <span className="text-[10px] text-slate-400 block font-medium">Last Verified</span>
-            <span className={`font-semibold ${freshness.isStale ? 'text-amber-600 dark:text-amber-400' : 'text-slate-800 dark:text-slate-100'}`}>
+          <div className="p-3 rounded-xl glass-pill">
+            <span className="text-[10px] text-slate-400 block font-semibold uppercase tracking-wider">Last Verified</span>
+            <span className={`font-bold ${freshness.isStale ? 'text-amber-500' : 'text-slate-800 dark:text-slate-100'}`}>
               {freshness.text}
             </span>
           </div>
 
-          <div className="col-span-2 sm:col-span-1 p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60">
-            <span className="text-[10px] text-slate-400 block font-medium">GPS Source</span>
-            <span className="font-semibold text-slate-800 dark:text-slate-100">
+          <div className="col-span-2 sm:col-span-1 p-3 rounded-xl glass-pill">
+            <span className="text-[10px] text-slate-400 block font-semibold uppercase tracking-wider">GPS Source</span>
+            <span className="font-bold text-slate-800 dark:text-slate-100">
               Device Sensor (Real)
             </span>
           </div>
         </div>
       ) : (
-        <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-dashed border-slate-200 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400">
+        <div className="p-3.5 rounded-xl glass-pill text-xs text-slate-500 dark:text-slate-400 relative z-10">
           Sharing your real store coordinates enables nearby suppliers to verify wholesale delivery eligibility and calculate direct route savings for your orders.
         </div>
       )}
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap items-center gap-2 pt-1">
+      <div className="flex flex-wrap items-center gap-2 pt-1 relative z-10">
         {isShared ? (
           <>
             <button
               type="button"
               disabled={isUpdating}
               onClick={handleUpdateLocation}
-              className="py-2 px-3 rounded-lg bg-emerald-800 hover:bg-emerald-700 text-white font-medium text-xs transition shadow-sm flex items-center space-x-1.5 disabled:opacity-60"
+              className="py-2 px-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs transition shadow-md shadow-emerald-600/20 flex items-center space-x-1.5 disabled:opacity-60 border border-white/20"
             >
               {isUpdating ? (
                 <>
@@ -228,12 +231,12 @@ export default function RetailerLocationCard({
               type="button"
               disabled={isTogglingShare}
               onClick={handleToggleSharing}
-              className="py-2 px-3 rounded-lg border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium text-xs transition flex items-center space-x-1.5 disabled:opacity-60"
+              className="py-2 px-3.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/40 dark:bg-white/5 hover:bg-white/70 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 font-semibold text-xs transition flex items-center space-x-1.5 disabled:opacity-60 shadow-sm"
             >
               {isTogglingShare ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
               ) : (
-                <EyeOff className="w-3.5 h-3.5 text-slate-500" />
+                <EyeOff className="w-3.5 h-3.5 text-slate-400" />
               )}
               <span>Stop Sharing Location</span>
             </button>
@@ -243,7 +246,7 @@ export default function RetailerLocationCard({
             type="button"
             disabled={isUpdating}
             onClick={handleUpdateLocation}
-            className="py-2 px-4 rounded-lg bg-emerald-800 hover:bg-emerald-700 text-white font-medium text-xs transition shadow-sm flex items-center space-x-1.5 disabled:opacity-60"
+            className="py-2 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs transition shadow-md shadow-emerald-600/20 flex items-center space-x-1.5 disabled:opacity-60 border border-white/20"
           >
             {isUpdating ? (
               <>

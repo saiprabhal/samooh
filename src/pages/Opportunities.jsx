@@ -346,7 +346,7 @@ export default function Opportunities() {
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="rounded-lg border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-800 p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
+      <div className="glass-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3">
         {/* Search */}
         <div className="relative flex-1 min-w-[240px]">
           <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -361,7 +361,7 @@ export default function Opportunities() {
             }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full border border-slate-200 dark:border-slate-700 rounded-md pl-9 pr-3 py-1.5 text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-800"
+            className="glass-input w-full rounded-xl pl-9 pr-3 py-1.5 text-xs focus:outline-none"
           />
         </div>
 

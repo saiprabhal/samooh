@@ -154,11 +154,27 @@ function MainLayout() {
   }
 
   return (
-    <div className={`flex min-h-screen font-sans transition-colors duration-200 ${
+    <div className={`flex min-h-screen font-sans transition-colors duration-300 relative ${
       theme === 'light'
-        ? 'bg-[#F7F6F2] text-slate-900'
-        : 'bg-[#0F172A] text-slate-100'
+        ? 'bg-[#F4F7FB] text-slate-900'
+        : 'bg-[#070B14] text-slate-100'
     }`}>
+      {/* Ambient Glassmorphism Luminous Glow Backdrops */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className={`absolute -top-32 -left-32 w-96 h-96 sm:w-[520px] sm:h-[520px] rounded-full blur-[130px] transition-opacity duration-700 ${
+          theme === 'light' ? 'bg-emerald-300/35' : 'bg-emerald-500/15'
+        }`} />
+        <div className={`absolute -bottom-32 -right-32 w-96 h-96 sm:w-[600px] sm:h-[600px] rounded-full blur-[140px] transition-opacity duration-700 ${
+          theme === 'light' ? 'bg-teal-300/30' : 'bg-teal-500/14'
+        }`} />
+        <div className={`absolute top-1/4 right-[12%] w-80 h-80 sm:w-[460px] sm:h-[460px] rounded-full blur-[130px] transition-opacity duration-700 ${
+          theme === 'light' ? 'bg-sky-300/25' : 'bg-indigo-600/15'
+        }`} />
+        <div className={`absolute bottom-1/4 left-[18%] w-72 h-72 sm:w-[420px] sm:h-[420px] rounded-full blur-[120px] transition-opacity duration-700 ${
+          theme === 'light' ? 'bg-indigo-200/30' : 'bg-cyan-500/10'
+        }`} />
+      </div>
+
       {/* Left Sidebar Navigation (Fixed on Desktop, Collapsible Thin Line) */}
       <Sidebar 
         mobileOpen={mobileMenuOpen}
@@ -168,7 +184,7 @@ function MainLayout() {
       />
 
       {/* Main Content Area - dynamically offsets for fixed desktop sidebar */}
-      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${
+      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 relative z-10 ${
         isDesktopCollapsed ? 'md:ml-14' : 'md:ml-60'
       }`}>
         <TopNav 
