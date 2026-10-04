@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Layers, CheckCircle2 } from 'lucide-react';
+import { Layers, CheckCircle2, LogOut, ArrowLeft } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 import RoleSelectionStep from './RoleSelectionStep';
@@ -25,10 +25,22 @@ export default function Onboarding() {
     firebaseUser, 
     user, 
     userProfile,
+    logout,
     completeRetailerOnboarding, 
     completeSupplierOnboarding 
   } = useApp();
   const navigate = useNavigate();
+
+  const handleBackToLogin = async () => {
+    try {
+      if (logout) {
+        await logout();
+      }
+    } catch (err) {
+      console.warn('[Samooh Onboarding] Logout error:', err);
+    }
+    navigate('/login?logout=true');
+  };
 
   const [role, setRole] = useState(null);
   const [currentStep, setCurrentStep] = useState(0); // 0 = Role Selection, 1..N = Role Steps
@@ -174,14 +186,25 @@ export default function Onboarding() {
           </div>
         </div>
 
-        {firebaseUser && (
-          <div className="text-right text-xs">
-            <span className="text-slate-500 block text-[11px]">Logged in as</span>
-            <span className="font-semibold text-slate-800 dark:text-slate-200 truncate max-w-[160px] inline-block">
-              {firebaseUser.email}
-            </span>
-          </div>
-        )}
+        <div className="flex items-center space-x-3 text-xs">
+          {firebaseUser && (
+            <div className="text-right hidden sm:block">
+              <span className="text-slate-500 block text-[11px]">Logged in as</span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200 truncate max-w-[150px] inline-block">
+                {firebaseUser.email}
+              </span>
+            </div>
+          )}
+          <button
+            type="button"
+            onClick={handleBackToLogin}
+            className="py-1.5 px-3 rounded-md border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 text-xs font-medium transition flex items-center space-x-1.5 shadow-sm"
+            title="Return to main login screen"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span>Back to Login</span>
+          </button>
+        </div>
       </header>
 
       {/* Main Container Card */}
@@ -226,6 +249,7 @@ export default function Onboarding() {
                   selectedRole={role}
                   onSelectRole={handleSelectRole}
                   onNext={handleRoleNext}
+                  onBackToLogin={handleBackToLogin}
                 />
               )}
 

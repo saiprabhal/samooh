@@ -103,11 +103,14 @@ function MainLayout() {
   // Standalone Full-Screen Login & Onboarding Views
   if (location.pathname === '/login' || location.pathname === '/onboarding') {
     if (location.pathname === '/login') {
-      if (firebaseUser && onboardingCompleted) {
-        return <Navigate to={userRole === 'supplier' ? '/supplier' : '/'} replace />;
-      }
-      if (firebaseUser && !onboardingCompleted) {
-        return <Navigate to="/onboarding" replace />;
+      const isSwitching = new URLSearchParams(location.search).get('logout') === 'true' || new URLSearchParams(location.search).get('switch') === 'true';
+      if (!isSwitching) {
+        if (firebaseUser && onboardingCompleted) {
+          return <Navigate to={userRole === 'supplier' ? '/supplier' : '/'} replace />;
+        }
+        if (firebaseUser && !onboardingCompleted) {
+          return <Navigate to="/onboarding" replace />;
+        }
       }
     }
 

@@ -1,9 +1,21 @@
 import React from 'react';
-import { Store, Building2, Check, ArrowRight } from 'lucide-react';
+import { Store, Building2, Check, ArrowRight, ArrowLeft } from 'lucide-react';
 
-export default function RoleSelectionStep({ selectedRole, onSelectRole, onNext }) {
+export default function RoleSelectionStep({ selectedRole, onSelectRole, onNext, onBackToLogin }) {
   return (
     <div className="space-y-6">
+      {/* Top Back Action Link */}
+      <div className="flex items-center justify-between pb-1">
+        <button
+          type="button"
+          onClick={onBackToLogin}
+          className="text-xs text-slate-500 hover:text-emerald-800 dark:text-slate-400 dark:hover:text-emerald-400 font-medium inline-flex items-center space-x-1.5 transition"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Login</span>
+        </button>
+      </div>
+
       <div className="text-center max-w-lg mx-auto">
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
           How will you use Samooh?
@@ -89,12 +101,21 @@ export default function RoleSelectionStep({ selectedRole, onSelectRole, onNext }
         </div>
       </div>
 
-      <div className="flex justify-center pt-2">
+      <div className="flex flex-col-reverse sm:flex-row items-center justify-center gap-3 pt-3">
+        <button
+          type="button"
+          onClick={onBackToLogin}
+          className="w-full sm:w-auto py-2.5 px-5 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium text-xs shadow-sm transition flex items-center justify-center space-x-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Main Login</span>
+        </button>
+
         <button
           type="button"
           disabled={!selectedRole}
           onClick={onNext}
-          className="py-2.5 px-8 rounded-md bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-xs shadow-sm transition flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full sm:w-auto py-2.5 px-8 rounded-md bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-xs shadow-sm transition flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <span>Continue as {selectedRole === 'supplier' ? 'Wholesale Supplier' : selectedRole === 'retailer' ? 'Kirana Retailer' : 'Partner'}</span>
           <ArrowRight className="w-4 h-4" />
