@@ -243,29 +243,38 @@ export default function Dashboard() {
   }));
 
   return (
-    <div className="p-4 sm:p-6 space-y-6 max-w-7xl mx-auto">
-      {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center">
-            {t('groupProcurementDashboard')}
-            <span className="ml-2 text-[11px] font-medium px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800">
-              Active Store: {user?.storeName || 'Sri Lakshmi Kirana'}
-            </span>
-          </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            {t('dashboardDesc')}
-          </p>
+    <div className="p-3 sm:p-6 space-y-5 max-w-7xl mx-auto">
+      {/* Hero Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/20 dark:border-white/10">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-lg shadow-emerald-600/20 border border-white/20 flex-shrink-0">
+            <Sparkles className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <div className="flex items-center space-x-2">
+              <h1 className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+                Live Wholesale Pools
+              </h1>
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30">
+                {user?.storeName || 'Sri Lakshmi Kirana'}
+              </span>
+            </div>
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              Nearby Kirana group orders unlocking wholesale tier rates
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center space-x-2">
           <button
+            type="button"
             onClick={handleSeedData}
             disabled={isSeeding}
-            className="px-3 py-1.5 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-700/60 transition flex items-center space-x-1.5 shadow-sm"
+            className="px-3.5 py-1.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/40 dark:bg-white/5 text-slate-700 dark:text-slate-200 text-xs font-bold hover:bg-white/70 dark:hover:bg-white/15 transition flex items-center space-x-1.5 shadow-sm cursor-pointer"
+            title="Refresh active mandi pool prices"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isSeeding ? 'animate-spin' : ''}`} />
-            <span>{isSeeding ? t('seeding') : t('resetSeedData')}</span>
+            <RefreshCw className={`w-3.5 h-3.5 ${isSeeding ? 'animate-spin text-emerald-600' : ''}`} />
+            <span>Sync Deals</span>
           </button>
         </div>
       </div>
@@ -291,28 +300,30 @@ export default function Dashboard() {
         />
       )}
 
-
       {/* Top Urgent Recommendations & Pools (Placed at TOP) */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-              <span>{t('highPriorityOpps') || 'Recommended Procurement Pools'}</span>
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+              <span>High-Discount Pools</span>
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              AI-matched bulk procurement opportunities ready to unlock tier discounts with nearby stores.
-            </p>
+            <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-600 text-white shadow-sm">
+              Live Mandi
+            </span>
           </div>
           {recommendations.length > 0 && (
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full glass-pill text-emerald-800 dark:text-emerald-300">
-              {recommendations.length} Active Pools
-            </span>
+            <button
+              type="button"
+              onClick={() => navigate('/opportunities')}
+              className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+            >
+              View all ({recommendations.length}) →
+            </button>
           )}
         </div>
 
         {recommendations.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {recommendations.slice(0, 3).map((rec) => (
               <RecommendationCard
                 key={rec.id || rec.pool_id || Math.random()}
@@ -324,7 +335,7 @@ export default function Dashboard() {
             ))}
           </div>
         ) : (
-          <div className="p-8 text-center rounded-2xl glass-card">
+          <div className="p-8 text-center rounded-3xl glass-card">
             <p className="text-slate-500 text-xs">{t('noPools') || 'No active pools currently match your store location.'}</p>
           </div>
         )}
@@ -332,64 +343,62 @@ export default function Dashboard() {
 
       {/* Performance & Community Savings Metrics (Placed at BOTTOM) */}
       <div className="pt-2">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-          Platform Performance & Savings Metrics
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-xs font-black uppercase tracking-wider text-slate-400">
+            Cluster Impact & Savings
+          </h3>
+          <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+            Kukatpally Zone
+          </span>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <KPICard
             title={t('estimatedSavings')}
             value={formatINR(data?.metrics?.total_community_savings_inr || 84520)}
-            subtext={t('netSavingsSub')}
+            badge="+24.5%"
             icon={IndianRupee}
             color="emerald"
-            badge="+24.5%"
           />
           <KPICard
             title={t('retailersBenefited')}
             value={data?.metrics?.total_retailers || 30}
-            subtext={t('retailersSub')}
+            badge="Joined"
             icon={Users}
             color="blue"
-            badge="Hyderabad Hub"
           />
           <KPICard
             title={t('procurementPools')}
             value={data?.metrics?.total_active_pools || 12}
-            subtext={t('poolsSub')}
+            badge={`${data?.metrics?.pools_achieved_threshold || 9} Met`}
             icon={Layers}
             color="purple"
-            badge={`${data?.metrics?.pools_achieved_threshold || 9} Active`}
           />
           <KPICard
             title={t('avgSavingsPct')}
             value={`${data?.metrics?.average_savings_percentage || 18.5}%`}
-            subtext={t('avgSavingsSub')}
+            badge="Wholesale"
             icon={Percent}
             color="amber"
-            badge="Up to 24%"
           />
         </div>
       </div>
 
       {/* Charts Grid Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Main Monthly Savings Trend Chart */}
-        <div className="lg:col-span-2 rounded-2xl glass-card p-5">
+        <div className="lg:col-span-2 rounded-3xl glass-card p-5 border border-white/40 dark:border-white/10">
           <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/20 dark:border-white/10">
             <div>
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
-                {t('monthlySavingsGrowth')}
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                Monthly Savings Growth
               </h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                {t('cumulativeSavingsDesc')}
-              </p>
             </div>
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full glass-pill text-emerald-800 dark:text-emerald-300">
-              ₹84,520 {t('totalSaved')}
+            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full glass-pill text-emerald-800 dark:text-emerald-300">
+              ₹84.5k Total Saved
             </span>
           </div>
 
-          <div className="h-64 w-full">
+          <div className="h-60 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data?.monthly_savings_trend || MOCK_DASHBOARD.monthly_savings_trend}>
                 <defs>
@@ -406,7 +415,7 @@ export default function Dashboard() {
                     backgroundColor: theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(15, 23, 42, 0.85)', 
                     backdropFilter: 'blur(16px)',
                     borderColor: theme === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.1)',
-                    borderRadius: '12px',
+                    borderRadius: '16px',
                     fontSize: '12px',
                     boxShadow: '0 8px 32px rgba(0,0,0,0.2)'
                   }}
@@ -419,15 +428,15 @@ export default function Dashboard() {
         </div>
 
         {/* Category Breakdown Donut Chart */}
-        <div className="rounded-2xl glass-card p-5 flex flex-col justify-between">
+        <div className="rounded-3xl glass-card p-5 border border-white/40 dark:border-white/10 flex flex-col justify-between">
           <div>
-            <div className="pb-2 border-b border-white/20 dark:border-white/10 mb-3">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
-                {t('categoryBreakdown')}
+            <div className="flex items-center justify-between pb-2 border-b border-white/20 dark:border-white/10 mb-3">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                Commodity Volume
               </h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                {t('categoryDesc')}
-              </p>
+              <span className="text-[10px] font-bold text-slate-400">
+                Categories
+              </span>
             </div>
 
             <div className="h-44 w-full">
@@ -438,8 +447,8 @@ export default function Dashboard() {
                     cx="50%"
                     cy="50%"
                     innerRadius={45}
-                    outerRadius={70}
-                    paddingAngle={3}
+                    outerRadius={68}
+                    paddingAngle={4}
                     dataKey="value"
                   >
                     {pieData.map((entry, index) => (
@@ -450,7 +459,7 @@ export default function Dashboard() {
                     contentStyle={{ 
                       backgroundColor: theme === 'light' ? '#FFFFFF' : '#1E293B', 
                       borderColor: '#CBD5E1',
-                      borderRadius: '6px',
+                      borderRadius: '12px',
                       fontSize: '12px'
                     }}
                   />
@@ -460,10 +469,10 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-2 gap-2 text-xs pt-2">
               {pieData.map((item) => (
-                <div key={item.name} className="flex items-center space-x-1.5">
-                  <span className="w-2.5 h-2.5 rounded" style={{ backgroundColor: item.color }} />
-                  <span className="font-medium truncate text-slate-700 dark:text-slate-300">
-                    {item.name} ({item.value})
+                <div key={item.name} className="flex items-center space-x-1.5 p-1 rounded-lg glass-pill">
+                  <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
+                  <span className="font-bold truncate text-slate-700 dark:text-slate-300 text-[11px]">
+                    {item.name}: {item.value}
                   </span>
                 </div>
               ))}
