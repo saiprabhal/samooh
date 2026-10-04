@@ -7,7 +7,8 @@ import {
   Percent, 
   AlertCircle,
   RefreshCw,
-  Database
+  Database,
+  Sparkles
 } from 'lucide-react';
 import { 
   AreaChart, 

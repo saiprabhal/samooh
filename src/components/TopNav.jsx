@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, User, Menu, Truck, ShieldCheck, ChevronRight } from 'lucide-react';
-import { checkHealth } from '../services/api';
+import { Search, User, Menu, Truck, ShieldCheck, ChevronRight, Layers } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export default function TopNav({ 
@@ -13,33 +12,22 @@ export default function TopNav({
   const navigate = useNavigate();
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [isOnline, setIsOnline] = useState(true);
 
   const isSupplier = userRole === 'supplier' || location.pathname.startsWith('/supplier');
 
-  useEffect(() => {
-    async function monitorHealth() {
-      const res = await checkHealth();
-      setIsOnline(res.isOnline);
-    }
-    monitorHealth();
-    const interval = setInterval(monitorHealth, 25000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <header className={`h-14 border-b px-3 sm:px-6 flex items-center justify-between sticky top-0 z-20 transition-colors ${
+    <header className={`h-14 border-b px-3 sm:px-5 flex items-center justify-between sticky top-0 z-20 transition-colors ${
       theme === 'light'
         ? 'bg-white border-slate-200 text-slate-900'
         : 'bg-[#1E293B] border-slate-700/80 text-white'
     }`}>
-      {/* Left: Desktop Toggle / Mobile Menu & Search */}
-      <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
+      {/* Left: Mobile/Desktop Toggle + Logo & Brand Name + Search Bar */}
+      <div className="flex items-center space-x-2.5 sm:space-x-4 flex-1 min-w-0 pr-3">
         {/* Mobile Hamburger Drawer Toggle */}
         <button
           type="button"
           onClick={onToggleMobileMenu}
-          className="md:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+          className="md:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex-shrink-0"
           aria-label="Toggle mobile navigation menu"
         >
           <Menu className="w-5 h-5" />
@@ -49,16 +37,43 @@ export default function TopNav({
         <button
           type="button"
           onClick={onToggleDesktopSidebar}
-          className="hidden md:flex p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition"
+          className="hidden md:flex p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition flex-shrink-0"
           title={isDesktopCollapsed ? "Open sidebar menu" : "Collapse sidebar menu"}
           aria-label="Toggle desktop sidebar"
         >
           <Menu className="w-4 h-4" />
         </button>
 
+        {/* Brand Logo & Name */}
+        <div 
+          onClick={() => navigate(isSupplier ? '/supplier' : '/')}
+          className="flex items-center space-x-2 cursor-pointer select-none flex-shrink-0"
+          title="Go to Samooh Home"
+        >
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white shadow-sm transition ${
+            isSupplier ? 'bg-emerald-800' : 'bg-emerald-700'
+          }`}>
+            {isSupplier ? <Truck className="w-4 h-4" /> : <Layers className="w-4 h-4" />}
+          </div>
+          <div className="flex items-center space-x-1.5">
+            <span className={`text-base font-bold tracking-tight ${
+              theme === 'light' ? 'text-slate-900' : 'text-white'
+            }`}>
+              {t('brandName') || 'Samooh'}
+            </span>
+            <span className={`hidden sm:inline-block text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border ${
+              isSupplier 
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800' 
+                : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
+            }`}>
+              {isSupplier ? 'Supplier' : 'Retail'}
+            </span>
+          </div>
+        </div>
+
         {/* Search Bar */}
-        <div className="relative flex-1 max-w-[200px] sm:max-w-xs md:max-w-sm">
-          <Search className={`w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 ${
+        <div className="relative flex-1 max-w-xs sm:max-w-sm md:max-w-md">
+          <Search className={`w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 ${
             theme === 'light' ? 'text-slate-400' : 'text-slate-500'
           }`} />
           <input 
@@ -66,18 +81,12 @@ export default function TopNav({
             placeholder={t('searchPlaceholder') || "Search catalog, commodities, pools..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={`w-full border rounded-lg pl-8 pr-2.5 py-1.5 text-xs transition focus:outline-none ${
+            className={`w-full border rounded-lg pl-9 pr-3 py-1.5 text-xs sm:text-sm transition focus:outline-none ${
               theme === 'light'
                 ? 'bg-slate-50 border-slate-200 text-slate-800 placeholder-slate-400 focus:border-slate-400 focus:bg-white'
                 : 'bg-slate-800/80 border-slate-700 text-slate-200 placeholder-slate-500 focus:border-slate-600'
             }`}
           />
-        </div>
-
-        {/* Real-time Network Status Badge */}
-        <div className="hidden lg:flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border bg-emerald-50 text-emerald-800 border-emerald-200/80 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800">
-          <span className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-emerald-600 animate-pulse' : 'bg-amber-500'}`} />
-          <span>{isOnline ? 'Network Live' : 'Connecting'}</span>
         </div>
       </div>
 
